@@ -7,5 +7,4 @@ if (! function_exists('timber')) {
     {
         return app(Timber::class)->send(...$args);
     }
-
 }

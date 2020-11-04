@@ -8,7 +8,6 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelTimber\Tests\TestClasses\FakeClient;
 use Spatie\LaravelTimber\Timber;
 use Spatie\LaravelTimber\TimberServiceProvider;
-use Spatie\Timber\Client;
 
 class TestCase extends Orchestra
 {
