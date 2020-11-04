@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Timber\Tests;
+namespace Spatie\LaravelTimber\Tests;
 
 class ExampleTest extends TestCase
 {

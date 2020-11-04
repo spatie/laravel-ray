@@ -1,11 +1,11 @@
 <?php
 
-namespace Spatie\Timber;
+namespace Spatie\LaravelTimber;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Spatie\Timber\Timber
+ * @see \Spatie\LaravelTimber\Timber
  */
 class TimberFacade extends Facade
 {

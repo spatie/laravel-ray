@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Timber\Tests;
+namespace Spatie\LaravelTimber\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\Timber\TimberServiceProvider;
+use Spatie\LaravelTimber\TimberServiceProvider;
 
 class TestCase extends Orchestra
 {

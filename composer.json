@@ -5,6 +5,11 @@
         "spatie",
         "laravel-timber"
     ],
+    "repositories": [{
+        "type": "path",
+        "url": "../timber"
+    }
+    ],
     "homepage": "https://github.com/spatie/laravel-timber",
     "license": "MIT",
     "authors": [
@@ -17,7 +22,10 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/contracts": "^8.0"
+        "illuminate/contracts": "^8.0",
+        "illuminate/database": "^8.13",
+        "illuminate/support": "^8.13",
+        "spatie/timber": "dev-master"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
@@ -25,13 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Timber\\": "src",
-            "Spatie\\Timber\\Database\\Factories\\": "database/factories"
+            "Spatie\\LaravelTimber\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Timber\\Tests\\": "tests"
+            "Spatie\\LaravelTimber\\Tests\\": "tests"
         }
     },
     "scripts": {
