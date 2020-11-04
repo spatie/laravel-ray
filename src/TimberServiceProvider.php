@@ -50,15 +50,15 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function listenForLogEvents(): self
     {
-        if (! config('timber.send_log_calls_to_timber')) {
-            return $this;
-        }
-
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
+            if (! config('timber.send_log_calls_to_timber')) {
+                return $this;
+            }
+
             /** @var Timber $timber */
             $timber = app(Timber::class);
 
-            $timber->send($message);
+            $timber->send($message->message);
 
             if ($message->level === 'error') {
                 $timber->color('red');
