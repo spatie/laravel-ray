@@ -20,7 +20,7 @@ class TestCase extends Orchestra
         $this->client = new FakeClient();
 
         $this->app->bind(Timber::class, function () {
-            return new Timber($this->client, 'fakeUuid');
+            return (new Timber($this->client, 'fakeUuid'));
         });
     }
 

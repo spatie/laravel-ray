@@ -94,4 +94,16 @@ class TimberTest extends TestCase
         DB::table('users')->get('id');
         $this->assertCount(1, $this->client->sentPayloads());
     }
+
+    /** @test */
+    public function it_can_be_disabled()
+    {
+        timber()->disable();
+        timber('test');
+        $this->assertCount(0, $this->client->sentPayloads());
+
+        timber()->enable();
+        timber('not test');
+        $this->assertCount(1, $this->client->sentPayloads());
+    }
 }
