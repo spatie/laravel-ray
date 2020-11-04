@@ -71,22 +71,22 @@ All arguments will be converted to strings and will be sent to Timber.
 You can disable sending to Timber by calling `disable`.
 
 ```php
-timber('foo'); // will be logged
+timber('foo'); // will be sent to Timber
 
 timber()->disable();
 
-timber('bar') // will not be logged
+timber('bar') // will not be sent to Timber
 
 timber()->enable();
 
-timber('baz'); // will be logged
+timber('baz'); // will be sent to Timber
 ```
 
 You can pass a boolean to `enable`. This can be handy when you want to log only one iteration of a loop.
 
 ```php
 foreach (range(1, 3) as $i) {
-   // only things in the third iteration will be logged
+   // only things in the third iteration will be sent to Timber
    timber()->enable($i === 3);
     
    timber('we are in the third iteration');
@@ -111,10 +111,10 @@ Alternatively to manually starting and stopping listening for queries, you can a
 
 ````php
 timber()->logQueries(function() {
-    $this->mailAllUsers() // all queries executed in this closure will be logged
+    $this->mailAllUsers() // all queries executed in this closure will be sent to Timber
 }); 
 
-User::get(); // this query will not be logged
+User::get(); // this query will not be sent to Timber
 ````
 
 ## Testing
