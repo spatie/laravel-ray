@@ -30,10 +30,14 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function registerBindings(): self
     {
-        $this->app->bind(Timber::class, function () {
+        $this->app->bind(Client::class, function() {
             $timberConfig = config('timber');
 
-            $client = new Client("http://localhost:{$timberConfig['port']}");
+            return new Client("http://localhost:{$timberConfig['port']}");
+        });
+
+        $this->app->bind(Timber::class, function () {
+            $client = app(Client::class);
 
             return new Timber($client);
         });
