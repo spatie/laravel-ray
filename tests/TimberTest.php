@@ -2,9 +2,7 @@
 
 namespace Spatie\LaravelTimber\Tests;
 
-use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Log;
 use Spatie\Snapshots\MatchesSnapshots;
 
