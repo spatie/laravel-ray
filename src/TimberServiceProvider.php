@@ -24,8 +24,7 @@ class TimberServiceProvider extends ServiceProvider
 
         $this
             ->registerBindings()
-            ->listenForLogEvents()
-            ->defineTimberFunction();
+            ->listenForLogEvents();
     }
 
     protected function registerBindings(): self
@@ -69,16 +68,6 @@ class TimberServiceProvider extends ServiceProvider
                 $timber->color('orange');
             }
         });
-
-        return $this;
-    }
-
-    protected function defineTimberFunction(): self
-    {
-        function timber()
-        {
-            return app(Timber::class);
-        }
 
         return $this;
     }
