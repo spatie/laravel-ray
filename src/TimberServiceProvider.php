@@ -78,6 +78,4 @@ class TimberServiceProvider extends ServiceProvider
 
         return $this;
     }
-
-
 }
