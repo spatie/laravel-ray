@@ -1,39 +1,37 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "spatie/laravel-timber",
+    "description": "Easily debug Laravel apps",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "spatie",
+        "laravel-timber"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/spatie/laravel-timber",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "Freek Van der Herten",
+            "email": "freek@spatie.be",
             "homepage": "https://spatie.be",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "illuminate/contracts": "^8.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
         "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.11"
+        "phpunit/phpunit": "^9.3"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src",
-            "Spatie\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Spatie\\Timber\\": "src",
+            "Spatie\\Timber\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Spatie\\Timber\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -48,10 +46,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "Spatie\\Timber\\TimberServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "Timber": "Spatie\\Timber\\TimberFacade"
             }
         }
     },
