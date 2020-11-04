@@ -28,10 +28,10 @@ class Timber extends BaseTimber
 
         app(QueryLogger::class)->startLoggingQueries();
 
-        if (!is_null($callable)) {
+        if (! is_null($callable)) {
             $callable();
 
-            if (!$wasLoggingQueries) {
+            if (! $wasLoggingQueries) {
                 $this->stopLoggingQueries();
             }
         }
