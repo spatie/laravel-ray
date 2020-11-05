@@ -113,6 +113,5 @@ class TimberTest extends TestCase
         dump('test');
 
         $this->assertCount(1, $this->client->sentPayloads());
-
     }
 }
