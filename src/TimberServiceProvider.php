@@ -31,7 +31,7 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function registerBindings(): self
     {
-        $this->app->bind(Client::class, fn() => new Client('http://', config('timber.port')));
+        $this->app->bind(Client::class, fn () => new Client('http://', config('timber.port')));
 
         $this->app->bind(Timber::class, function () {
             $client = app(Client::class);
@@ -39,7 +39,7 @@ class TimberServiceProvider extends ServiceProvider
             return new Timber($client);
         });
 
-        $this->app->singleton(QueryLogger::class, fn() => new QueryLogger());
+        $this->app->singleton(QueryLogger::class, fn () => new QueryLogger());
 
         return $this;
     }
