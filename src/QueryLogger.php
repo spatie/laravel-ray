@@ -4,6 +4,7 @@ namespace Spatie\LaravelTimber;
 
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
+use Spatie\LaravelTimber\Payloads\ExecutedQueryPayload;
 
 class QueryLogger
 {
@@ -25,7 +26,9 @@ class QueryLogger
         if (! $this->queryListenerRegistered) {
             DB::listen(function (QueryExecuted $query) {
                 if ($this->listenForQueries) {
-                    app(Timber::class)->send($query->sql);
+                    $payload = new ExecutedQueryPayload($query);
+
+                    app(Timber::class)->sendRequest([$payload]);
                 }
             });
 
