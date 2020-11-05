@@ -106,4 +106,13 @@ class TimberTest extends TestCase
         timber('not test');
         $this->assertCount(1, $this->client->sentPayloads());
     }
+
+    /** @test */
+    public function it_can_log_dumps()
+    {
+        dump('test');
+
+        $this->assertCount(1, $this->client->sentPayloads());
+
+    }
 }

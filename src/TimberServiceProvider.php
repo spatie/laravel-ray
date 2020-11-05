@@ -5,6 +5,7 @@ namespace Spatie\LaravelTimber;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Spatie\LaravelTimber\DumpRecorder\DumpRecorder;
 use Spatie\Timber\Client;
 
 class TimberServiceProvider extends ServiceProvider
@@ -24,7 +25,8 @@ class TimberServiceProvider extends ServiceProvider
 
         $this
             ->registerBindings()
-            ->listenForLogEvents();
+            ->listenForLogEvents()
+            ->listenForDumps();
     }
 
     protected function registerBindings(): self
@@ -62,6 +64,13 @@ class TimberServiceProvider extends ServiceProvider
                 $timber->color('orange');
             }
         });
+
+        return $this;
+    }
+
+    protected function listenForDumps(): self
+    {
+        $this->app->make(DumpRecorder::class)->register();
 
         return $this;
     }
