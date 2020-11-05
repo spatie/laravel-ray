@@ -35,7 +35,7 @@ class DumpRecorder
 
         $multiDumpHandler
             ->addHandler($this->getDefaultHandler())
-            ->addHandler(fn($dumpedVariable) => app(Timber::class)->send($dumpedVariable));
+            ->addHandler(fn ($dumpedVariable) => app(Timber::class)->send($dumpedVariable));
 
         return $this;
     }
