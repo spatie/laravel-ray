@@ -29,7 +29,7 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-         VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
+        VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
             $multiDumpHandler->dump($dumpedVariable);
         });
 
