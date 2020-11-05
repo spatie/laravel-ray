@@ -111,7 +111,7 @@ Alternatively to manually starting and stopping listening for queries, you can a
 
 ````php
 timber()->logQueries(function() {
-    $this->mailAllUsers() // all queries executed in this closure will be sent to Timber
+    $this->mailAllUsers(); // all queries executed in this closure will be sent to Timber
 }); 
 
 User::get(); // this query will not be sent to Timber
