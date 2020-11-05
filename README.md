@@ -31,9 +31,6 @@ You can install the package via composer:
 composer require spatie/laravel-timber
 ```
 
-You can publish and run the migrations with:
-
-
 You can publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Spatie\Timber\TimberServiceProvider" --tag="config"
