@@ -11,7 +11,7 @@ class TimberTest extends TestCase
     use MatchesSnapshots;
 
     /** @test */
-    public function it_can_send_a_something_to_timber()
+    public function it_can_send_something_to_timber()
     {
         timber('a');
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\LaravelTimber\DumpRecorder\DumpRecorder;
 use Spatie\Timber\Client;
+use Spatie\Timber\Payloads\Payload;
 
 class TimberServiceProvider extends ServiceProvider
 {
@@ -40,6 +41,8 @@ class TimberServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(QueryLogger::class, fn () => new QueryLogger());
+
+        Payload::$originFactoryClass = OriginFactory::class;
 
         return $this;
     }

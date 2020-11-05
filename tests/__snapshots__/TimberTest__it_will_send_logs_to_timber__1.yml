@@ -1,1 +1,3 @@
-- '{"uuid":"fakeUuid","messages":[{"type":"log","content":{"values":["hey"]},"frame":[]}]}'
+-
+    uuid: fakeUuid
+    payloads: [{ type: log, content: { values: [hey] }, origin: { file: /vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php, line_number: 391 } }]
