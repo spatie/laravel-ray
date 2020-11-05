@@ -70,6 +70,10 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function listenForDumps(): self
     {
+        if (! config('timber.send_dumps_to_timber')) {
+            return $this;
+        }
+
         $this->app->make(DumpRecorder::class)->register();
 
         return $this;
