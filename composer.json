@@ -57,11 +57,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Timber\\TimberServiceProvider"
-            ],
-            "aliases": {
-                "Timber": "Spatie\\Timber\\TimberFacade"
-            }
+                "Spatie\\LaravelTimber\\TimberServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",
