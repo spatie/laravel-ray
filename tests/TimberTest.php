@@ -14,6 +14,7 @@ class TimberTest extends TestCase
     public function it_can_send_something_to_timber()
     {
         timber('a');
+        /* timber(['a' => 1]); */
 
         $this->assertMatchesSnapshot($this->client->sentPayloads());
     }
