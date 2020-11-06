@@ -8,9 +8,11 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelTimber\Tests\TestClasses\FakeClient;
 use Spatie\LaravelTimber\Timber;
 use Spatie\LaravelTimber\TimberServiceProvider;
+use Spatie\Timber\Client;
 
 class TestCase extends Orchestra
 {
+    /* protected Client $client; */
     protected FakeClient $client;
 
     public function setUp(): void
@@ -18,6 +20,8 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->client = new FakeClient();
+
+        /* $this->client = new Client(); */
 
         $this->app->bind(Timber::class, function () {
             return (new Timber($this->client, 'fakeUuid'));
