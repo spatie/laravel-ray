@@ -4,6 +4,7 @@ namespace Spatie\LaravelTimber;
 
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\LaravelTimber\DumpRecorder\DumpRecorder;
@@ -29,7 +30,9 @@ class TimberServiceProvider extends ServiceProvider
             ->registerBindings()
             ->listenForLogEvents()
             ->listenForDumps()
-            ->registerMacros();
+            ->registerMacros()
+            ->registerBindings()
+            ->registerBladeDirectives();
     }
 
     protected function registerBindings(): self
@@ -90,6 +93,15 @@ class TimberServiceProvider extends ServiceProvider
             timber($this->items);
 
             return $this;
+        });
+
+        return $this;
+    }
+
+    protected function registerBladeDirectives(): self
+    {
+        Blade::directive('timber', function ($expression) {
+            return "<?php timber($expression)";
         });
 
         return $this;
