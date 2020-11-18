@@ -86,7 +86,7 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function registerMacros(): self
     {
-        Collection::macro('timber', function() {
+        Collection::macro('timber', function () {
             timber($this->items);
 
             return $this;
