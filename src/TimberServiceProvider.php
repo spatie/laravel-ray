@@ -101,7 +101,7 @@ class TimberServiceProvider extends ServiceProvider
     protected function registerBladeDirectives(): self
     {
         Blade::directive('timber', function ($expression) {
-            return "<?php timber($expression)";
+            return "<?php timber($expression); ?>";
         });
 
         return $this;
