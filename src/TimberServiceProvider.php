@@ -3,6 +3,7 @@
 namespace Spatie\LaravelTimber;
 
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\LaravelTimber\DumpRecorder\DumpRecorder;
@@ -27,7 +28,8 @@ class TimberServiceProvider extends ServiceProvider
         $this
             ->registerBindings()
             ->listenForLogEvents()
-            ->listenForDumps();
+            ->listenForDumps()
+            ->registerMacros();
     }
 
     protected function registerBindings(): self
@@ -78,6 +80,17 @@ class TimberServiceProvider extends ServiceProvider
         }
 
         $this->app->make(DumpRecorder::class)->register();
+
+        return $this;
+    }
+
+    protected function registerMacros(): self
+    {
+        Collection::macro('timber', function() {
+            timber($this->items);
+
+            return $this;
+        });
 
         return $this;
     }

@@ -14,8 +14,6 @@ class TimberTest extends TestCase
     public function it_can_send_something_to_timber()
     {
         timber('a');
-        /* timber(['a' => 1]); */
-
         $this->assertMatchesSnapshot($this->client->sentPayloads());
     }
 
@@ -112,6 +110,18 @@ class TimberTest extends TestCase
     public function it_can_log_dumps()
     {
         dump('test');
+
+        $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_has_a_chainable_collection_macro_to_send_things_to_timber()
+    {
+        $array = ['a', 'b', 'c'];
+
+        $newArray = collect($array)->timber()->toArray();
+
+        $this->assertEquals($newArray, $array);
 
         $this->assertCount(1, $this->client->sentPayloads());
     }
