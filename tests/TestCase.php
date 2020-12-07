@@ -5,9 +5,9 @@ namespace Spatie\LaravelRay\Tests;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\LaravelRay\Tests\TestClasses\FakeClient;
 use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
+use Spatie\LaravelRay\Tests\TestClasses\FakeClient;
 use Spatie\Ray\Client;
 
 class TestCase extends Orchestra
