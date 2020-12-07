@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\LaravelTimber\Payloads;
+namespace Spatie\LaravelRay\Payloads;
 
 use Illuminate\Database\Events\QueryExecuted;
-use Spatie\Timber\Payloads\Payload;
+use Spatie\Ray\Payloads\Payload;
 
 class ExecutedQueryPayload extends Payload
 {

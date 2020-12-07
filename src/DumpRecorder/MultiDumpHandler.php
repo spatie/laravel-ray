@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\LaravelTimber\DumpRecorder;
+namespace Spatie\LaravelRay\DumpRecorder;
 
 class MultiDumpHandler
 {

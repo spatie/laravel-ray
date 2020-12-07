@@ -1,14 +1,14 @@
 # Easily debug Laravel apps
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-timber.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-timber)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-timber/run-tests?label=tests)](https://github.com/spatie/laravel-timber/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-timber.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-timber)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-ray.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-ray)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-ray/run-tests?label=tests)](https://github.com/spatie/laravel-ray/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-ray.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-ray)
 
-This package can send messages to the Timber app. 
+This package can send messages to the Ray app. 
 
 ```php
-timber('hi there!')
-timber('I am big and green')->green()->large()
+ray('hi there!')
+ray('I am big and green')->green()->large()
 ```
 
 Here's how that looks like in the app.
@@ -17,7 +17,7 @@ TODO: add screenshot
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/package-laravel-timber-laravel.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/package-laravel-timber-laravel)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/package-laravel-ray-laravel.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/package-laravel-ray-laravel)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
@@ -28,12 +28,12 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-timber
+composer require spatie/laravel-ray
 ```
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="Spatie\Timber\TimberServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Spatie\Ray\RayServiceProvider" --tag="config"
 ```
 
 This is the contents of the published config file:
@@ -42,12 +42,12 @@ This is the contents of the published config file:
 return [
     /*
      * When enabled, all things logged to the application log
-     * will be sent to Timber as well.
+     * will be sent to Ray as well.
      */
-    'send_log_calls_to_timber' => true,
+    'send_log_calls_to_ray' => true,
 
     /*
-     * The port number to communicate with Timber.
+     * The port number to communicate with Ray.
      */
     'port' => 23517,
 ];
@@ -55,63 +55,63 @@ return [
 
 ## Usage
 
-You can pass any variable you want to `timber`:
+You can pass any variable you want to `ray`:
 
 ```php
-timber('a string', ['an array'], new MyClass)
+ray('a string', ['an array'], new MyClass)
 ```
 
-All arguments will be converted to strings and will be sent to Timber.
+All arguments will be converted to strings and will be sent to Ray.
 
 ## Enabling and disabling logging
 
-You can disable sending to Timber by calling `disable`.
+You can disable sending to Ray by calling `disable`.
 
 ```php
-timber('foo'); // will be sent to Timber
+ray('foo'); // will be sent to Ray
 
-timber()->disable();
+ray()->disable();
 
-timber('bar') // will not be sent to Timber
+ray('bar') // will not be sent to Ray
 
-timber()->enable();
+ray()->enable();
 
-timber('baz'); // will be sent to Timber
+ray('baz'); // will be sent to Ray
 ```
 
 You can pass a boolean to `enable`. This can be handy when you want to log only one iteration of a loop.
 
 ```php
 foreach (range(1, 3) as $i) {
-   // only things in the third iteration will be sent to Timber
-   timber()->enable($i === 3);
+   // only things in the third iteration will be sent to Ray
+   ray()->enable($i === 3);
     
-   timber('we are in the third iteration');
+   ray('we are in the third iteration');
 }
 ```
 
 ## Logging queries
 
-You can send all queries to Timber using `logQueries`.
+You can send all queries to Ray using `logQueries`.
 
 ````php
-timber()->logQueries(); // all queries after this call will be sent to Timber
+ray()->logQueries(); // all queries after this call will be sent to Ray
 ````
 
 If you wish to stop logging queries, call `stopLoggingQueries`.
 
 ````php
-timber()->stopLoggingQueries(); // all queries after this call will not be sent to Timber anymore
+ray()->stopLoggingQueries(); // all queries after this call will not be sent to Ray anymore
 ````
 
-Alternatively to manually starting and stopping listening for queries, you can also pass a closure to `logQueries`. Only the queries executed inside the closure will be sent to Timber.
+Alternatively to manually starting and stopping listening for queries, you can also pass a closure to `logQueries`. Only the queries executed inside the closure will be sent to Ray.
 
 ````php
-timber()->logQueries(function() {
-    $this->mailAllUsers(); // all queries executed in this closure will be sent to Timber
+ray()->logQueries(function() {
+    $this->mailAllUsers(); // all queries executed in this closure will be sent to Ray
 }); 
 
-User::get(); // this query will not be sent to Timber
+User::get(); // this query will not be sent to Ray
 ````
 
 ## Testing

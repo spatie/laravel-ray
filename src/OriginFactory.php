@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\LaravelTimber;
+namespace Spatie\LaravelRay;
 
-use Spatie\Timber\Origin\Origin;
-use Spatie\Timber\Timber;
+use Spatie\Ray\Origin\Origin;
+use Spatie\Ray\Ray;
 
 class OriginFactory
 {
@@ -21,7 +21,7 @@ class OriginFactory
     {
         $trace = array_reverse(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
 
-        $frameIndex = $this->getIndexOfTimberCall($trace);
+        $frameIndex = $this->getIndexOfRayCall($trace);
 
         if (! $frameIndex) {
             return null;
@@ -30,10 +30,10 @@ class OriginFactory
         return $trace[$frameIndex - 1] ?? null;
     }
 
-    protected function getIndexOfTimberCall(array $stackTrace): ?int
+    protected function getIndexOfRayCall(array $stackTrace): ?int
     {
         foreach ($stackTrace as $index => $frame) {
-            if (($frame['class'] ?? '') === Timber::class) {
+            if (($frame['class'] ?? '') === Ray::class) {
                 return $index;
             }
 

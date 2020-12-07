@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\LaravelTimber;
+namespace Spatie\LaravelRay;
 
-use Spatie\Timber\Timber as BaseTimber;
+use Spatie\Ray\Ray as BaseRay;
 
-class Timber extends BaseTimber
+class Ray extends BaseRay
 {
     public static bool $enabled = true;
 
@@ -51,12 +51,12 @@ class Timber extends BaseTimber
         return app(QueryLogger::class);
     }
 
-    public function sendRequest(array $payloads): BaseTimber
+    public function sendRequest(array $payloads): BaseRay
     {
         if (! static::$enabled) {
             return $this;
         }
 
-        return BaseTimber::sendRequest($payloads);
+        return BaseRay::sendRequest($payloads);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\LaravelTimber;
+namespace Spatie\LaravelRay;
 
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
-use Spatie\LaravelTimber\Payloads\ExecutedQueryPayload;
+use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
 
 class QueryLogger
 {
@@ -28,7 +28,7 @@ class QueryLogger
                 if ($this->listenForQueries) {
                     $payload = new ExecutedQueryPayload($query);
 
-                    app(Timber::class)->sendRequest([$payload]);
+                    app(Ray::class)->sendRequest([$payload]);
                 }
             });
 

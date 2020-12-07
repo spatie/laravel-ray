@@ -1,24 +1,24 @@
 <?php
 
-namespace Spatie\LaravelTimber\Tests;
+namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Facades\DB;
 use Log;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class TimberTest extends TestCase
+class RayTest extends TestCase
 {
     use MatchesSnapshots;
 
     /** @test */
-    public function it_can_send_something_to_timber()
+    public function it_can_send_something_to_ray()
     {
-        timber('a');
+        ray('a');
         $this->assertMatchesSnapshot($this->client->sentPayloads());
     }
 
     /** @test */
-    public function it_will_send_logs_to_timber()
+    public function it_will_send_logs_to_ray()
     {
         Log::info('hey');
 
@@ -28,9 +28,9 @@ class TimberTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_send_logs_to_timber_when_disabled()
+    public function it_will_not_send_logs_to_ray_when_disabled()
     {
-        config()->set(['timber.send_log_calls_to_timber' => false]);
+        config()->set(['ray.send_log_calls_to_ray' => false]);
 
         Log::info('hey');
 
@@ -40,7 +40,7 @@ class TimberTest extends TestCase
     /** @test */
     public function it_will_not_blow_up_when_not_passing_anything()
     {
-        timber();
+        ray();
 
         $this->assertCount(0, $this->client->sentPayloads());
     }
@@ -48,7 +48,7 @@ class TimberTest extends TestCase
     /** @test */
     public function it_can_start_logging_queries()
     {
-        timber()->logQueries();
+        ray()->logQueries();
 
         DB::table('users')->get('id');
 
@@ -58,13 +58,13 @@ class TimberTest extends TestCase
     /** @test */
     public function it_can_stop_logging_queries()
     {
-        timber()->logQueries();
+        ray()->logQueries();
 
         DB::table('users')->get('id');
         DB::table('users')->get('id');
         $this->assertCount(2, $this->client->sentPayloads());
 
-        timber()->stopLoggingQueries();
+        ray()->stopLoggingQueries();
         DB::table('users')->get('id');
         $this->assertCount(2, $this->client->sentPayloads());
     }
@@ -72,8 +72,8 @@ class TimberTest extends TestCase
     /** @test */
     public function calling_log_queries_twice_will_not_log_all_queries_twice()
     {
-        timber()->logQueries();
-        timber()->logQueries();
+        ray()->logQueries();
+        ray()->logQueries();
 
         DB::table('users')->get('id');
 
@@ -83,7 +83,7 @@ class TimberTest extends TestCase
     /** @test */
     public function it_can_log_all_queries_in_a_callable()
     {
-        timber()->logQueries(function () {
+        ray()->logQueries(function () {
             // will be logged
             DB::table('users')->where('id', 1)->get();
         });
@@ -97,12 +97,12 @@ class TimberTest extends TestCase
     /** @test */
     public function it_can_be_disabled()
     {
-        timber()->disable();
-        timber('test');
+        ray()->disable();
+        ray('test');
         $this->assertCount(0, $this->client->sentPayloads());
 
-        timber()->enable();
-        timber('not test');
+        ray()->enable();
+        ray('not test');
         $this->assertCount(1, $this->client->sentPayloads());
     }
 
@@ -115,11 +115,11 @@ class TimberTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_chainable_collection_macro_to_send_things_to_timber()
+    public function it_has_a_chainable_collection_macro_to_send_things_to_ray()
     {
         $array = ['a', 'b', 'c'];
 
-        $newArray = collect($array)->timber()->toArray();
+        $newArray = collect($array)->ray()->toArray();
 
         $this->assertEquals($newArray, $array);
 

@@ -1,10 +1,10 @@
 <?php
 
-use Spatie\LaravelTimber\Timber;
+use Spatie\LaravelRay\Ray;
 
-if (! function_exists('timber')) {
-    function timber(...$args): Timber
+if (! function_exists('ray')) {
+    function ray(...$args): Ray
     {
-        return app(Timber::class)->send(...$args);
+        return app(Ray::class)->send(...$args);
     }
 }

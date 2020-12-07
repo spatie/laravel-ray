@@ -1,30 +1,30 @@
 <?php
 
-namespace Spatie\LaravelTimber;
+namespace Spatie\LaravelRay;
 
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Spatie\LaravelTimber\DumpRecorder\DumpRecorder;
-use Spatie\Timber\Client;
-use Spatie\Timber\Payloads\Payload;
+use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
+use Spatie\Ray\Client;
+use Spatie\Ray\Payloads\Payload;
 
-class TimberServiceProvider extends ServiceProvider
+class RayServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/timber.php' => config_path('timber.php'),
+                __DIR__ . '/../config/ray.php' => config_path('ray.php'),
             ], 'config');
         }
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/timber.php', 'timber');
+        $this->mergeConfigFrom(__DIR__ . '/../config/ray.php', 'ray');
 
         $this
             ->registerBindings()
@@ -37,12 +37,12 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function registerBindings(): self
     {
-        $this->app->bind(Client::class, fn () => new Client('http://localhost', config('timber.port')));
+        $this->app->bind(Client::class, fn () => new Client('http://localhost', config('ray.port')));
 
-        $this->app->bind(Timber::class, function () {
+        $this->app->bind(Ray::class, function () {
             $client = app(Client::class);
 
-            return new Timber($client);
+            return new Ray($client);
         });
 
         $this->app->singleton(QueryLogger::class, fn () => new QueryLogger());
@@ -55,21 +55,21 @@ class TimberServiceProvider extends ServiceProvider
     protected function listenForLogEvents(): self
     {
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
-            if (! config('timber.send_log_calls_to_timber')) {
+            if (! config('ray.send_log_calls_to_ray')) {
                 return $this;
             }
 
-            /** @var Timber $timber */
-            $timber = app(Timber::class);
+            /** @var Ray $ray */
+            $ray = app(Ray::class);
 
-            $timber->send($message->message);
+            $ray->send($message->message);
 
             if ($message->level === 'error') {
-                $timber->color('red');
+                $ray->color('red');
             }
 
             if ($message->level === 'warning') {
-                $timber->color('orange');
+                $ray->color('orange');
             }
         });
 
@@ -78,7 +78,7 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function listenForDumps(): self
     {
-        if (! config('timber.send_dumps_to_timber')) {
+        if (! config('ray.send_dumps_to_ray')) {
             return $this;
         }
 
@@ -89,8 +89,8 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function registerMacros(): self
     {
-        Collection::macro('timber', function () {
-            timber($this->items);
+        Collection::macro('ray', function () {
+            ray($this->items);
 
             return $this;
         });
@@ -100,8 +100,8 @@ class TimberServiceProvider extends ServiceProvider
 
     protected function registerBladeDirectives(): self
     {
-        Blade::directive('timber', function ($expression) {
-            return "<?php timber($expression); ?>";
+        Blade::directive('ray', function ($expression) {
+            return "<?php ray($expression); ?>";
         });
 
         return $this;

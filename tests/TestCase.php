@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\LaravelTimber\Tests;
+namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\LaravelTimber\Tests\TestClasses\FakeClient;
-use Spatie\LaravelTimber\Timber;
-use Spatie\LaravelTimber\TimberServiceProvider;
-use Spatie\Timber\Client;
+use Spatie\LaravelRay\Tests\TestClasses\FakeClient;
+use Spatie\LaravelRay\Ray;
+use Spatie\LaravelRay\RayServiceProvider;
+use Spatie\Ray\Client;
 
 class TestCase extends Orchestra
 {
@@ -23,15 +23,15 @@ class TestCase extends Orchestra
 
         /* $this->client = new Client(); */
 
-        $this->app->bind(Timber::class, function () {
-            return (new Timber($this->client, 'fakeUuid'));
+        $this->app->bind(Ray::class, function () {
+            return (new Ray($this->client, 'fakeUuid'));
         });
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            TimberServiceProvider::class,
+            RayServiceProvider::class,
         ];
     }
 

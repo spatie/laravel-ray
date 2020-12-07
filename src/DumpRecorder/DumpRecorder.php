@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\LaravelTimber\DumpRecorder;
+namespace Spatie\LaravelRay\DumpRecorder;
 
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
-use Spatie\LaravelTimber\Timber;
+use Spatie\LaravelRay\Ray;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper as BaseHtmlDumper;
@@ -35,7 +35,7 @@ class DumpRecorder
 
         $multiDumpHandler
             ->addHandler($this->getDefaultHandler())
-            ->addHandler(fn ($dumpedVariable) => app(Timber::class)->send($dumpedVariable));
+            ->addHandler(fn ($dumpedVariable) => app(Ray::class)->send($dumpedVariable));
 
         return $this;
     }
