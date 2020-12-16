@@ -28,7 +28,9 @@ class Ray extends BaseRay
     {
         $payload = new ModelPayload($model);
 
-        return $this->send([$payload]);
+        $this->sendRequest([$payload]);
+
+        return $this;
     }
 
     public function logQueries($callable = null): self
