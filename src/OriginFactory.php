@@ -37,7 +37,7 @@ class OriginFactory
                 return $index;
             }
 
-            if ($this->startsWith($frame['file'], __DIR__)) {
+            if (isset($frame['file']) && $this->startsWith($frame['file'], __DIR__)) {
                 return $index;
             }
         }
