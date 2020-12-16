@@ -4,6 +4,7 @@ namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Facades\DB;
 use Log;
+use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class RayTest extends TestCase
@@ -112,6 +113,16 @@ class RayTest extends TestCase
         dump('test');
 
         $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_can_send_models_to_ray()
+    {
+        $user = User::make(['email' => 'john@example.com']);
+
+        ray()->model($user);
+
+        $this->assertMatchesSnapshot($this->client->sentPayloads());
     }
 
     /** @test */

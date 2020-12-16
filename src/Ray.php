@@ -2,6 +2,8 @@
 
 namespace Spatie\LaravelRay;
 
+use Illuminate\Database\Eloquent\Model;
+use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\Ray\Ray as BaseRay;
 
 class Ray extends BaseRay
@@ -20,6 +22,13 @@ class Ray extends BaseRay
         self::$enabled = false;
 
         return $this;
+    }
+
+    public function model(Model $model): self
+    {
+        $payload = new ModelPayload($model);
+
+        return $this->send([$payload]);
     }
 
     public function logQueries($callable = null): self

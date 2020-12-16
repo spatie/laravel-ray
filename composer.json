@@ -25,7 +25,8 @@
         "illuminate/contracts": "^8.0",
         "illuminate/database": "^8.13",
         "illuminate/support": "^8.13",
-        "spatie/ray": "dev-master"
+        "spatie/ray": "dev-master",
+        "symfony/stopwatch": "^5.2"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
