@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay;
 
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\Backtrace\Backtrace;
 use Spatie\Backtrace\Frame;
@@ -38,6 +39,18 @@ class OriginFactory
                 return false;
             });
 
+        if ($frames[$indexOfRay] && $frames[$indexOfRay]->class === QueryLogger::class) {
+            return $this->findFrameForQuery($frames);
+        }
+
         return $frames[$indexOfRay + 1] ?? null;
+    }
+
+    protected function findFrameForQuery(Collection $frames): ?Frame
+    {
+        $indexOfLastDatabaseCall = $frames
+            ->search(fn(Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
+
+        return $frames[$indexOfLastDatabaseCall + 1] ?? null;
     }
 }
