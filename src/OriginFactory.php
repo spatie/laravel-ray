@@ -2,7 +2,6 @@
 
 namespace Spatie\LaravelRay;
 
-use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\Backtrace\Backtrace;
