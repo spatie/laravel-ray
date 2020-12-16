@@ -25,6 +25,7 @@
         "illuminate/contracts": "^8.0",
         "illuminate/database": "^8.13",
         "illuminate/support": "^8.13",
+        "spatie/backtrace": "^1.0",
         "spatie/ray": "dev-master",
         "symfony/stopwatch": "^5.2"
     },

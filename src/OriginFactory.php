@@ -2,6 +2,9 @@
 
 namespace Spatie\LaravelRay;
 
+use Illuminate\Support\Str;
+use Spatie\Backtrace\Backtrace;
+use Spatie\Backtrace\Frame;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
 
@@ -12,41 +15,24 @@ class OriginFactory
         $frame = $this->getFrame();
 
         return new Origin(
-            $frame['file'] ?? null,
-            $frame['line'] ?? null,
+            optional($frame)->file,
+            optional($frame)->lineNumber,
         );
     }
 
-    protected function getFrame(): ?array
+    protected function getFrame(): Frame
     {
-        $trace = array_reverse(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        return collect(Backtrace::create()->frames())
+            ->first(function(Frame $frame) {
+                if ($frame->file === 'unknown') {
+                    return false;
+                }
 
-        $frameIndex = $this->getIndexOfRayCall($trace);
+                if (Str::endsWith($frame->file, 'laravel-ray/src/helpers.php')) {
+                    return false;
+                }
 
-        if (! $frameIndex) {
-            return null;
-        }
-
-        return $trace[$frameIndex - 1] ?? null;
-    }
-
-    protected function getIndexOfRayCall(array $stackTrace): ?int
-    {
-        foreach ($stackTrace as $index => $frame) {
-            if (($frame['class'] ?? '') === Ray::class) {
-                return $index;
-            }
-
-            if ($this->startsWith($frame['file'], __DIR__)) {
-                return $index;
-            }
-        }
-
-        return null;
-    }
-
-    public function startsWith(string $hayStack, string $needle): bool
-    {
-        return strpos($hayStack, $needle) === 0;
+                return ! Str::startsWith($frame->class, ['Spatie\LaravelRay', 'Spatie\Ray']);
+            });
     }
 }
