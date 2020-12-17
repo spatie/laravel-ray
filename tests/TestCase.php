@@ -4,15 +4,14 @@ namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
 use Spatie\LaravelRay\Tests\TestClasses\FakeClient;
-use Spatie\Ray\Client;
 
 class TestCase extends Orchestra
 {
-    /* protected Client $client; */
     protected FakeClient $client;
 
     public function setUp(): void
@@ -21,11 +20,12 @@ class TestCase extends Orchestra
 
         $this->client = new FakeClient();
 
-        /* $this->client = new Client(); */
-
         $this->app->bind(Ray::class, function () {
             return (new Ray($this->client, 'fakeUuid'));
         });
+
+        View::addLocation(__DIR__ . '/resources/view');
+
     }
 
     protected function getPackageProviders($app)

@@ -3,6 +3,8 @@
 namespace Spatie\LaravelRay;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Mail\Mailable;
+use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\Ray\Ray as BaseRay;
 
@@ -24,6 +26,15 @@ class Ray extends BaseRay
         return $this;
     }
 
+    public function mailable(Mailable $mailable): self
+    {
+        $payload = new MailablePayload($mailable);
+
+        $this->sendRequest([$payload]);
+
+        return $this;
+    }
+
     public function model(Model $model): self
     {
         $payload = new ModelPayload($model);
@@ -39,10 +50,10 @@ class Ray extends BaseRay
 
         app(QueryLogger::class)->startLoggingQueries();
 
-        if (! is_null($callable)) {
+        if (!is_null($callable)) {
             $callable();
 
-            if (! $wasLoggingQueries) {
+            if (!$wasLoggingQueries) {
                 $this->stopLoggingQueries();
             }
         }
@@ -64,7 +75,7 @@ class Ray extends BaseRay
 
     public function sendRequest(array $payloads): BaseRay
     {
-        if (! static::$enabled) {
+        if (!static::$enabled) {
             return $this;
         }
 

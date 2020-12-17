@@ -4,6 +4,7 @@ namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Facades\DB;
 use Log;
+use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -133,6 +134,14 @@ class RayTest extends TestCase
         $newArray = collect($array)->ray()->toArray();
 
         $this->assertEquals($newArray, $array);
+
+        $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_can_send_the_mailable_payload()
+    {
+        ray()->mailable(new TestMailable());
 
         $this->assertCount(1, $this->client->sentPayloads());
     }
