@@ -2,6 +2,8 @@
 
 namespace Spatie\LaravelRay;
 
+use Illuminate\Events\Dispatcher;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\Backtrace\Backtrace;
@@ -40,16 +42,30 @@ class OriginFactory
                 return false;
             });
 
-        if ($frames[$indexOfRay] && $frames[$indexOfRay]->class === QueryLogger::class) {
+        /** @var Frame|null $foundFrame */
+        $foundFrame = $frames[$indexOfRay] ?? null;
+
+        /** @var Frame|null $foundFrame */
+        $oneFrameAboveFoundFrame = $frames[$indexOfRay + 1] ?? null;
+
+
+        if (! $foundFrame) {
+            return null;
+        }
+
+        if ($foundFrame->class === QueryLogger::class) {
             return $this->findFrameForQuery($frames);
         }
 
-
-        if ($frames[$indexOfRay] && $frames[$indexOfRay]->class === DumpRecorder::class) {
+        if ($foundFrame->class === DumpRecorder::class) {
             return $this->findFrameForDump($frames);
         }
 
-        return $frames[$indexOfRay + 1] ?? null;
+        if ($oneFrameAboveFoundFrame->class === Dispatcher::class) {
+            return $this->findFrameForLog($frames);
+        }
+
+        return $oneFrameAboveFoundFrame;
     }
 
     protected function findFrameForQuery(Collection $frames): ?Frame
@@ -72,5 +88,15 @@ class OriginFactory
             });
 
         return $frames[$indexOfDumpCall + 1] ?? null;
+    }
+
+    protected function findFrameForLog(Collection $frames): ?Frame
+    {
+        $indexOfLoggerCall = $frames
+            ->search(function(Frame $frame) {
+                return $frame->class === Logger::class;
+            });
+
+        return $frames[$indexOfLoggerCall + 1] ?? null;
     }
 }
