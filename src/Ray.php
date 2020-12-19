@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
+use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Ray as BaseRay;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -13,7 +14,7 @@ class Ray extends BaseRay
 {
     public static bool $enabled = true;
 
-    protected ?OutputInterface $consoleOutput;
+    protected ?OutputInterface $consoleOutput = null;
 
     public function setConsoleOutput(?OutputInterface $consoleOutput): self
     {
@@ -89,6 +90,14 @@ class Ray extends BaseRay
             return $this;
         }
 
-        return BaseRay::sendRequest($payloads);
+        $ray =  BaseRay::sendRequest($payloads);
+
+        if ($this->consoleOutput) {
+            collect($payloads)->each(function(Payload $payload) {
+                $payload->outputToConsole($this->consoleOutput);
+            });
+        }
+
+        return $ray;
     }
 }
