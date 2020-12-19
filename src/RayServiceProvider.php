@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay;
 
+use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
@@ -10,9 +11,12 @@ use Illuminate\Support\ServiceProvider;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\Payload;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class RayServiceProvider extends ServiceProvider
 {
+    protected ?OutputInterface $consoleOutput;
+
     public function boot()
     {
         if ($this->app->runningInConsole()) {
@@ -32,7 +36,8 @@ class RayServiceProvider extends ServiceProvider
             ->listenForDumps()
             ->registerMacros()
             ->registerBindings()
-            ->registerBladeDirectives();
+            ->registerBladeDirectives()
+            ->listenForEvents();
     }
 
     protected function registerBindings(): self
@@ -42,7 +47,11 @@ class RayServiceProvider extends ServiceProvider
         $this->app->bind(Ray::class, function () {
             $client = app(Client::class);
 
-            return new Ray($client);
+            $ray = new Ray($client);
+
+            $ray->setConsoleOutput($this->consoleOutput);
+
+            return $ray;
         });
 
         $this->app->singleton(QueryLogger::class, fn () => new QueryLogger());
@@ -102,6 +111,15 @@ class RayServiceProvider extends ServiceProvider
     {
         Blade::directive('ray', function ($expression) {
             return "<?php ray($expression); ?>";
+        });
+
+        return $this;
+    }
+
+    private function listenForEvents(): self
+    {
+        Event::listen(CommandStarting::class, function(CommandStarting $event) {
+            $this->consoleOutput = $event->output;
         });
 
         return $this;

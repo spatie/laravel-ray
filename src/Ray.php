@@ -7,10 +7,20 @@ use Illuminate\Mail\Mailable;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\Ray\Ray as BaseRay;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Ray extends BaseRay
 {
     public static bool $enabled = true;
+
+    protected ?OutputInterface $consoleOutput;
+
+    public function setConsoleOutput(?OutputInterface $consoleOutput): self
+    {
+        $this->consoleOutput = $consoleOutput;
+
+        return $this;
+    }
 
     public function enable(): self
     {
