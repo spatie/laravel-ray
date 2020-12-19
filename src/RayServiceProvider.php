@@ -49,6 +49,11 @@ class RayServiceProvider extends ServiceProvider
 
             $ray = new Ray($client);
 
+            if (Ray::$enabled) {
+                config('ray.enable_ray')
+                    ? $ray->enable()
+                    : $ray->disable();
+            }
             $ray->setConsoleOutput($this->consoleOutput);
 
             return $ray;

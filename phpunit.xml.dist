@@ -18,4 +18,7 @@
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
+    <php>
+        <env name="APP_DEBUG" value="true" />
+    </php>
 </phpunit>

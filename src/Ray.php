@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
+use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Ray as BaseRay;
 use Symfony\Component\Console\Output\OutputInterface;

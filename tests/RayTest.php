@@ -13,20 +13,16 @@ class RayTest extends TestCase
     use MatchesSnapshots;
 
     /** @test */
-    public function it_can_send_something_to_ray()
+    public function when_disabled_nothing_will_be_sent_to_ray()
     {
-        ray('a');
-        $this->assertMatchesSnapshot($this->client->sentPayloads());
-    }
+        config()->set(['ray.enable_ray' => false]);
 
-    /** @test */
-    public function it_will_send_logs_to_ray()
-    {
-        Log::info('hey');
+        ray('test');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentPayloads());
 
-        $this->assertMatchesSnapshot($this->client->sentPayloads());
+        // renable for next tests
+        ray()->enable();
     }
 
     /** @test */

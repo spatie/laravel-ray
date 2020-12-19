@@ -21,11 +21,18 @@ class TestCase extends Orchestra
         $this->client = new FakeClient();
 
         $this->app->bind(Ray::class, function () {
-            return (new Ray($this->client, 'fakeUuid'));
+            $ray = (new Ray($this->client, 'fakeUuid'));
+
+            if (Ray::$enabled) {
+                config('ray.enable_ray')
+                    ? $ray->enable()
+                    : $ray->disable();
+            }
+
+            return $ray;
         });
 
         View::addLocation(__DIR__ . '/resources/view');
-
     }
 
     protected function getPackageProviders($app)
