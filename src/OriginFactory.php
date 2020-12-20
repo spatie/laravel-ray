@@ -42,30 +42,31 @@ class OriginFactory
                 return false;
             });
 
-        /** @var Frame|null $foundFrame */
-        $foundFrame = $frames[$indexOfRay] ?? null;
+
+
+        /** @var Frame|null $rayFrame */
+        $rayFrame = $frames[$indexOfRay] ?? null;
 
         /** @var Frame|null $foundFrame */
-        $oneFrameAboveFoundFrame = $frames[$indexOfRay + 1] ?? null;
+        $originFrame = $frames[$indexOfRay + 2] ?? null;
 
-
-        if (! $foundFrame) {
+        if (! $rayFrame) {
             return null;
         }
 
-        if ($foundFrame->class === QueryLogger::class) {
+        if ($rayFrame->class === QueryLogger::class) {
             return $this->findFrameForQuery($frames);
         }
 
-        if ($foundFrame->class === DumpRecorder::class) {
+        if ($rayFrame->class === DumpRecorder::class) {
             return $this->findFrameForDump($frames);
         }
 
-        if ($oneFrameAboveFoundFrame->class === Dispatcher::class) {
+        if ($originFrame->class === Dispatcher::class) {
             return $this->findFrameForLog($frames);
         }
 
-        return $oneFrameAboveFoundFrame;
+        return $originFrame;
     }
 
     protected function findFrameForQuery(Collection $frames): ?Frame

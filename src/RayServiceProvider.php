@@ -42,7 +42,7 @@ class RayServiceProvider extends ServiceProvider
 
     protected function registerBindings(): self
     {
-        $this->app->bind(Client::class, fn () => new Client('http://localhost', config('ray.port')));
+        $this->app->bind(Client::class, fn () => new Client(config('ray.port')), 'http://localhost');
 
         $this->app->bind(Ray::class, function () {
             $client = app(Client::class);
