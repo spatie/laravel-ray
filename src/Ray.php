@@ -68,12 +68,19 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function showEvents(): self
+    public function showEvents($callable = null): self
     {
-        /** @var \Spatie\LaravelRay\EventLogger $eventLogger */
-        $eventLogger = app(EventLogger::class);
+        $wasLoggingEvents = $this->eventLogger()->isLoggingEvents();
 
-        $eventLogger->enable();
+        $this->eventLogger()->enable();
+
+        if ($callable) {
+            $callable();
+
+            if (! $wasLoggingEvents) {
+                $this->eventLogger()->disable();
+            }
+        }
 
         return $this;
     }
@@ -93,7 +100,7 @@ class Ray extends BaseRay
     {
         $wasLoggingQueries = $this->queryLogger()->isLoggingQueries();
 
-        app(QueryLogger::class)->startLoggingQueries();
+        $this->queryLogger()->startLoggingQueries();
 
         if (! is_null($callable)) {
             $callable();
@@ -111,6 +118,11 @@ class Ray extends BaseRay
         $this->queryLogger()->stopLoggingQueries();
 
         return $this;
+    }
+
+    protected function eventLogger(): EventLogger
+    {
+        return app(EventLogger::class);
     }
 
     protected function queryLogger(): QueryLogger

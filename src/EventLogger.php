@@ -33,6 +33,11 @@ class EventLogger
         app(Ray::class)->sendRequest([$payload]);
     }
 
+    public function isLoggingEvents(): bool
+    {
+        return $this->enabled;
+    }
+
     protected function shouldHandleEvent($event): bool
     {
         return $this->enabled;
