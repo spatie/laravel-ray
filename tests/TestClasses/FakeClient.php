@@ -10,7 +10,7 @@ class FakeClient extends Client
 {
     protected array $sentRequests = [];
 
-    public function send(Request $request)
+    public function send(Request $request): void
     {
         $requestProperties = $request->toArray();
 
