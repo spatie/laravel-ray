@@ -11,7 +11,6 @@ use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
-use Symfony\Component\VarDumper\VarDumper;
 
 class OriginFactory
 {
@@ -53,7 +52,7 @@ class OriginFactory
             $originFrame = $frames[$indexOfRay + 2] ?? null;
         }
 
-        if (!$rayFrame) {
+        if (! $rayFrame) {
             return null;
         }
 
@@ -75,7 +74,7 @@ class OriginFactory
     protected function findFrameForQuery(Collection $frames): ?Frame
     {
         $indexOfLastDatabaseCall = $frames
-            ->search(fn(Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
+            ->search(fn (Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
 
         return $frames[$indexOfLastDatabaseCall + 1] ?? null;
     }
@@ -84,7 +83,7 @@ class OriginFactory
     {
         $indexOfDumpCall = $frames
             ->search(function (Frame $frame) {
-                if (!is_null($frame->class)) {
+                if (! is_null($frame->class)) {
                     return false;
                 }
 

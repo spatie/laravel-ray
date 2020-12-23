@@ -4,8 +4,8 @@ namespace Spatie\LaravelRay\Payloads;
 
 use Exception;
 use Illuminate\Mail\Mailable;
-use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\ArgumentConvertor;
+use Spatie\Ray\Payloads\Payload;
 
 class MailablePayload extends Payload
 {
@@ -36,9 +36,6 @@ class MailablePayload extends Payload
             return $this->mailable->render();
         } catch (Exception $exception) {
             return "Mailable could not be rendered because {$exception->getMessage()}";
-
         }
     }
-
-
 }

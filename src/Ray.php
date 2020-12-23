@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
-use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Ray as BaseRay;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -62,10 +61,10 @@ class Ray extends BaseRay
 
         app(QueryLogger::class)->startLoggingQueries();
 
-        if (!is_null($callable)) {
+        if (! is_null($callable)) {
             $callable();
 
-            if (!$wasLoggingQueries) {
+            if (! $wasLoggingQueries) {
                 $this->stopLoggingQueries();
             }
         }
@@ -87,14 +86,14 @@ class Ray extends BaseRay
 
     public function sendRequest(array $payloads): BaseRay
     {
-        if (!static::$enabled) {
+        if (! static::$enabled) {
             return $this;
         }
 
-        $ray =  BaseRay::sendRequest($payloads);
+        $ray = BaseRay::sendRequest($payloads);
 
         if ($this->consoleOutput) {
-            collect($payloads)->each(function(Payload $payload) {
+            collect($payloads)->each(function (Payload $payload) {
                 $payload->outputToConsole($this->consoleOutput);
             });
         }

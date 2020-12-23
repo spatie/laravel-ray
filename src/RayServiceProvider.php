@@ -123,7 +123,7 @@ class RayServiceProvider extends ServiceProvider
 
     private function listenForEvents(): self
     {
-        Event::listen(CommandStarting::class, function(CommandStarting $event) {
+        Event::listen(CommandStarting::class, function (CommandStarting $event) {
             $this->consoleOutput = $event->output;
         });
 

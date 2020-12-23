@@ -24,7 +24,7 @@ class ModelPayload extends Payload
         return [
             'class_name' => get_class($this->model),
             'attributes' => $this->model->attributesToArray(),
-            'relations' => $this->model->relationsToArray()
+            'relations' => $this->model->relationsToArray(),
         ];
     }
 }
