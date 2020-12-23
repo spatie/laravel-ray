@@ -4,8 +4,6 @@ namespace Spatie\LaravelRay\Payloads;
 
 use Exception;
 use Illuminate\Mail\Mailable;
-use Illuminate\Support\Facades\Mail;
-use Spatie\Ray\ArgumentConvertor;
 use Spatie\Ray\Payloads\Payload;
 
 class MailablePayload extends Payload
