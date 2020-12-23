@@ -54,7 +54,7 @@ class OriginFactory
             $originFrame = $frames[$indexOfRay + 2] ?? null;
         }
 
-        if (!$rayFrame) {
+        if (! $rayFrame) {
             return null;
         }
 
@@ -76,7 +76,7 @@ class OriginFactory
     protected function findFrameForQuery(Collection $frames): ?Frame
     {
         $indexOfLastDatabaseCall = $frames
-            ->search(fn(Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
+            ->search(fn (Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
 
         return $frames[$indexOfLastDatabaseCall + 1] ?? null;
     }
@@ -85,7 +85,7 @@ class OriginFactory
     {
         $indexOfDumpCall = $frames
             ->search(function (Frame $frame) {
-                if (!is_null($frame->class)) {
+                if (! is_null($frame->class)) {
                     return false;
                 }
 
@@ -113,7 +113,7 @@ class OriginFactory
 
 
         /** @var Frame $foundFrame */
-        if($foundFrame = $frames[$indexOfEventDispatcherCall + 2]) {
+        if ($foundFrame = $frames[$indexOfEventDispatcherCall + 2]) {
             if (Str::endsWith($foundFrame->file, '/Illuminate/Foundation/Events/Dispatchable.php')) {
                 $foundFrame = $frames[$indexOfEventDispatcherCall + 3];
             }
