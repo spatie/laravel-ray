@@ -16,7 +16,7 @@ class MailablePayloadTest extends TestCase
     {
         $mailable = new TestMailable();
 
-        $payload = new MailablePayload($mailable);
+        $payload = MailablePayload::forMailable($mailable);
 
         $this->assertMatchesSnapshot($payload->getContent()['html']);
     }

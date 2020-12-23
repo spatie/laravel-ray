@@ -4,7 +4,9 @@ namespace Spatie\LaravelRay;
 
 use Illuminate\Events\Dispatcher;
 use Illuminate\Log\Logger;
+use Illuminate\Log\LogManager;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Str;
 use Spatie\Backtrace\Backtrace;
 use Spatie\Backtrace\Frame;
@@ -65,7 +67,7 @@ class OriginFactory
         }
 
         if ($originFrame->class === Dispatcher::class) {
-            return $this->findFrameForLog($frames);
+            return $this->findFrameForEvent($frames);
         }
 
         return $originFrame;
@@ -93,13 +95,28 @@ class OriginFactory
         return $frames[$indexOfDumpCall + 1] ?? null;
     }
 
-    protected function findFrameForLog(Collection $frames): ?Frame
+    protected function findFrameForEvent(Collection $frames): ?Frame
     {
         $indexOfLoggerCall = $frames
             ->search(function (Frame $frame) {
                 return $frame->class === Logger::class;
             });
 
-        return $frames[$indexOfLoggerCall + 1] ?? null;
+        /** @var Frame $foundFrame */
+        if ($foundFrame = $frames[$indexOfLoggerCall + 1]) {
+            if ($foundFrame->class === LogManager::class) {
+                $foundFrame = $frames[$indexOfLoggerCall + 2];
+
+                if ($foundFrame->class = Facade::class) {
+                    $foundFrame = $frames[$indexOfLoggerCall + 3];
+                }
+
+                if (Str::endsWith($foundFrame->file, '/Illuminate/Foundation/helpers.php')) {
+                    $foundFrame = $frames[$indexOfLoggerCall + 3];
+                }
+            }
+        }
+
+        return $foundFrame ?? null;
     }
 }

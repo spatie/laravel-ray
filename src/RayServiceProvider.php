@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\Payload;
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RayServiceProvider extends ServiceProvider
 {
-    protected ?OutputInterface $consoleOutput;
+    protected ?OutputInterface $consoleOutput = null;
 
     public function boot()
     {
@@ -69,14 +70,18 @@ class RayServiceProvider extends ServiceProvider
     protected function listenForLogEvents(): self
     {
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
+
             if (! config('ray.send_log_calls_to_ray')) {
                 return $this;
             }
 
             /** @var Ray $ray */
             $ray = app(Ray::class);
+            $concernsMailable = $this->concernsLoggedMail($message->message);
 
-            $ray->send($message->message);
+            $concernsMailable
+                ? $ray->loggedMail($message->message)
+                : $ray->send($message->message);
 
             if ($message->level === 'error') {
                 $ray->color('red');
@@ -121,12 +126,25 @@ class RayServiceProvider extends ServiceProvider
         return $this;
     }
 
-    private function listenForEvents(): self
+    protected function listenForEvents(): self
     {
         Event::listen(CommandStarting::class, function (CommandStarting $event) {
             $this->consoleOutput = $event->output;
         });
 
         return $this;
+    }
+
+    protected function concernsLoggedMail(string $message): bool
+    {
+        if (! Str::startsWith($message, 'Message-ID')) {
+            return false;
+        }
+
+        if (! Str::contains($message, '@swift.generated')) {
+            return false;
+        }
+
+        return true;
     }
 }
