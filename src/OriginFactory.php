@@ -54,7 +54,7 @@ class OriginFactory
             $originFrame = $frames[$indexOfRay + 2] ?? null;
         }
 
-        if (! $rayFrame) {
+        if (!$rayFrame) {
             return null;
         }
 
@@ -76,7 +76,7 @@ class OriginFactory
     protected function findFrameForQuery(Collection $frames): ?Frame
     {
         $indexOfLastDatabaseCall = $frames
-            ->search(fn (Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
+            ->search(fn(Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
 
         return $frames[$indexOfLastDatabaseCall + 1] ?? null;
     }
@@ -85,7 +85,7 @@ class OriginFactory
     {
         $indexOfDumpCall = $frames
             ->search(function (Frame $frame) {
-                if (! is_null($frame->class)) {
+                if (!is_null($frame->class)) {
                     return false;
                 }
 
@@ -102,6 +102,28 @@ class OriginFactory
                 return $frame->class === Logger::class;
             });
 
+        if ($indexOfLoggerCall) {
+            return $this->findFrameForLog($frames, $indexOfLoggerCall);
+        }
+
+        $indexOfEventDispatcherCall = $frames
+            ->search(function (Frame $frame) {
+                return ($frame->class === Dispatcher::class) && $frame->method === 'dispatch';
+            });
+
+
+        /** @var Frame $foundFrame */
+        if($foundFrame = $frames[$indexOfEventDispatcherCall + 2]) {
+            if (Str::endsWith($foundFrame->file, '/Illuminate/Foundation/Events/Dispatchable.php')) {
+                $foundFrame = $frames[$indexOfEventDispatcherCall + 3];
+            }
+        };
+
+        return $foundFrame ?? null;
+    }
+
+    protected function findFrameForLog(Collection $frames, int $indexOfLoggerCall): ?Frame
+    {
         /** @var Frame $foundFrame */
         if ($foundFrame = $frames[$indexOfLoggerCall + 1]) {
             if ($foundFrame->class === LogManager::class) {

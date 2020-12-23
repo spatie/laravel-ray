@@ -17,6 +17,7 @@ class Ray extends BaseRay
 
     protected ?OutputInterface $consoleOutput = null;
 
+
     public function setConsoleOutput(?OutputInterface $consoleOutput): self
     {
         $this->consoleOutput = $consoleOutput;
@@ -67,7 +68,28 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function logQueries($callable = null): self
+    public function showEvents(): self
+    {
+        /** @var \Spatie\LaravelRay\EventLogger $eventLogger */
+        $eventLogger = app(EventLogger::class);
+
+        $eventLogger->enable();
+
+        return $this;
+    }
+
+    public function stopShowingEvents(): self
+    {
+        /** @var \Spatie\LaravelRay\EventLogger $eventLogger */
+        $eventLogger = app(EventLogger::class);
+
+        $eventLogger->disable();
+
+        return $this;
+    }
+
+
+    public function showQueries($callable = null): self
     {
         $wasLoggingQueries = $this->queryLogger()->isLoggingQueries();
 
@@ -77,14 +99,14 @@ class Ray extends BaseRay
             $callable();
 
             if (! $wasLoggingQueries) {
-                $this->stopLoggingQueries();
+                $this->stopShowingQueries();
             }
         }
 
         return $this;
     }
 
-    public function stopLoggingQueries(): self
+    public function stopShowingQueries(): self
     {
         $this->queryLogger()->stopLoggingQueries();
 

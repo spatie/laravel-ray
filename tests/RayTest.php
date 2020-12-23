@@ -46,7 +46,7 @@ class RayTest extends TestCase
     /** @test */
     public function it_can_start_logging_queries()
     {
-        ray()->logQueries();
+        ray()->showQueries();
 
         DB::table('users')->get('id');
 
@@ -56,13 +56,13 @@ class RayTest extends TestCase
     /** @test */
     public function it_can_stop_logging_queries()
     {
-        ray()->logQueries();
+        ray()->showQueries();
 
         DB::table('users')->get('id');
         DB::table('users')->get('id');
         $this->assertCount(2, $this->client->sentPayloads());
 
-        ray()->stopLoggingQueries();
+        ray()->stopShowingQueries();
         DB::table('users')->get('id');
         $this->assertCount(2, $this->client->sentPayloads());
     }
@@ -70,8 +70,8 @@ class RayTest extends TestCase
     /** @test */
     public function calling_log_queries_twice_will_not_log_all_queries_twice()
     {
-        ray()->logQueries();
-        ray()->logQueries();
+        ray()->showQueries();
+        ray()->showQueries();
 
         DB::table('users')->get('id');
 
@@ -81,7 +81,7 @@ class RayTest extends TestCase
     /** @test */
     public function it_can_log_all_queries_in_a_callable()
     {
-        ray()->logQueries(function () {
+        ray()->showQueries(function () {
             // will be logged
             DB::table('users')->where('id', 1)->get();
         });

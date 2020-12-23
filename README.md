@@ -95,19 +95,19 @@ foreach (range(1, 3) as $i) {
 You can send all queries to Ray using `logQueries`.
 
 ````php
-ray()->logQueries(); // all queries after this call will be sent to Ray
+ray()->showQueries(); // all queries after this call will be sent to Ray
 ````
 
 If you wish to stop logging queries, call `stopLoggingQueries`.
 
 ````php
-ray()->stopLoggingQueries(); // all queries after this call will not be sent to Ray anymore
+ray()->stopShowingQueries(); // all queries after this call will not be sent to Ray anymore
 ````
 
 Alternatively to manually starting and stopping listening for queries, you can also pass a closure to `logQueries`. Only the queries executed inside the closure will be sent to Ray.
 
 ````php
-ray()->logQueries(function() {
+ray()->showQueries(function() {
     $this->mailAllUsers(); // all queries executed in this closure will be sent to Ray
 }); 
 

@@ -64,13 +64,14 @@ class RayServiceProvider extends ServiceProvider
 
         Payload::$originFactoryClass = OriginFactory::class;
 
+        $this->app->singleton(EventLogger::class, fn() => new EventLogger());
+
         return $this;
     }
 
     protected function listenForLogEvents(): self
     {
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
-
             if (! config('ray.send_log_calls_to_ray')) {
                 return $this;
             }
@@ -128,12 +129,21 @@ class RayServiceProvider extends ServiceProvider
 
     protected function listenForEvents(): self
     {
+        Event::listen('*', function(string $event, array $arguments) {
+            /** @var \Spatie\LaravelRay\EventLogger $eventLogger */
+            $eventLogger = app(EventLogger::class);
+
+            $eventLogger->handleEvent($event, $arguments);
+        });
+
         Event::listen(CommandStarting::class, function (CommandStarting $event) {
             $this->consoleOutput = $event->output;
         });
 
         return $this;
     }
+
+
 
     protected function concernsLoggedMail(string $message): bool
     {
