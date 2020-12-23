@@ -17,7 +17,6 @@ class Ray extends BaseRay
 
     protected ?OutputInterface $consoleOutput = null;
 
-
     public function setConsoleOutput(?OutputInterface $consoleOutput): self
     {
         $this->consoleOutput = $consoleOutput;
@@ -94,7 +93,6 @@ class Ray extends BaseRay
 
         return $this;
     }
-
 
     public function showQueries($callable = null): self
     {
