@@ -70,7 +70,6 @@ class RayServiceProvider extends ServiceProvider
     protected function listenForLogEvents(): self
     {
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
-
             if (! config('ray.send_log_calls_to_ray')) {
                 return $this;
             }
