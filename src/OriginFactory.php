@@ -43,14 +43,17 @@ class OriginFactory
             });
 
 
-
         /** @var Frame|null $rayFrame */
         $rayFrame = $frames[$indexOfRay] ?? null;
 
         /** @var Frame|null $foundFrame */
-        $originFrame = $frames[$indexOfRay + 2] ?? null;
+        $originFrame = $frames[$indexOfRay + 1] ?? null;
 
-        if (! $rayFrame) {
+        if ($originFrame && Str::endsWith($originFrame->file, 'ray/src/helpers.php')) {
+            $originFrame = $frames[$indexOfRay + 2] ?? null;
+        }
+
+        if (!$rayFrame) {
             return null;
         }
 
@@ -80,8 +83,8 @@ class OriginFactory
     protected function findFrameForDump(Collection $frames): ?Frame
     {
         $indexOfDumpCall = $frames
-            ->search(function(Frame $frame) {
-                if (! is_null($frame->class)) {
+            ->search(function (Frame $frame) {
+                if (!is_null($frame->class)) {
                     return false;
                 }
 
@@ -94,7 +97,7 @@ class OriginFactory
     protected function findFrameForLog(Collection $frames): ?Frame
     {
         $indexOfLoggerCall = $frames
-            ->search(function(Frame $frame) {
+            ->search(function (Frame $frame) {
                 return $frame->class === Logger::class;
             });
 
