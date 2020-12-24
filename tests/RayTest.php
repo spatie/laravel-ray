@@ -191,7 +191,7 @@ class RayTest extends TestCase
     {
         event('start event');
 
-        ray()->showEvents(function() {
+        ray()->showEvents(function () {
             event('event in callable');
         });
 
