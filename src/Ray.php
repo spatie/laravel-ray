@@ -128,13 +128,17 @@ class Ray extends BaseRay
         return app(QueryLogger::class);
     }
 
-    public function sendRequest(array $payloads): BaseRay
+    public function sendRequest(array $payloads, array $meta = []): BaseRay
     {
         if (! static::$enabled) {
             return $this;
         }
 
-        $ray = BaseRay::sendRequest($payloads);
+        $meta = [
+            'laravel_version' => app()->version(),
+        ];
+
+        $ray = BaseRay::sendRequest($payloads, $meta);
 
         if ($this->consoleOutput) {
             collect($payloads)->each(function (Payload $payload) {
