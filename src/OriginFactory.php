@@ -58,6 +58,10 @@ class OriginFactory
             return null;
         }
 
+        if ($rayFrame->class === Collection::class && Str::startsWith($rayFrame->method, 'Spatie\LaravelRay')) {
+            return $this->findFrameForCollectionMacro($frames, $indexOfRay);
+        }
+
         if ($rayFrame->class === QueryLogger::class) {
             return $this->findFrameForQuery($frames);
         }
@@ -71,6 +75,11 @@ class OriginFactory
         }
 
         return $originFrame;
+    }
+
+    protected function findFrameForCollectionMacro(Collection $frames, int $indexOfFoundFrame): ?Frame
+    {
+        return $frames[$indexOfFoundFrame + 2];
     }
 
     protected function findFrameForQuery(Collection $frames): ?Frame
