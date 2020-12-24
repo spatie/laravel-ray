@@ -110,7 +110,6 @@ class RayServiceProvider extends ServiceProvider
     protected function registerMacros(): self
     {
         Collection::macro('ray', function (string $description = '') {
-
             $description === ''
                 ? ray($this->items)
                 : ray($description, $this->items);
