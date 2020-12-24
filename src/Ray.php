@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay;
 
+use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Str;
@@ -137,6 +138,10 @@ class Ray extends BaseRay
         $meta = [
             'laravel_version' => app()->version(),
         ];
+
+        if (class_exists(InstalledVersions::class)) {
+            $meta['laravel_ray_package_version'] = InstalledVersions::getVersion('spatie/laravel-ray');
+        }
 
         $ray = BaseRay::sendRequest($payloads, $meta);
 
