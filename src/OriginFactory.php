@@ -74,6 +74,12 @@ class OriginFactory
             return $this->findFrameForEvent($frames);
         }
 
+        if (Str::contains($originFrame->file, 'storage' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR. 'views')) {
+            return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
+        }
+
+        var_dump($originFrame);
+
         return $originFrame;
     }
 
@@ -149,5 +155,25 @@ class OriginFactory
         }
 
         return $foundFrame ?? null;
+    }
+
+    protected function replaceCompiledViewPathWithOriginalViewPath(Frame $frame): Frame
+    {
+        if (! file_exists($frame->file)) {
+            return $frame;
+        }
+
+        $fileContents = file_get_contents($frame->file);
+
+        $originalViewPath = trim(Str::between($fileContents, '/**PATH', 'ENDPATH**/'));
+
+        if (! file_exists($originalViewPath)) {
+            return $frame;
+        }
+
+        $frame->file = $originalViewPath;
+        $frame->lineNumber = 1;
+
+        return $frame;
     }
 }
