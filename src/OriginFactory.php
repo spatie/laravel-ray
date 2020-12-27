@@ -74,7 +74,11 @@ class OriginFactory
             return $this->findFrameForEvent($frames);
         }
 
-        if (Str::contains($originFrame->file, 'storage' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR. 'views')) {
+        if (Str::endsWith($originFrame->file, '/vendor/psy/psysh/src/ExecutionLoopClosure.php')) {
+            $this->returnTinkerFrame();
+        }
+
+        if (Str::startsWith($originFrame->file, storage_path('views'))) {
             return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
         }
 
