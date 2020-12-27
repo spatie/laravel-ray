@@ -22,7 +22,7 @@ class ModelPayload extends Payload
 
     public function getContent(): array
     {
-        $content =  [
+        $content = [
             'class_name' => get_class($this->model),
             'attributes' => ArgumentConvertor::convertToPrimitive($this->model->attributesToArray()),
 
