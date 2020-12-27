@@ -82,8 +82,6 @@ class OriginFactory
             return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
         }
 
-        var_dump($originFrame);
-
         return $originFrame;
     }
 
