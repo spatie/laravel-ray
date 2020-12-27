@@ -121,7 +121,7 @@ class RayTest extends TestCase
 
         ray()->model($user);
 
-        $this->assertMatchesSnapshot($this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentPayloads());
     }
 
     /** @test */
