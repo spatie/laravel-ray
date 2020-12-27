@@ -24,6 +24,10 @@ class FakeClient extends Client
             if (isset($payload['content']['values'])) {
                 $payload['content']['values'] = preg_replace('/sf-dump-[0-9]{1,10}/', 'sf-dump-xxxxxxxxxx', $payload['content']['values']);
             }
+
+            if (isset($payload['content']['attributes'])) {
+                $payload['content']['attributes'] = preg_replace('/sf-dump-[0-9]{1,10}/', 'sf-dump-xxxxxxxxxx', $payload['content']['attributes']);
+            }
         }
 
         $requestProperties['meta'] = [];
