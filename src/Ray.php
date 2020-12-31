@@ -8,22 +8,11 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Support\Str;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
-use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Ray as BaseRay;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class Ray extends BaseRay
 {
     public static bool $enabled = true;
-
-    protected ?OutputInterface $consoleOutput = null;
-
-    public function setConsoleOutput(?OutputInterface $consoleOutput): self
-    {
-        $this->consoleOutput = $consoleOutput;
-
-        return $this;
-    }
 
     public function enable(): self
     {
@@ -143,14 +132,6 @@ class Ray extends BaseRay
             $meta['laravel_ray_package_version'] = InstalledVersions::getVersion('spatie/laravel-ray');
         }
 
-        $ray = BaseRay::sendRequest($payloads, $meta);
-
-        if ($this->consoleOutput) {
-            collect($payloads)->each(function (Payload $payload) {
-                $payload->outputToConsole($this->consoleOutput);
-            });
-        }
-
-        return $ray;
+        return BaseRay::sendRequest($payloads, $meta);
     }
 }

@@ -12,26 +12,16 @@ use Illuminate\Support\Str;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\Payload;
+use Spatie\Ray\Settings\Settings;
+use Spatie\Ray\Settings\SettingsFactory;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RayServiceProvider extends ServiceProvider
 {
-    protected ?OutputInterface $consoleOutput = null;
-
-    public function boot()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../config/ray.php' => config_path('ray.php'),
-            ], 'config');
-        }
-    }
-
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/ray.php', 'ray');
-
         $this
+            ->registerSettings()
             ->registerBindings()
             ->listenForLogEvents()
             ->listenForDumps()
@@ -41,30 +31,46 @@ class RayServiceProvider extends ServiceProvider
             ->listenForEvents();
     }
 
+    protected function registerSettings(): self
+    {
+        $this->app->singleton(Settings::class, function () {
+            $settings = SettingsFactory::createFromConfigFile();
+
+            return $settings->setDefaultSettings([
+                'enable' => !app()->environment('production'),
+                'send_log_calls_to_ray' => true,
+                'send_dumps_to_ray' => true,
+            ]);
+        });
+
+        return $this;
+    }
+
     protected function registerBindings(): self
     {
-        $this->app->bind(Client::class, fn () => new Client(config('ray.port')), 'http://localhost');
+        $settings = app(Settings::class);
+
+        $this->app->bind(Client::class, fn() => new Client($settings->port), $settings->base_url);
 
         $this->app->bind(Ray::class, function () {
             $client = app(Client::class);
 
-            $ray = new Ray($client);
+            $settings = app(Settings::class);
 
-            if (Ray::$enabled) {
-                config('ray.enable_ray')
-                    ? $ray->enable()
-                    : $ray->disable();
+            $ray = new Ray($settings, $client);
+
+            if (!$settings->enable) {
+                $ray->disable();
             }
-            $ray->setConsoleOutput($this->consoleOutput);
 
             return $ray;
         });
 
-        $this->app->singleton(QueryLogger::class, fn () => new QueryLogger());
+        $this->app->singleton(QueryLogger::class, fn() => new QueryLogger());
 
         Payload::$originFactoryClass = OriginFactory::class;
 
-        $this->app->singleton(EventLogger::class, fn () => new EventLogger());
+        $this->app->singleton(EventLogger::class, fn() => new EventLogger());
 
         return $this;
     }
@@ -72,12 +78,14 @@ class RayServiceProvider extends ServiceProvider
     protected function listenForLogEvents(): self
     {
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
-            if (! config('ray.send_log_calls_to_ray')) {
-                return $this;
-            }
 
             /** @var Ray $ray */
             $ray = app(Ray::class);
+
+            if (!$ray->settings->send_log_calls_to_ray) {
+                return $this;
+            }
+
             $concernsMailable = $this->concernsLoggedMail($message->message);
 
             $concernsMailable
@@ -98,7 +106,9 @@ class RayServiceProvider extends ServiceProvider
 
     protected function listenForDumps(): self
     {
-        if (! config('ray.send_dumps_to_ray')) {
+        $settings = app(Settings::class);
+
+        if (!$settings->send_dumps_to_ray) {
             return $this;
         }
 
@@ -147,11 +157,11 @@ class RayServiceProvider extends ServiceProvider
 
     protected function concernsLoggedMail(string $message): bool
     {
-        if (! Str::startsWith($message, 'Message-ID')) {
+        if (!Str::startsWith($message, 'Message-ID')) {
             return false;
         }
 
-        if (! Str::contains($message, '@swift.generated')) {
+        if (!Str::contains($message, '@swift.generated')) {
             return false;
         }
 

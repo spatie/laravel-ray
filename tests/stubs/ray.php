@@ -3,14 +3,9 @@
 return [
     /*
      *  By default, this package will only try to transmit info to Ray
-     *  when APP_DEBUG is set to `true`.
+     *  when the environment is not production.
      */
-    'enable_ray' => (bool) env('APP_DEBUG', false),
-
-    /*
-     * The port number to communicate with Ray.
-     */
-    'port' => 23517,
+    'enable' =>
 
     /*
      * When enabled, all things logged to the application log

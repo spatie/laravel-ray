@@ -9,6 +9,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
 use Spatie\LaravelRay\Tests\TestClasses\FakeClient;
+use Spatie\Ray\Settings\Settings;
 
 class TestCase extends Orchestra
 {
@@ -21,12 +22,12 @@ class TestCase extends Orchestra
         $this->client = new FakeClient();
 
         $this->app->bind(Ray::class, function () {
-            $ray = (new Ray($this->client, 'fakeUuid'));
+            $settings = app(Settings::class);
 
-            if (Ray::$enabled) {
-                config('ray.enable_ray')
-                    ? $ray->enable()
-                    : $ray->disable();
+            $ray = new Ray($settings, $this->client, 'fakeUuid');
+
+            if (!$settings->enable) {
+                $ray->disable();
             }
 
             return $ray;

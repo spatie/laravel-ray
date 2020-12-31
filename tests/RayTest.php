@@ -8,6 +8,7 @@ use Log;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
+use Spatie\Ray\Settings\Settings;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class RayTest extends TestCase
@@ -17,20 +18,28 @@ class RayTest extends TestCase
     /** @test */
     public function when_disabled_nothing_will_be_sent_to_ray()
     {
-        config()->set(['ray.enable_ray' => false]);
+        app(Settings::class)->enable = false;
 
         ray('test');
 
-        $this->assertCount(0, $this->client->sentPayloads());
-
         // re-enable for next tests
         ray()->enable();
+
+        $this->assertCount(0, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_will_send_logs_to_ray_by_default()
+    {
+        Log::info('hey');
+
+        $this->assertCount(1, $this->client->sentPayloads());
     }
 
     /** @test */
     public function it_will_not_send_logs_to_ray_when_disabled()
     {
-        config()->set(['ray.send_log_calls_to_ray' => false]);
+        app(Settings::class)->send_log_calls_to_ray = false;
 
         Log::info('hey');
 
