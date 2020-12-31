@@ -14,7 +14,6 @@ use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Settings\Settings;
 use Spatie\Ray\Settings\SettingsFactory;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class RayServiceProvider extends ServiceProvider
 {
@@ -37,7 +36,7 @@ class RayServiceProvider extends ServiceProvider
             $settings = SettingsFactory::createFromConfigFile();
 
             return $settings->setDefaultSettings([
-                'enable' => !app()->environment('production'),
+                'enable' => ! app()->environment('production'),
                 'send_log_calls_to_ray' => true,
                 'send_dumps_to_ray' => true,
             ]);
@@ -50,7 +49,7 @@ class RayServiceProvider extends ServiceProvider
     {
         $settings = app(Settings::class);
 
-        $this->app->bind(Client::class, fn() => new Client($settings->port), $settings->base_url);
+        $this->app->bind(Client::class, fn () => new Client($settings->port), $settings->base_url);
 
         $this->app->bind(Ray::class, function () {
             $client = app(Client::class);
@@ -59,18 +58,18 @@ class RayServiceProvider extends ServiceProvider
 
             $ray = new Ray($settings, $client);
 
-            if (!$settings->enable) {
+            if (! $settings->enable) {
                 $ray->disable();
             }
 
             return $ray;
         });
 
-        $this->app->singleton(QueryLogger::class, fn() => new QueryLogger());
+        $this->app->singleton(QueryLogger::class, fn () => new QueryLogger());
 
         Payload::$originFactoryClass = OriginFactory::class;
 
-        $this->app->singleton(EventLogger::class, fn() => new EventLogger());
+        $this->app->singleton(EventLogger::class, fn () => new EventLogger());
 
         return $this;
     }
@@ -82,7 +81,7 @@ class RayServiceProvider extends ServiceProvider
             /** @var Ray $ray */
             $ray = app(Ray::class);
 
-            if (!$ray->settings->send_log_calls_to_ray) {
+            if (! $ray->settings->send_log_calls_to_ray) {
                 return $this;
             }
 
@@ -108,7 +107,7 @@ class RayServiceProvider extends ServiceProvider
     {
         $settings = app(Settings::class);
 
-        if (!$settings->send_dumps_to_ray) {
+        if (! $settings->send_dumps_to_ray) {
             return $this;
         }
 
@@ -157,11 +156,11 @@ class RayServiceProvider extends ServiceProvider
 
     protected function concernsLoggedMail(string $message): bool
     {
-        if (!Str::startsWith($message, 'Message-ID')) {
+        if (! Str::startsWith($message, 'Message-ID')) {
             return false;
         }
 
-        if (!Str::contains($message, '@swift.generated')) {
+        if (! Str::contains($message, '@swift.generated')) {
             return false;
         }
 

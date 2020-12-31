@@ -26,7 +26,7 @@ class TestCase extends Orchestra
 
             $ray = new Ray($settings, $this->client, 'fakeUuid');
 
-            if (!$settings->enable) {
+            if (! $settings->enable) {
                 $ray->disable();
             }
 
