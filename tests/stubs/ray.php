@@ -5,7 +5,7 @@ return [
      *  By default, this package will only try to transmit info to Ray
      *  when the environment is not production.
      */
-    'enable' =>
+    'enable' => true,
 
     /*
      * When enabled, all things logged to the application log
