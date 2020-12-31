@@ -49,7 +49,7 @@ class RayServiceProvider extends ServiceProvider
     {
         $settings = app(Settings::class);
 
-        $this->app->bind(Client::class, fn() => new Client($settings->port), $settings->host);
+        $this->app->bind(Client::class, fn () => new Client($settings->port), $settings->host);
 
         $this->app->bind(Ray::class, function () {
             $client = app(Client::class);
