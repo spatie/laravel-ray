@@ -11,6 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Client;
+use Spatie\Ray\Payloads\ApplicationLogPayload;
 use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Settings\Settings;
 use Spatie\Ray\Settings\SettingsFactory;
@@ -90,7 +91,7 @@ class RayServiceProvider extends ServiceProvider
             if ($concernsMailable) {
                 $ray->loggedMail($message->message);
 
-                return;
+                return $this;
             }
 
             $payload = new ApplicationLogPayload($message->message);
