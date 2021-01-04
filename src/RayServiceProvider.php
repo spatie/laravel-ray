@@ -87,9 +87,15 @@ class RayServiceProvider extends ServiceProvider
 
             $concernsMailable = $this->concernsLoggedMail($message->message);
 
-            $concernsMailable
-                ? $ray->loggedMail($message->message)
-                : $ray->send($message->message);
+            if ($concernsMailable) {
+                $ray->loggedMail($message->message);
+
+                return;
+            }
+
+            $payload = new ApplicationLogPayload($message->message);
+
+            $ray->sendRequest($payload);
 
             if ($message->level === 'error') {
                 $ray->color('red');
