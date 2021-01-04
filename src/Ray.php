@@ -34,7 +34,7 @@ class Ray extends BaseRay
 
         $payload = new MailablePayload($html);
 
-        $this->sendRequest([$payload]);
+        $this->sendRequest($payload);
 
         return $this;
     }
@@ -43,7 +43,7 @@ class Ray extends BaseRay
     {
         $payload = MailablePayload::forMailable($mailable);
 
-        $this->sendRequest([$payload]);
+        $this->sendRequest($payload);
 
         return $this;
     }
@@ -52,7 +52,7 @@ class Ray extends BaseRay
     {
         $payload = new ModelPayload($model);
 
-        $this->sendRequest([$payload]);
+        $this->sendRequest($payload);
 
         return $this;
     }
@@ -118,7 +118,14 @@ class Ray extends BaseRay
         return app(QueryLogger::class);
     }
 
-    public function sendRequest(array $payloads, array $meta = []): BaseRay
+    /**
+     * @param \Spatie\Ray\Payloads\Payload|\Spatie\Ray\Payloads\Payload[] $payloads
+     * @param array $meta
+     *
+     * @return \Spatie\Ray\Ray
+     * @throws \Exception
+     */
+    public function sendRequest($payloads, array $meta = []): BaseRay
     {
         if (! static::$enabled) {
             return $this;

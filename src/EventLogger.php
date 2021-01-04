@@ -30,7 +30,7 @@ class EventLogger
 
         $payload = new EventPayload($eventName, $arguments);
 
-        app(Ray::class)->sendRequest([$payload]);
+        app(Ray::class)->sendRequest($payload);
     }
 
     public function isLoggingEvents(): bool

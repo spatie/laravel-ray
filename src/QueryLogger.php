@@ -28,7 +28,7 @@ class QueryLogger
                 if ($this->listenForQueries) {
                     $payload = new ExecutedQueryPayload($query);
 
-                    app(Ray::class)->sendRequest([$payload]);
+                    app(Ray::class)->sendRequest($payload);
                 }
             });
 
