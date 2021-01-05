@@ -43,6 +43,7 @@ class MailablePayload extends Payload
             $content = array_merge($content, [
                 'mailable_class' => get_class($this->mailable),
                 'from' => $this->convertToPersons($this->mailable->from),
+                'subject' => $this->mailable->subject,
                 'to' => $this->convertToPersons($this->mailable->to),
                 'cc' => $this->convertToPersons($this->mailable->cc),
                 'bcc' => $this->convertToPersons($this->mailable->bcc),
