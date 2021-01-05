@@ -2,7 +2,7 @@
 
 namespace Spatie\LaravelRay\Payloads;
 
-use Spatie\Ray\ArgumentConvertor;
+use Spatie\Ray\ArgumentConverter;
 use Spatie\Ray\Payloads\Payload;
 
 class EventPayload extends Payload
@@ -29,8 +29,8 @@ class EventPayload extends Payload
     {
         return [
             'name' => $this->eventName,
-            'event' => ArgumentConvertor::convertToPrimitive($this->event),
-            'payload' => ArgumentConvertor::convertToPrimitive($this->payload),
+            'event' => ArgumentConverter::convertToPrimitive($this->event),
+            'payload' => ArgumentConverter::convertToPrimitive($this->payload),
             'class_based_event' => ! is_null($this->event),
         ];
     }

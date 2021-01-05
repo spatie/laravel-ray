@@ -3,7 +3,7 @@
 namespace Spatie\LaravelRay\Payloads;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Ray\ArgumentConvertor;
+use Spatie\Ray\ArgumentConverter;
 use Spatie\Ray\Payloads\Payload;
 
 class ModelPayload extends Payload
@@ -24,13 +24,13 @@ class ModelPayload extends Payload
     {
         $content = [
             'class_name' => get_class($this->model),
-            'attributes' => ArgumentConvertor::convertToPrimitive($this->model->attributesToArray()),
+            'attributes' => ArgumentConverter::convertToPrimitive($this->model->attributesToArray()),
         ];
 
         $relations = $this->model->relationsToArray();
 
         if (count($relations)) {
-            $content['relations'] = ArgumentConvertor::convertToPrimitive($relations);
+            $content['relations'] = ArgumentConverter::convertToPrimitive($relations);
         }
 
         return $content;
