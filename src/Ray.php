@@ -48,7 +48,7 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function model(Model $model): self
+    public function model(?Model $model): self
     {
         $payload = new ModelPayload($model);
 

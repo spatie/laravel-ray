@@ -8,9 +8,9 @@ use Spatie\Ray\Payloads\Payload;
 
 class ModelPayload extends Payload
 {
-    protected Model $model;
+    protected ?Model $model;
 
-    public function __construct(Model $model)
+    public function __construct(?Model $model)
     {
         $this->model = $model;
     }
@@ -22,8 +22,12 @@ class ModelPayload extends Payload
 
     public function getContent(): array
     {
+        if (! $this->model) {
+            return [];
+        }
+
         $content = [
-            'class_name' => get_class($this->model),
+            'class_name' => $this->model ?? 'Model not found',
             'attributes' => ArgumentConverter::convertToPrimitive($this->model->attributesToArray()),
         ];
 
