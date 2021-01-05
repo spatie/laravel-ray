@@ -66,7 +66,7 @@ class Ray extends BaseRay
         if ($callable) {
             $callable();
 
-            if (!$wasLoggingEvents) {
+            if (! $wasLoggingEvents) {
                 $this->eventLogger()->disable();
             }
         }
