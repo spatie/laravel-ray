@@ -66,12 +66,17 @@ class Ray extends BaseRay
         if ($callable) {
             $callable();
 
-            if (! $wasLoggingEvents) {
+            if (!$wasLoggingEvents) {
                 $this->eventLogger()->disable();
             }
         }
 
         return $this;
+    }
+
+    public function events($callable = null): self
+    {
+        return $this->showEvents($callable);
     }
 
     public function stopShowingEvents(): self
@@ -99,6 +104,11 @@ class Ray extends BaseRay
         }
 
         return $this;
+    }
+
+    public function queries($callable = null): self
+    {
+        $this->showQueries($callable);
     }
 
     public function stopShowingQueries(): self
