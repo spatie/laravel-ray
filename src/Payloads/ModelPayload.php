@@ -27,7 +27,7 @@ class ModelPayload extends Payload
         }
 
         $content = [
-            'class_name' => $this->model ?? 'Model not found',
+            'class_name' => get_class($this->model),
             'attributes' => ArgumentConverter::convertToPrimitive($this->model->attributesToArray()),
         ];
 
