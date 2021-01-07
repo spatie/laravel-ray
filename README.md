@@ -6,8 +6,6 @@
 
 This package can be installed in a Laravel application to send messages to [the Ray app](https://myray.app).
 
-![screenshot]()
-
 ## Documentation
 
 You can find the full documentation on [our documentation site](https://spatie.be/docs/ray).
