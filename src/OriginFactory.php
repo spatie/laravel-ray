@@ -49,7 +49,7 @@ class OriginFactory
         /** @var Frame|null $foundFrame */
         $originFrame = $frames[$indexOfRay + 1] ?? null;
 
-        if ($originFrame && Str::endsWith($originFrame->file, 'ray/src/helpers.php')) {
+        if ($originFrame && Str::endsWith($originFrame->file, Ray::makePathOsSafe('ray/src/helpers.php'))) {
             $originFrame = $frames[$indexOfRay + 2] ?? null;
         }
 
@@ -73,7 +73,7 @@ class OriginFactory
             return $this->findFrameForEvent($frames);
         }
 
-        if (Str::endsWith($originFrame->file, '/vendor/psy/psysh/src/ExecutionLoopClosure.php')) {
+        if (Str::endsWith($originFrame->file, Ray::makePathOsSafe('/vendor/psy/psysh/src/ExecutionLoopClosure.php'))) {
             $this->returnTinkerFrame();
         }
 
@@ -130,7 +130,7 @@ class OriginFactory
 
         /** @var Frame $foundFrame */
         if ($foundFrame = $frames[$indexOfEventDispatcherCall + 2]) {
-            if (Str::endsWith($foundFrame->file, '/Illuminate/Foundation/Events/Dispatchable.php')) {
+            if (Str::endsWith($foundFrame->file, Ray::makePathOsSafe('/Illuminate/Foundation/Events/Dispatchable.php'))) {
                 $foundFrame = $frames[$indexOfEventDispatcherCall + 3];
             }
         };
@@ -149,7 +149,7 @@ class OriginFactory
                     $foundFrame = $frames[$indexOfLoggerCall + 3];
                 }
 
-                if (Str::endsWith($foundFrame->file, '/Illuminate/Foundation/helpers.php')) {
+                if (Str::endsWith($foundFrame->file, Ray::makePathOsSafe('/Illuminate/Foundation/helpers.php'))) {
                     $foundFrame = $frames[$indexOfLoggerCall + 3];
                 }
             }
