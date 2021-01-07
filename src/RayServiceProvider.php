@@ -34,7 +34,7 @@ class RayServiceProvider extends ServiceProvider
     protected function registerSettings(): self
     {
         $this->app->singleton(Settings::class, function () {
-            $settings = SettingsFactory::createFromConfigFile();
+            $settings = SettingsFactory::createFromConfigFile($this->app->configPath());
 
             return $settings->setDefaultSettings([
                 'enable' => ! app()->environment('production'),
@@ -138,9 +138,11 @@ class RayServiceProvider extends ServiceProvider
 
     protected function registerBladeDirectives(): self
     {
-        Blade::directive('ray', function ($expression) {
-            return "<?php ray($expression); ?>";
-        });
+        if ($this->app->has('blade.compiler')) {
+            Blade::directive('ray', function ($expression) {
+                return "<?php ray($expression); ?>";
+            });
+        }
 
         return $this;
     }
