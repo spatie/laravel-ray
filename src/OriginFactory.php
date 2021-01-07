@@ -43,7 +43,6 @@ class OriginFactory
                 return false;
             });
 
-
         /** @var Frame|null $rayFrame */
         $rayFrame = $frames[$indexOfRay] ?? null;
 
@@ -78,7 +77,7 @@ class OriginFactory
             $this->returnTinkerFrame();
         }
 
-        if (Str::startsWith($originFrame->file, storage_path('views'))) {
+        if (Str::startsWith($originFrame->file, storage_path('framework/views'))) {
             return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
         }
 
