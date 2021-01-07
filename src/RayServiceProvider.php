@@ -138,11 +138,13 @@ class RayServiceProvider extends ServiceProvider
 
     protected function registerBladeDirectives(): self
     {
-        if ($this->app->has('blade.compiler')) {
-            Blade::directive('ray', function ($expression) {
-                return "<?php ray($expression); ?>";
-            });
+        if (! $this->app->has('blade.compiler')) {
+            return $this;
         }
+        
+        Blade::directive('ray', function ($expression) {
+           return "<?php ray($expression); ?>";
+        });
 
         return $this;
     }
