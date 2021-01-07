@@ -49,7 +49,7 @@ class OriginFactory
         /** @var Frame|null $foundFrame */
         $originFrame = $frames[$indexOfRay + 1] ?? null;
 
-        if ($originFrame && Str::endsWith($originFrame->file, 'ray/src/helpers.php')) {
+        if ($originFrame && Str::endsWith($originFrame->file, ['ray/src/helpers.php', 'ray\src\helpers.php'])) {
             $originFrame = $frames[$indexOfRay + 2] ?? null;
         }
 
