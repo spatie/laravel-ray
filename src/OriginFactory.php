@@ -127,6 +127,7 @@ class OriginFactory
                 return ($frame->class === Dispatcher::class) && $frame->method === 'dispatch';
             });
 
+
         /** @var Frame $foundFrame */
         if ($foundFrame = $frames[$indexOfEventDispatcherCall + 2]) {
             if (Str::endsWith($foundFrame->file, join(DIRECTORY_SEPARATOR, array('Illuminate', 'Foundation', 'Events', 'Dispatchable.php')))) {
