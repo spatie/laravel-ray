@@ -1,7 +1,7 @@
 # Debug with Ray to fix problems faster
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-ray.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-ray)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-ray/run-tests?label=tests)](https://github.com/spatie/laravel-ray/actions?query=workflow%3Arun-tests+branch%3Amaster)
+![Tests](https://github.com/spatie/laravel-ray/workflows/Tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-ray.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-ray)
 
 This package can be installed in a Laravel application to send messages to [the Ray app](https://myray.app).
