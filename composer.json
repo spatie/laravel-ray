@@ -26,7 +26,7 @@
         "illuminate/database": "^7.0|^8.13",
         "illuminate/support": "^7.0|^8.13",
         "spatie/backtrace": "^1.0",
-        "spatie/ray": "dev-master",
+        "spatie/ray": "^1.0",
         "symfony/stopwatch": "4.2|^5.2"
     },
     "require-dev": {
