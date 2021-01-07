@@ -5,11 +5,6 @@
         "spatie",
         "laravel-ray"
     ],
-    "repositories": [{
-        "type": "path",
-        "url": "../ray"
-    }
-    ],
     "homepage": "https://github.com/spatie/laravel-ray",
     "license": "MIT",
     "authors": [
