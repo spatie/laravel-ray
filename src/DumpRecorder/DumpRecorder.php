@@ -3,7 +3,7 @@
 namespace Spatie\LaravelRay\DumpRecorder;
 
 use Closure;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use Spatie\LaravelRay\Ray;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
@@ -14,9 +14,9 @@ class DumpRecorder
 {
     protected array $dumps = [];
 
-    protected Application $app;
+    protected Container $app;
 
-    public function __construct(Application $app)
+    public function __construct(Container $app)
     {
         $this->app = $app;
     }
