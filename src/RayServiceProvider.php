@@ -18,6 +18,13 @@ use Spatie\Ray\Settings\SettingsFactory;
 
 class RayServiceProvider extends ServiceProvider
 {
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/../config/ray.php' => base_path('ray.php'),
+        ], 'config');
+    }
+
     public function register()
     {
         $this
@@ -141,7 +148,7 @@ class RayServiceProvider extends ServiceProvider
         if (! $this->app->has('blade.compiler')) {
             return $this;
         }
-        
+
         Blade::directive('ray', function ($expression) {
             return "<?php ray($expression); ?>";
         });
