@@ -16,19 +16,19 @@ class PublishConfigCommand extends Command
     {
         if ((new Filesystem)->exists('ray.php')) {
             $this->error('ray.php already exists in the project root');
+
             return;
         }
         copy(__DIR__ . '/../../stub/ray.php', base_path('ray.php'));
 
-        if($this->option('docker')){
+        if ($this->option('docker')) {
             file_put_contents(base_path('ray.php'), str_replace("'host' => 'localhost'", "'host' => 'host.docker.internal'", file_get_contents(base_path('ray.php'))));
         }
 
-        if($this->option('homestead')){
+        if ($this->option('homestead')) {
             file_put_contents(base_path('ray.php'), str_replace("'host' => 'localhost'", "'host' => '10.0.2.2'", file_get_contents(base_path('ray.php'))));
         }
 
         $this->line('ray.php now created in the project root');
     }
-
 }
