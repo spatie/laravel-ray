@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.2.0 - 2021-01-08
+
+- add support for `local_path` and `remote_path` settings
+
 ## 1.1.0 - 2021-01-07
 
 - add support for Lumen (#22)

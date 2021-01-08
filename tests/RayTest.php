@@ -209,4 +209,19 @@ class RayTest extends TestCase
         $this->assertCount(1, $this->client->sentPayloads());
         $this->assertEquals('event in callable', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
     }
+
+    /** @test */
+    public function it_can_replace_the_remote_path_with_the_local_one()
+    {
+        app(Settings::class)->remote_path = 'tests';
+        app(Settings::class)->local_path = 'local_tests';
+
+        ray('test');
+
+        $this->assertEquals(
+            '/local_tests/RayTest.php',
+            Arr::get($this->client->sentPayloads(), '0.payloads.0.origin.file')
+        );
+
+    }
 }

@@ -13,6 +13,7 @@ use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
+use Spatie\Ray\Settings\Settings;
 
 class OriginFactory
 {
@@ -58,19 +59,19 @@ class OriginFactory
         }
 
         if ($rayFrame->class === Collection::class && Str::startsWith($rayFrame->method, 'Spatie\LaravelRay')) {
-            $originFrame = $this->findFrameForCollectionMacro($frames, $indexOfRay);
+            return $this->findFrameForCollectionMacro($frames, $indexOfRay);
         }
 
         if ($rayFrame->class === QueryLogger::class) {
-            $originFrame = $this->findFrameForQuery($frames);
+            return $this->findFrameForQuery($frames);
         }
 
         if ($rayFrame->class === DumpRecorder::class) {
-            $originFrame = $this->findFrameForDump($frames);
+            return $this->findFrameForDump($frames);
         }
 
         if ($originFrame->class === Dispatcher::class) {
-            $originFrame = $this->findFrameForEvent($frames);
+            return $this->findFrameForEvent($frames);
         }
 
         if (Str::endsWith($originFrame->file, Ray::makePathOsSafe('/vendor/psy/psysh/src/ExecutionLoopClosure.php'))) {
@@ -78,10 +79,8 @@ class OriginFactory
         }
 
         if (Str::startsWith($originFrame->file, storage_path('framework/views'))) {
-            $originFrame = $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
+            return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
         }
-
-        $originFrame->file = \Spatie\LaravelRay\Ray::replaceRemotePathWithLocalPath($originFrame->file);
 
         return $originFrame;
     }
