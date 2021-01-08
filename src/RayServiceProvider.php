@@ -19,7 +19,6 @@ use Spatie\Ray\Settings\SettingsFactory;
 
 class RayServiceProvider extends ServiceProvider
 {
-
     public function boot()
     {
         if ($this->app->runningInConsole()) {

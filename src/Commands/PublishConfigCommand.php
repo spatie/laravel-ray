@@ -16,6 +16,7 @@ class PublishConfigCommand extends Command
     {
         if ((new Filesystem)->exists('ray.php')) {
             $this->error('ray.php already exists in the project root');
+
             return;
         }
 
@@ -37,5 +38,4 @@ class PublishConfigCommand extends Command
 
         $this->info('ray.php created in the project root');
     }
-
 }
