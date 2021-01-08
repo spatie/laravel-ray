@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\Ray\Ray as BaseRay;
-use Spatie\Ray\Settings\Settings;
 
 class Ray extends BaseRay
 {
@@ -152,6 +151,4 @@ class Ray extends BaseRay
 
         return BaseRay::sendRequest($payloads, $meta);
     }
-
-
 }

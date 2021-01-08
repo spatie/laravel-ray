@@ -222,6 +222,5 @@ class RayTest extends TestCase
             '/local_tests/RayTest.php',
             Arr::get($this->client->sentPayloads(), '0.payloads.0.origin.file')
         );
-
     }
 }

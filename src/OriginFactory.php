@@ -13,7 +13,6 @@ use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
-use Spatie\Ray\Settings\Settings;
 
 class OriginFactory
 {
