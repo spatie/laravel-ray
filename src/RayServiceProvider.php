@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\ApplicationLogPayload;
@@ -18,11 +19,14 @@ use Spatie\Ray\Settings\SettingsFactory;
 
 class RayServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config/ray.php' => base_path('ray.php'),
-        ], 'config');
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                PublishConfigCommand::class,
+            ]);
+        }
     }
 
     public function register()
