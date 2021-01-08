@@ -218,8 +218,8 @@ class RayTest extends TestCase
 
         ray('test');
 
-        $this->assertEquals(
-            '/local_tests/RayTest.php',
+        $this->assertStringContainsString(
+            'local_tests',
             Arr::get($this->client->sentPayloads(), '0.payloads.0.origin.file')
         );
     }
