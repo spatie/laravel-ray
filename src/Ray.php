@@ -153,7 +153,8 @@ class Ray extends BaseRay
         return BaseRay::sendRequest($payloads, $meta);
     }
 
-    public static function replaceRemotePathWithLocalPath($file_path) {
+    public static function replaceRemotePathWithLocalPath($file_path)
+    {
         $settings = app(Settings::class);
 
         return str_replace($settings->remote_path, $settings->local_path, $file_path);
