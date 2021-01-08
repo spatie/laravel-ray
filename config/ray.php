@@ -23,6 +23,7 @@ return [
     /*
     * The host used to communicate with the Ray app.
     * For usage in Docker on Mac or Windows, you can replace host with 'host.docker.internal'
+    * For usage in Homestead on Mac or Windows, you can replace host with '10.0.2.2'
     */
     'host' => 'localhost',
 
