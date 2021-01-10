@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.3.2 - 2021-01-09
+
+- fix frame for `rd` function
+
 ## 1.3.1 - 2021-01-09
 
 - fix broken `queries()`-method (#51)
