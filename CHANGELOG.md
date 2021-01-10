@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.3.1 - 2021-01-09
+
+- fix broken `queries()`-method (#51)
+
 ## 1.3.0 - 2021-01-08
 
 - Add `PublishConfigCommand`
