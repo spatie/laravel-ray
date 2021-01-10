@@ -108,7 +108,7 @@ class Ray extends BaseRay
 
     public function queries($callable = null): self
     {
-        $this->showQueries($callable);
+        return $this->showQueries($callable);
     }
 
     public function stopShowingQueries(): self
