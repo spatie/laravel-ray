@@ -33,6 +33,11 @@ class Ray extends BaseRay
         return self::$enabled;
     }
 
+    public function disabled(): bool
+    {
+        return ! self::$enabled;
+    }
+
     public function loggedMail(string $loggedMail): self
     {
         $html = '<html' . Str::between($loggedMail, '<html', '</html>') . '</html>';
