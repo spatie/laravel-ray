@@ -136,6 +136,16 @@ class RayTest extends TestCase
     }
 
     /** @test */
+    public function it_can_check_disabled_status()
+    {
+        ray()->disable();
+        $this->assertEquals(true, ray()->disabled());
+
+        ray()->enable();
+        $this->assertEquals(false, ray()->disabled());
+    }
+
+    /** @test */
     public function it_can_log_dumps()
     {
         dump('test');
