@@ -65,6 +65,16 @@ class RayTest extends TestCase
     }
 
     /** @test */
+    public function it_can_start_logging_queries_using_alias()
+    {
+        ray()->queries();
+
+        DB::table('users')->get('id');
+
+        $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
     public function it_can_stop_logging_queries()
     {
         ray()->showQueries();
