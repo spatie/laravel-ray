@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.3.4 - 2021-01-09
+
+- add `env()` vars for each Laravel config setting (#55)
+
 ## 1.3.3 - 2021-01-09
 
 - add `enabled()` and `disabled()` methods (#54)
