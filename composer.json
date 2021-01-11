@@ -25,8 +25,8 @@
         "symfony/stopwatch": "4.2|^5.2"
     },
     "require-dev": {
-        "illuminate/mail": "^7.0|^8.19",
-        "illuminate/view": "^7.0|^8.19",
+        "illuminate/mail": "^6.0|^7.0|^8.19",
+        "illuminate/view": "^6.0|^7.0|^8.19",
         "orchestra/testbench": "^4.0|^5.0|^6.0",
         "phpunit/phpunit": "^9.3",
         "spatie/phpunit-snapshot-assertions": "^4.2"
