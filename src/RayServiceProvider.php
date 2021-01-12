@@ -181,7 +181,7 @@ class RayServiceProvider extends ServiceProvider
             return false;
         }
 
-        if (! Str::contains($message, '@swift.generated')) {
+        if (! Str::contains($message, 'swift')) {
             return false;
         }
 

@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.3.3 - 2021-01-12
+
+- improve recognizing mails in logs
+
 ## 1.3.2 - 2021-01-09
 
 - fix frame for `rd` function
