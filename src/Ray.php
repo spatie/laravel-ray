@@ -58,11 +58,13 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function model(?Model $model): self
+    public function model(?Model ...$models): self
     {
-        $payload = new ModelPayload($model);
+        $payloads = array_map(function ($model) {
+            return new ModelPayload($model);
+        }, $models);
 
-        $this->sendRequest($payload);
+        $this->sendRequest($payloads);
 
         return $this;
     }
