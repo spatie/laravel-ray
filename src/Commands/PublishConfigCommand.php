@@ -25,14 +25,22 @@ class PublishConfigCommand extends Command
         if ($this->option('docker')) {
             file_put_contents(
                 base_path('ray.php'),
-                str_replace("'host' => 'localhost'", "'host' => 'host.docker.internal'", file_get_contents(base_path('ray.php')))
+                str_replace(
+                    "'host' => env('RAY_HOST', 'localhost')",
+                    "'host' => env('RAY_HOST', 'host.docker.internal')",
+                    file_get_contents(base_path('ray.php'))
+                )
             );
         }
 
         if ($this->option('homestead')) {
             file_put_contents(
                 base_path('ray.php'),
-                str_replace("'host' => 'localhost'", "'host' => '10.0.2.2'", file_get_contents(base_path('ray.php')))
+                str_replace(
+                    "'host' => env('RAY_HOST', 'localhost')",
+                    "'host' => env('RAY_HOST', '10.0.2.2')",
+                    file_get_contents(base_path('ray.php'))
+                )
             );
         }
 
