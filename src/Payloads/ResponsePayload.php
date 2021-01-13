@@ -46,7 +46,7 @@ class ResponsePayload extends Payload
     {
         return [
             'status_code' => $this->statusCode,
-            'headers' => $this->headers,
+            'headers' => ArgumentConverter::convertToPrimitive($this->headers),
             'content' => $this->content,
             'json' => ArgumentConverter::convertToPrimitive($this->json),
         ];
