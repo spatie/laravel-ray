@@ -44,7 +44,6 @@ class ResponsePayload extends Payload
 
     public function getContent(): array
     {
-        dd($this->json);
         return [
             'status_code' => $this->statusCode,
             'headers' => $this->headers,
