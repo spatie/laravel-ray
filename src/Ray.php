@@ -6,8 +6,10 @@ use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Str;
+use Illuminate\Testing\TestResponse;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
+use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\Ray\Ray as BaseRay;
 
 class Ray extends BaseRay
@@ -128,6 +130,12 @@ class Ray extends BaseRay
         $this->queryLogger()->stopLoggingQueries();
 
         return $this;
+    }
+
+    public function testResponse(TestResponse $testResponse) {
+        $payload = ResponsePayload::fromTestResponse($testResponse);
+
+        $this->sendRequest($payload);
     }
 
     protected function eventLogger(): EventLogger
