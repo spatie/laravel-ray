@@ -144,7 +144,7 @@ class RayServiceProvider extends ServiceProvider
             return $this;
         });
 
-        TestResponse::macro('ray', function() {
+        TestResponse::macro('ray', function () {
             ray()->testResponse($this);
         });
 

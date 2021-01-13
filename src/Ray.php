@@ -132,7 +132,8 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function testResponse(TestResponse $testResponse) {
+    public function testResponse(TestResponse $testResponse)
+    {
         $payload = ResponsePayload::fromTestResponse($testResponse);
 
         $this->sendRequest($payload);

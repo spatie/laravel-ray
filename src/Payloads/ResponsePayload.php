@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay\Payloads;
 
 use Illuminate\Testing\TestResponse;
-use Prophecy\Argument;
 use Spatie\Ray\ArgumentConverter;
 use Spatie\Ray\Payloads\Payload;
 
@@ -23,7 +22,7 @@ class ResponsePayload extends Payload
             $testResponse->getStatusCode(),
             $testResponse->headers->all(),
             $testResponse->content(),
-            $json = rescue(fn() => $testResponse->json(), null, false)
+            $json = rescue(fn () => $testResponse->json(), null, false)
         );
     }
 
@@ -56,7 +55,7 @@ class ResponsePayload extends Payload
     protected function normalizeHeaders(array $headers): array
     {
         return collect($headers)
-            ->map(fn(array $values) => $values[0] ?? null)
+            ->map(fn (array $values) => $values[0] ?? null)
             ->filter()
             ->toArray();
     }

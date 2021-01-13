@@ -271,7 +271,7 @@ class RayTest extends TestCase
     /** @test */
     public function it_can_send_a_json_test_response_to_ray()
     {
-        Route::get('test', function() {
+        Route::get('test', function () {
             return response()->json(['a' => 1]);
         });
 
@@ -287,13 +287,13 @@ class RayTest extends TestCase
 
         $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
         $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
-        $this->assertNotEmpty( Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
+        $this->assertNotEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
     }
 
     /** @test */
     public function it_can_send_a_regular_test_response_to_ray()
     {
-        Route::get('test', function() {
+        Route::get('test', function () {
             return response('hello', 201);
         });
 
@@ -307,6 +307,6 @@ class RayTest extends TestCase
         $this->assertEquals('text/html; charset=UTF-8', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers.content-type'));
 
         $this->assertEquals('hello', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
-        $this->assertEmpty( Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
+        $this->assertEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
     }
 }
