@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.3.6 - 2021-01-13
+
+- update `str_replace()` calls in `ray:publish-config` with `env()` usage (#82)
+
 ## 1.3.5 - 2021-01-12
 
 - improve recognizing mails in logs
