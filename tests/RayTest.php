@@ -326,6 +326,7 @@ class RayTest extends TestCase
         $this->assertEquals('text/html; charset=UTF-8', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers.content-type'));
 
         $this->assertEquals('hello', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
+
         $this->assertEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
     }
 }
