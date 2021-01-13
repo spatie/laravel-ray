@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.5.0 - 2021-01-13
+
+- add `testResponse` method
+
 ## 1.4.0 - 2021-01-13
 
 - let the `model` call accepts multiple models.
