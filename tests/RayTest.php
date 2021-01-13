@@ -277,7 +277,8 @@ class RayTest extends TestCase
 
         $this
             ->get('test')
-            ->ray();
+            ->ray()
+            ->assertSuccessful();
 
         $this->assertCount(1, $this->client->sentPayloads());
 
