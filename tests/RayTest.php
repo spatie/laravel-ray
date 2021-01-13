@@ -277,6 +277,12 @@ class RayTest extends TestCase
 
     protected function assertMatchesOsSafeSnapshot($data)
     {
-        $this->assertMatchesJsonSnapshot(json_encode($data));
+        // fix paths when running unit tests on windows platform (github actions)
+        $json = json_encode($data);
+        $json = str_replace('D:\\\\a\\\\laravel-ray\\\\laravel-ray', '', $json);
+        $json = str_replace('\\\\', '\\/', $json);
+
+
+        $this->assertMatchesJsonSnapshot($json);
     }
 }
