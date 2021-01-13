@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Illuminate\Testing\TestResponse;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\Ray\Client;
@@ -141,6 +142,10 @@ class RayServiceProvider extends ServiceProvider
                 : ray($description, $this->items);
 
             return $this;
+        });
+
+        TestResponse::macro('ray', function () {
+            ray()->testResponse($this);
         });
 
         return $this;
