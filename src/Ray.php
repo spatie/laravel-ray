@@ -60,7 +60,7 @@ class Ray extends BaseRay
 
     public function model(?Model ...$models): self
     {
-        $payloads = array_map(function ($model) {
+        $payloads = array_map(function (Model $model) {
             return new ModelPayload($model);
         }, $models);
 

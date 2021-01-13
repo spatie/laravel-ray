@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.4.0 - 2021-01-13
+
+- let the `model` call accepts multiple models.
+
 ## 1.3.6 - 2021-01-13
 
 - update `str_replace()` calls in `ray:publish-config` with `env()` usage (#82)
