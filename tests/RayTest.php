@@ -266,4 +266,17 @@ class RayTest extends TestCase
             Arr::get($this->client->sentPayloads(), '0.payloads.0.origin.file')
         );
     }
+
+    /** @test */
+    public function it_can_render_and_send_markdown()
+    {
+        ray()->markdown('## Hello World!');
+
+        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+    }
+
+    protected function assertMatchesOsSafeSnapshot($data)
+    {
+        $this->assertMatchesJsonSnapshot(json_encode($data));
+    }
 }

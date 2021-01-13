@@ -1,0 +1,19 @@
+[
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "custom",
+                "content": {
+                    "content": "<style>a { text-decoration:underline!important; }<\/style><div class=\"w-100 block\" style=\"font-size:1.8em!important;\">Hello World!<\/div>",
+                    "label": "Markdown"
+                },
+                "origin": {
+                    "file": "\/tests\/RayTest.php",
+                    "line_number": 273
+                }
+            }
+        ],
+        "meta": []
+    }
+]
