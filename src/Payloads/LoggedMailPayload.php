@@ -13,8 +13,6 @@ class LoggedMailPayload extends Payload
 {
     protected string $html = '';
 
-    protected ?Mailable $mailable = null;
-
     private array $from;
 
     private ?string $subject;
