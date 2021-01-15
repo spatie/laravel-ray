@@ -269,6 +269,25 @@ class RayTest extends TestCase
     }
 
     /** @test */
+    public function it_can_render_and_send_markdown()
+    {
+        ray()->markdown('## Hello World!');
+
+        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+    }
+
+    protected function assertMatchesOsSafeSnapshot($data)
+    {
+        // fix paths when running unit tests on windows platform (github actions)
+        $json = json_encode($data);
+        $json = str_replace('D:\\\\a\\\\laravel-ray\\\\laravel-ray', '', $json);
+        $json = str_replace('\\\\', '/', $json);
+
+
+        $this->assertMatchesJsonSnapshot($json);
+    }
+
+    /** @test */
     public function it_can_send_a_json_test_response_to_ray()
     {
         Route::get('test', function () {

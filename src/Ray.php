@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Spatie\LaravelRay\Payloads\MailablePayload;
+use Spatie\LaravelRay\Payloads\MarkdownPayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\Ray\Ray as BaseRay;
@@ -67,6 +68,15 @@ class Ray extends BaseRay
         }, $models);
 
         $this->sendRequest($payloads);
+
+        return $this;
+    }
+
+    public function markdown(string $markdown): self
+    {
+        $payload = new MarkdownPayload($markdown);
+
+        $this->sendRequest($payload);
 
         return $this;
     }
