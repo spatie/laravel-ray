@@ -302,8 +302,7 @@ class RayTest extends TestCase
         $this->assertCount(1, $this->client->sentPayloads());
 
         $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.status_code'));
-
-        $this->assertEquals('application/json', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers.content-type'));
+        $this->assertStringContainsString('application/json', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers'));
 
         $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
         $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
@@ -324,7 +323,7 @@ class RayTest extends TestCase
         $this->assertCount(1, $this->client->sentPayloads());
         $this->assertEquals(201, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.status_code'));
 
-        $this->assertEquals('text/html; charset=UTF-8', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers.content-type'));
+        $this->assertStringContainsString('text/html; charset=UTF-8', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers'));
 
         $this->assertEquals('hello', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
 
