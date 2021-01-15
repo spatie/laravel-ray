@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.6.0 - 2021-01-15
+
+- add `markdown` method
+
 ## 1.5.2 - 2021-01-13
 
 - fix headers on response payload
