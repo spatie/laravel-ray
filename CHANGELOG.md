@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.6.1 - 2021-01-15
+
+- better support for logged mailables
+
 ## 1.6.0 - 2021-01-15
 
 - add `markdown` method
