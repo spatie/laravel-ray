@@ -169,12 +169,30 @@ class RayTest extends TestCase
     {
         $user1 = User::make(['email' => 'john@example.com']);
         $user2 = User::make(['email' => 'paul@example.com']);
-        $user3 = User::make(['email' => 'george@example.com']);
-        $user4 = User::make(['email' => 'ringo@example.com']);
 
-        ray()->model($user1, $user2, $user3, $user4);
+        ray()->model($user1, $user2);
+        $this->assertCount(2, $this->client->sentPayloads());
+    }
 
-        $this->assertCount(4, Arr::get($this->client->sentPayloads(), '0.payloads'));
+    /** @test */
+    public function it_can_send_a_single_models_to_ray_using_models()
+    {
+        $user = User::make(['email' => 'john@example.com']);
+
+        ray()->models($user);
+
+        $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_can_send_a_collection_of_models_to_ray_using_models()
+    {
+        $user1 = User::make(['email' => 'john@example.com']);
+        $user2 = User::make(['email' => 'paul@example.com']);
+
+        ray()->models(collect([$user1, $user2]));
+
+        $this->assertCount(2, $this->client->sentPayloads());
     }
 
     /** @test */
