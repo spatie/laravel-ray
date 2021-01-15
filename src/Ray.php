@@ -11,7 +11,6 @@ use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
-use Spatie\Ray\Payloads\LogPayload;
 use Spatie\Ray\Ray as BaseRay;
 
 class Ray extends BaseRay
@@ -39,7 +38,7 @@ class Ray extends BaseRay
 
     public function disabled(): bool
     {
-        return !self::$enabled;
+        return ! self::$enabled;
     }
 
     public function loggedMail(string $loggedMail): self
@@ -67,21 +66,23 @@ class Ray extends BaseRay
      */
     public function model(...$model): self
     {
-
         $models = [];
-        foreach($model as $passedModel) {
+        foreach ($model as $passedModel) {
             if (is_null($passedModel)) {
-                 $models[] = null;
-                 continue;
+                $models[] = null;
+
+                continue;
             }
             if ($passedModel instanceof Model) {
                 $models[] = $passedModel;
+
                 continue;
             }
 
             if (is_iterable($model)) {
-                foreach($passedModel as $item) {
+                foreach ($passedModel as $item) {
                     $models[] = $item;
+
                     continue;
                 }
             }
@@ -91,7 +92,7 @@ class Ray extends BaseRay
             return new ModelPayload($model);
         }, $models);
 
-        foreach($payloads as $payload) {
+        foreach ($payloads as $payload) {
             ray()->sendRequest($payload);
         }
 
@@ -126,7 +127,7 @@ class Ray extends BaseRay
         if ($callable) {
             $callable();
 
-            if (!$wasLoggingEvents) {
+            if (! $wasLoggingEvents) {
                 $this->eventLogger()->disable();
             }
         }
@@ -155,10 +156,10 @@ class Ray extends BaseRay
 
         $this->queryLogger()->startLoggingQueries();
 
-        if (!is_null($callable)) {
+        if (! is_null($callable)) {
             $callable();
 
-            if (!$wasLoggingQueries) {
+            if (! $wasLoggingQueries) {
                 $this->stopShowingQueries();
             }
         }
@@ -204,7 +205,7 @@ class Ray extends BaseRay
      */
     public function sendRequest($payloads, array $meta = []): BaseRay
     {
-        if (!static::$enabled) {
+        if (! static::$enabled) {
             return $this;
         }
 
