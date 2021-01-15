@@ -42,8 +42,8 @@ EOD;
                 ],
                 [
                     'name' => '',
-                    'email' => 'ruben@spatie.be'
-                ]
+                    'email' => 'ruben@spatie.be',
+                ],
             ],
             'cc' => [
                 [
@@ -52,8 +52,8 @@ EOD;
                 ],
                 [
                     'name' => 'Seb',
-                    'email' => 'seb@spatie.be'
-                ]
+                    'email' => 'seb@spatie.be',
+                ],
             ],
             'bcc' => [
                 [

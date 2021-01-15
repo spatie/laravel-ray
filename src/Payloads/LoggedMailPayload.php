@@ -76,12 +76,12 @@ class LoggedMailPayload extends Payload
 
     protected static function convertHeaderToPersons(?AddressHeader $header): array
     {
-        if($header === null){
+        if ($header === null) {
             return [];
         }
 
         return array_map(
-            fn(AddressPart $address) => [
+            fn (AddressPart $address) => [
                 'name' => $address->getName(),
                 'email' => $address->getEmail(),
             ],

@@ -2,13 +2,10 @@
 
 namespace Spatie\LaravelRay\Tests;
 
-use Illuminate\Mail\Mailer;
-use Illuminate\Mail\MailManager;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\View\FileViewFinder;
+use Illuminate\Support\Facades\Route;
 use Log;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
