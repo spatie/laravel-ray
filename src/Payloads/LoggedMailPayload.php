@@ -2,7 +2,6 @@
 
 namespace Spatie\LaravelRay\Payloads;
 
-use Illuminate\Mail\Mailable;
 use Spatie\Ray\Payloads\Payload;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Header\HeaderConsts;
