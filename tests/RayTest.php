@@ -4,6 +4,7 @@ namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Log;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
@@ -193,6 +194,18 @@ class RayTest extends TestCase
     public function it_can_send_the_mailable_payload()
     {
         ray()->mailable(new TestMailable());
+
+        $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_can_send_a_logged_mailable()
+    {
+        Mail::mailer('log')
+            ->cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
+            ->bcc(['willem@spatie.be', 'jef@spatie.be'])
+            ->to(['freek@spatie.be', 'ruben@spatie.be'])
+            ->send(new TestMailable());
 
         $this->assertCount(1, $this->client->sentPayloads());
     }

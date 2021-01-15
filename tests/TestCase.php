@@ -33,7 +33,7 @@ class TestCase extends Orchestra
             return $ray;
         });
 
-        View::addLocation(__DIR__ . '/resources/view');
+        View::addLocation(__DIR__ . '/resources/views');
     }
 
     protected function getPackageProviders($app)
