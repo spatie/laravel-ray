@@ -5,8 +5,8 @@ namespace Spatie\LaravelRay;
 use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
-use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
+use Spatie\LaravelRay\Payloads\LoggedMailPayload;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
@@ -43,9 +43,7 @@ class Ray extends BaseRay
 
     public function loggedMail(string $loggedMail): self
     {
-        $html = '<html' . Str::between($loggedMail, '<html', '</html>') . '</html>';
-
-        $payload = new MailablePayload($html);
+        $payload = LoggedMailPayload::forLoggedMail($loggedMail);
 
         $this->sendRequest($payload);
 
