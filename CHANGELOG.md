@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.7.1 - 2021-01-17
+
+- lower dependencies
+
 ## 1.7.0 - 2021-01-15
 
 - make `model` more flexible
