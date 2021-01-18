@@ -174,7 +174,7 @@ class RayServiceProvider extends ServiceProvider
 
     protected function registerPayloadFinder(): self
     {
-        PayloadFactory::registerPayloadFinder(function($argument) {
+        PayloadFactory::registerPayloadFinder(function ($argument) {
             if ($argument instanceof Model) {
                 return new ModelPayload($argument);
             }

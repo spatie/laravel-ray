@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Log;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
-use Spatie\LaravelRay\Tests\TestClasses\TestEventWithParameter;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
