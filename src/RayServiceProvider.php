@@ -3,7 +3,9 @@
 namespace Spatie\LaravelRay;
 
 use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Mail\Mailable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
@@ -12,7 +14,10 @@ use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
+use Spatie\LaravelRay\Payloads\MailablePayload;
+use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\Ray\Client;
+use Spatie\Ray\PayloadFactory;
 use Spatie\Ray\Payloads\ApplicationLogPayload;
 use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Settings\Settings;
@@ -39,6 +44,7 @@ class RayServiceProvider extends ServiceProvider
             ->registerMacros()
             ->registerBindings()
             ->registerBladeDirectives()
+            ->registerPayloadFinder()
             ->listenForEvents();
     }
 
@@ -161,6 +167,23 @@ class RayServiceProvider extends ServiceProvider
 
         Blade::directive('ray', function ($expression) {
             return "<?php ray($expression); ?>";
+        });
+
+        return $this;
+    }
+
+    protected function registerPayloadFinder(): self
+    {
+        PayloadFactory::registerPayloadFinder(function($argument) {
+            if ($argument instanceof Model) {
+                return new ModelPayload($argument);
+            }
+
+            if ($argument instanceof Mailable) {
+                return MailablePayload::forMailable($argument);
+            }
+
+            return null;
         });
 
         return $this;

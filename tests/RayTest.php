@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Log;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
+use Spatie\LaravelRay\Tests\TestClasses\TestEventWithParameter;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
@@ -338,6 +339,17 @@ class RayTest extends TestCase
         $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
         $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
         $this->assertNotEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
+    }
+
+    /** @test */
+    public function it_will_automatically_use_specialized_payloads()
+    {
+        ray(new TestMailable(), new User());
+
+        $payloads = $this->client->sentPayloads();
+
+        $this->assertEquals('mailable', $payloads[0]['payloads'][0]['type']);
+        $this->assertEquals('eloquent_model', $payloads[0]['payloads'][1]['type']);
     }
 
     /** @test */
