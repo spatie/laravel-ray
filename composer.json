@@ -21,7 +21,7 @@
         "illuminate/database": "^7.0|^8.13",
         "illuminate/support": "^7.0|^8.13",
         "spatie/backtrace": "^1.0",
-        "spatie/ray": "dev-mixed-ray",
+        "spatie/ray": "dev-master",
         "symfony/stopwatch": "4.2|^5.1",
         "zbateson/mail-mime-parser": "^1.3"
     },
