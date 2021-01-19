@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Log;
+use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
-use Spatie\Snapshots\MatchesSnapshots;
 
 class RayTest extends TestCase
 {
-    use MatchesSnapshots;
+    use MatchesOsSafeSnapshots;
 
     /** @test */
     public function when_disabled_nothing_will_be_sent_to_ray()
@@ -305,17 +305,6 @@ class RayTest extends TestCase
         ray()->markdown('## Hello World!');
 
         $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
-    }
-
-    protected function assertMatchesOsSafeSnapshot($data)
-    {
-        // fix paths when running unit tests on windows platform (github actions)
-        $json = json_encode($data);
-        $json = str_replace('D:\\\\a\\\\laravel-ray\\\\laravel-ray', '', $json);
-        $json = str_replace('\\\\', '/', $json);
-
-
-        $this->assertMatchesJsonSnapshot($json);
     }
 
     /** @test */

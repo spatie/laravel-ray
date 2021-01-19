@@ -3,13 +3,13 @@
 namespace Spatie\LaravelRay\Tests\Payloads;
 
 use Spatie\LaravelRay\Payloads\MailablePayload;
+use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
-use Spatie\Snapshots\MatchesSnapshots;
 
 class MailablePayloadTest extends TestCase
 {
-    use MatchesSnapshots;
+    use MatchesOsSafeSnapshots;
 
     /** @test */
     public function it_can_render_a_mailable()
@@ -18,6 +18,6 @@ class MailablePayloadTest extends TestCase
 
         $payload = MailablePayload::forMailable($mailable);
 
-        $this->assertMatchesSnapshot($payload->getContent()['html']);
+        $this->assertMatchesOsSafeSnapshot($payload->getContent()['html']);
     }
 }
