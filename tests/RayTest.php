@@ -341,6 +341,17 @@ class RayTest extends TestCase
     }
 
     /** @test */
+    public function it_will_automatically_use_specialized_payloads()
+    {
+        ray(new TestMailable(), new User());
+
+        $payloads = $this->client->sentPayloads();
+
+        $this->assertEquals('mailable', $payloads[0]['payloads'][0]['type']);
+        $this->assertEquals('eloquent_model', $payloads[0]['payloads'][1]['type']);
+    }
+
+    /** @test */
     public function it_can_send_a_regular_test_response_to_ray()
     {
         Route::get('test', function () {
