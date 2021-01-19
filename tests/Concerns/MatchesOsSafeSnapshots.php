@@ -3,7 +3,6 @@
 
 namespace Spatie\LaravelRay\Tests\Concerns;
 
-
 use Spatie\Snapshots\MatchesSnapshots;
 
 trait MatchesOsSafeSnapshots
