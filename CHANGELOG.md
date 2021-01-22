@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.9.0 - 2021-01-22
+
+- add `showJobs`
+
 ## 1.8.0 - 2021-01-19
 
 - the package will now select the best payload type when passing something to `ray()`
