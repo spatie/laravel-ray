@@ -150,6 +150,38 @@ class Ray extends BaseRay
         return $this;
     }
 
+    public function showJobs($callable = null): self
+    {
+        $wasLoggingJobs = $this->jobLogger()->isLoggingJobs();
+
+        $this->jobLogger()->enable();
+
+        if ($callable) {
+            $callable();
+
+            if (! $wasLoggingJobs) {
+                $this->jobLogger()->disable();
+            }
+        }
+
+        return $this;
+    }
+
+    public function jobs($callable = null): self
+    {
+        return $this->showJobs($callable);
+    }
+
+    public function stopShowingJobs(): self
+    {
+        /** @var \Spatie\LaravelRay\JobLogger $jobLogger */
+        $jobLogger = app(JobLogger::class);
+
+        $jobLogger->disable();
+
+        return $this;
+    }
+
     public function showQueries($callable = null): self
     {
         $wasLoggingQueries = $this->queryLogger()->isLoggingQueries();
@@ -189,6 +221,11 @@ class Ray extends BaseRay
     protected function eventLogger(): EventLogger
     {
         return app(EventLogger::class);
+    }
+
+    protected function jobLogger(): JobLogger
+    {
+        return app(JobLogger::class);
     }
 
     protected function queryLogger(): QueryLogger

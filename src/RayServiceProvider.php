@@ -6,6 +6,11 @@ use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Mail\Mailable;
+use Illuminate\Queue\Events\JobExceptionOccurred;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Queue\Events\JobQueued;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
@@ -88,6 +93,8 @@ class RayServiceProvider extends ServiceProvider
         Payload::$originFactoryClass = OriginFactory::class;
 
         $this->app->singleton(EventLogger::class, fn () => new EventLogger());
+        $this->app->singleton(JobLogger::class, fn () => new JobLogger());
+
 
         return $this;
     }
@@ -196,6 +203,19 @@ class RayServiceProvider extends ServiceProvider
             $eventLogger = app(EventLogger::class);
 
             $eventLogger->handleEvent($event, $arguments);
+        });
+
+        Event::listen([
+            JobQueued::class,
+            JobProcessing::class,
+            JobProcessed::class,
+            JobFailed::class,
+            JobExceptionOccurred::class,
+        ], function (object $event) {
+            /** @var \Spatie\LaravelRay\JobLogger $jobLogger */
+            $jobLogger = app(JobLogger::class);
+
+            $jobLogger->handleJobEvent($event);
         });
 
         Event::listen(CommandStarting::class, function (CommandStarting $event) {

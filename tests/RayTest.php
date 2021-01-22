@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Log;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
+use Spatie\LaravelRay\Tests\TestClasses\TestJob;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
@@ -283,6 +284,22 @@ class RayTest extends TestCase
 
         $this->assertCount(1, $this->client->sentPayloads());
         $this->assertEquals('event in callable', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
+    }
+
+    /** @test */
+    public function it_can_automatically_send_jobs_to_ray()
+    {
+        ray()->showJobs();
+
+        dispatch(new TestJob());
+
+        ray()->stopShowingJobs();
+
+        dispatch(new TestJob());
+dd($this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentPayloads());
+      //  $this->assertEquals(TestEvent::class, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
+        //$this->assertTrue(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.class_based_event'));
     }
 
     /** @test */
