@@ -2,7 +2,6 @@
 
 namespace Spatie\LaravelRay;
 
-use Spatie\LaravelRay\Payloads\EventPayload;
 use Spatie\LaravelRay\Payloads\JobEventPayload;
 
 class JobLogger

@@ -32,7 +32,7 @@ class JobEventPayload extends Payload
 
     public function getContent(): array
     {
-         return [
+        return [
             'event_name' => class_basename($this->event),
             'job' => $this->job ? ArgumentConverter::convertToPrimitive($this->job) : null,
             'exception' => $this->exception ? ArgumentConverter::convertToPrimitive($this->exception) : null,
