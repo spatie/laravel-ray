@@ -296,10 +296,9 @@ class RayTest extends TestCase
         ray()->stopShowingJobs();
 
         dispatch(new TestJob());
-dd($this->client->sentPayloads());
-        $this->assertCount(1, $this->client->sentPayloads());
-      //  $this->assertEquals(TestEvent::class, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
-        //$this->assertTrue(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.class_based_event'));
+
+        $this->assertEquals('job_event', Arr::get($this->client->sentPayloads(), '0.payloads.0.type'));
+        $this->assertCount(2, $this->client->sentPayloads());
     }
 
     /** @test */

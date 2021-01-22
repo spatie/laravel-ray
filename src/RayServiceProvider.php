@@ -17,10 +17,12 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
+use Spatie\Backtrace\Backtrace;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
+use Spatie\Multitenancy\Models\Tenant;
 use Spatie\Ray\Client;
 use Spatie\Ray\PayloadFactory;
 use Spatie\Ray\Payloads\ApplicationLogPayload;
@@ -210,10 +212,13 @@ class RayServiceProvider extends ServiceProvider
             JobProcessing::class,
             JobProcessed::class,
             JobFailed::class,
-            JobExceptionOccurred::class,
         ], function (object $event) {
             /** @var \Spatie\LaravelRay\JobLogger $jobLogger */
             $jobLogger = app(JobLogger::class);
+
+            if (! $jobLogger->isLoggingJobs()) {
+                return;
+            }
 
             $jobLogger->handleJobEvent($event);
         });
