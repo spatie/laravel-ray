@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\LaravelRay\Payloads\MailablePayload;
@@ -27,18 +29,16 @@ use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Settings\Settings;
 use Spatie\Ray\Settings\SettingsFactory;
 
-class RayServiceProvider extends ServiceProvider
+class RayServiceProvider extends PackageServiceProvider
 {
-    public function boot()
+    public function configurePackage(Package $package): void
     {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                PublishConfigCommand::class,
-            ]);
-        }
+        $package
+            ->name('laravel-ray')
+            ->hasCommand(PublishConfigCommand::class);
     }
 
-    public function register()
+    public function packageRegistered()
     {
         $this
             ->registerSettings()
@@ -239,4 +239,6 @@ class RayServiceProvider extends ServiceProvider
 
         return true;
     }
+
+
 }
