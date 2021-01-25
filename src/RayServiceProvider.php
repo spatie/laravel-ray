@@ -13,7 +13,6 @@ use Illuminate\Queue\Events\JobQueued;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Spatie\LaravelPackageTools\Package;
@@ -239,6 +238,4 @@ class RayServiceProvider extends PackageServiceProvider
 
         return true;
     }
-
-
 }
