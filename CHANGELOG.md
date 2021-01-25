@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.9.1 - 2021-01-25
+
+- improve service provider
+
 ## 1.9.0 - 2021-01-22
 
 - add `showJobs`
