@@ -15,7 +15,7 @@ class DumpRecorder
     /** @var array */
     protected $dumps = [];
 
-    /** @var \Illuminate\Contracts\Container\Container  */
+    /** @var \Illuminate\Contracts\Container\Container */
     protected $app;
 
     public function __construct(Container $app)
