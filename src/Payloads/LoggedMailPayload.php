@@ -10,17 +10,23 @@ use ZBateson\MailMimeParser\MailMimeParser;
 
 class LoggedMailPayload extends Payload
 {
-    protected string $html = '';
+    /** @var string */
+    protected $html = '';
 
-    private array $from;
+    /** @var array */
+    private $from;
 
-    private ?string $subject;
+    /** @var string|null */
+    private $subject;
 
-    private array $to;
+    /** @var array */
+    private $to;
 
-    private array $cc;
+    /** @var array */
+    private $cc;
 
-    private array $bcc;
+    /** @var array */
+    private $bcc;
 
     public static function forLoggedMail(string $loggedMail): self
     {
@@ -78,10 +84,12 @@ class LoggedMailPayload extends Payload
         }
 
         return array_map(
-            fn (AddressPart $address) => [
-                'name' => $address->getName(),
-                'email' => $address->getEmail(),
-            ],
+            function (AddressPart $address) {
+                return [
+                    'name' => $address->getName(),
+                    'email' => $address->getEmail(),
+                ];
+            },
             $header->getAddresses()
         );
     }

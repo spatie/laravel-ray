@@ -13,10 +13,9 @@ use Illuminate\Queue\Events\JobQueued;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\LaravelRay\Payloads\MailablePayload;
@@ -28,18 +27,12 @@ use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Settings\Settings;
 use Spatie\Ray\Settings\SettingsFactory;
 
-class RayServiceProvider extends PackageServiceProvider
+class RayServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
-    {
-        $package
-            ->name('laravel-ray')
-            ->hasCommand(PublishConfigCommand::class);
-    }
-
-    public function packageRegistered()
+    public function register()
     {
         $this
+            ->registerCommands()
             ->registerSettings()
             ->registerBindings()
             ->listenForLogEvents()
@@ -49,6 +42,13 @@ class RayServiceProvider extends PackageServiceProvider
             ->registerBladeDirectives()
             ->registerPayloadFinder()
             ->listenForEvents();
+    }
+
+    protected function registerCommands(): self
+    {
+        $this->commands(PublishConfigCommand::class);
+
+        return $this;
     }
 
     protected function registerSettings(): self
@@ -70,7 +70,9 @@ class RayServiceProvider extends PackageServiceProvider
     {
         $settings = app(Settings::class);
 
-        $this->app->bind(Client::class, fn () => new Client($settings->port, $settings->host));
+        $this->app->bind(Client::class, function () use ($settings) {
+            return new Client($settings->port, $settings->host);
+        });
 
         $this->app->bind(Ray::class, function () {
             $client = app(Client::class);
@@ -86,12 +88,18 @@ class RayServiceProvider extends PackageServiceProvider
             return $ray;
         });
 
-        $this->app->singleton(QueryLogger::class, fn () => new QueryLogger());
+        $this->app->singleton(QueryLogger::class, function () {
+            return new QueryLogger();
+        });
 
         Payload::$originFactoryClass = OriginFactory::class;
 
-        $this->app->singleton(EventLogger::class, fn () => new EventLogger());
-        $this->app->singleton(JobLogger::class, fn () => new JobLogger());
+        $this->app->singleton(EventLogger::class, function () {
+            return new EventLogger();
+        });
+        $this->app->singleton(JobLogger::class, function () {
+            return new JobLogger();
+        });
 
 
         return $this;

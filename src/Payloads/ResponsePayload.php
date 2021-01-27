@@ -8,13 +8,17 @@ use Spatie\Ray\Payloads\Payload;
 
 class ResponsePayload extends Payload
 {
-    protected int $statusCode;
+    /** @var int */
+    protected $statusCode;
 
-    protected array $headers;
+    /** @var array */
+    protected $headers;
 
-    protected ?string $content;
+    /** @var string|null */
+    protected $content;
 
-    protected ?array $json;
+    /** @var array|null */
+    protected $json;
 
     public static function fromTestResponse(TestResponse $testResponse): self
     {
@@ -22,7 +26,9 @@ class ResponsePayload extends Payload
             $testResponse->getStatusCode(),
             $testResponse->headers->all(),
             $testResponse->content(),
-            $json = rescue(fn () => $testResponse->json(), null, false)
+            $json = rescue(function () use ($testResponse) {
+                return $testResponse->json();
+            }, null, false)
         );
     }
 
@@ -55,7 +61,9 @@ class ResponsePayload extends Payload
     protected function normalizeHeaders(array $headers): array
     {
         return collect($headers)
-            ->map(fn (array $values) => $values[0] ?? null)
+            ->map(function (array $values) {
+                return $values[0] ?? null;
+            })
             ->filter()
             ->toArray();
     }

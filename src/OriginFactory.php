@@ -100,7 +100,9 @@ class OriginFactory
     protected function findFrameForQuery(Collection $frames): ?Frame
     {
         $indexOfLastDatabaseCall = $frames
-            ->search(fn (Frame $frame) => Str::startsWith($frame->class, 'Illuminate\Database'));
+            ->search(function (Frame $frame) {
+                return Str::startsWith($frame->class, 'Illuminate\Database');
+            });
 
         return $frames[$indexOfLastDatabaseCall + 1] ?? null;
     }

@@ -15,7 +15,8 @@ use Spatie\Ray\Ray as BaseRay;
 
 class Ray extends BaseRay
 {
-    public static bool $enabled = true;
+    /** @var bool */
+    public static $enabled = true;
 
     public function enable(): self
     {

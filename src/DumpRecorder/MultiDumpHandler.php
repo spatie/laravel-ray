@@ -4,7 +4,8 @@ namespace Spatie\LaravelRay\DumpRecorder;
 
 class MultiDumpHandler
 {
-    protected array $handlers = [];
+    /** @var array  */
+    protected $handlers = [];
 
     public function dump($value)
     {

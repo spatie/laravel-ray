@@ -7,7 +7,8 @@ use Spatie\Ray\Payloads\Payload;
 
 class MarkdownPayload extends Payload
 {
-    protected string $markdown;
+    /** @var string */
+    protected $markdown;
 
     public function __construct(string $markdown)
     {

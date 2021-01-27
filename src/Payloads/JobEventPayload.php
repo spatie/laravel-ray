@@ -8,11 +8,14 @@ use Throwable;
 
 class JobEventPayload extends Payload
 {
-    protected object $event;
+    /** @var object */
+    protected $event;
 
-    protected object $job;
+    /** @var object|mixed */
+    protected $job;
 
-    protected ?Throwable $exception = null;
+    /** @var \Throwable|null */
+    protected $exception = null;
 
     public function __construct(object $event)
     {

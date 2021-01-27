@@ -8,9 +8,11 @@ use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
 
 class QueryLogger
 {
-    protected bool $listenForQueries = false;
+    /** @var bool */
+    protected $listenForQueries = false;
 
-    protected bool $queryListenerRegistered = false;
+    /** @var bool */
+    protected $queryListenerRegistered = false;
 
     public function isLoggingQueries(): bool
     {

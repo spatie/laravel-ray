@@ -12,9 +12,11 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class DumpRecorder
 {
-    protected array $dumps = [];
+    /** @var array */
+    protected $dumps = [];
 
-    protected Container $app;
+    /** @var \Illuminate\Contracts\Container\Container  */
+    protected $app;
 
     public function __construct(Container $app)
     {
@@ -35,7 +37,9 @@ class DumpRecorder
 
         $multiDumpHandler
             ->addHandler($this->getDefaultHandler())
-            ->addHandler(fn ($dumpedVariable) => app(Ray::class)->send($dumpedVariable));
+            ->addHandler(function ($dumpedVariable) {
+                return app(Ray::class)->send($dumpedVariable);
+            });
 
         return $this;
     }

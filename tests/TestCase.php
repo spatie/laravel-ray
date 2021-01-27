@@ -13,7 +13,8 @@ use Spatie\Ray\Settings\Settings;
 
 class TestCase extends Orchestra
 {
-    protected FakeClient $client;
+    /** @var \Spatie\LaravelRay\Tests\TestClasses\FakeClient */
+    protected $client;
 
     public function setUp(): void
     {

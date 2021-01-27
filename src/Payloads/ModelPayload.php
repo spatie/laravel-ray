@@ -8,7 +8,8 @@ use Spatie\Ray\Payloads\Payload;
 
 class ModelPayload extends Payload
 {
-    protected ?Model $model;
+    /** @var \Illuminate\Database\Eloquent\Model|null */
+    protected $model;
 
     public function __construct(?Model $model)
     {

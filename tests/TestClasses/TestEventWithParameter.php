@@ -4,7 +4,8 @@ namespace Spatie\LaravelRay\Tests\TestClasses;
 
 class TestEventWithParameter
 {
-    protected string $parameter;
+    /** @var string */
+    protected $parameter;
 
     public function __construct(string $parameter)
     {

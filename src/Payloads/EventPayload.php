@@ -7,9 +7,14 @@ use Spatie\Ray\Payloads\Payload;
 
 class EventPayload extends Payload
 {
-    protected string $eventName;
-    protected ?object $event = null;
-    protected array $payload = [];
+    /** @var string */
+    protected $eventName;
+
+    /** @var object|mixed|null */
+    protected $event = null;
+
+    /** @var array */
+    protected $payload = [];
 
     public function __construct(string $eventName, array $payload)
     {

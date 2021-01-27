@@ -6,7 +6,8 @@ use Spatie\LaravelRay\Payloads\JobEventPayload;
 
 class JobLogger
 {
-    protected bool $enabled = false;
+    /** @var bool */
+    protected $enabled = false;
 
     public function enable(): self
     {
