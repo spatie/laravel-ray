@@ -3,11 +3,9 @@
 namespace Spatie\LaravelRay;
 
 use Composer\InstalledVersions;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Illuminate\Testing\TestResponse;
-use Spatie\LaravelRay\Payloads\ExceptionPayload;
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
