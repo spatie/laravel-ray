@@ -44,6 +44,6 @@ class PublishConfigCommand extends Command
             );
         }
 
-        $this->info('ray.php created in the project root');
+        $this->info('`ray.php` created in the project base directory');
     }
 }
