@@ -11,6 +11,9 @@ use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
+use Spatie\LaravelRay\Watchers\EventWatcher;
+use Spatie\LaravelRay\Watchers\JobWatcher;
+use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\Ray\Ray as BaseRay;
 
 class Ray extends BaseRay
@@ -121,15 +124,15 @@ class Ray extends BaseRay
 
     public function showEvents($callable = null): self
     {
-        $wasLoggingEvents = $this->eventLogger()->isLoggingEvents();
+        $wasLoggingEvents = $this->eventWatcher()->enabled();
 
-        $this->eventLogger()->enable();
+        $this->eventWatcher()->enable();
 
         if ($callable) {
             $callable();
 
             if (! $wasLoggingEvents) {
-                $this->eventLogger()->disable();
+                $this->eventWatcher()->disable();
             }
         }
 
@@ -143,25 +146,25 @@ class Ray extends BaseRay
 
     public function stopShowingEvents(): self
     {
-        /** @var \Spatie\LaravelRay\EventLogger $eventLogger */
-        $eventLogger = app(EventLogger::class);
+        /** @var \Spatie\LaravelRay\Watchers\EventWatcher $eventWatcher */
+        $eventWatcher = app(EventWatcher::class);
 
-        $eventLogger->disable();
+        $eventWatcher->disable();
 
         return $this;
     }
 
     public function showJobs($callable = null): self
     {
-        $wasLoggingJobs = $this->jobLogger()->isLoggingJobs();
+        $wasLoggingJobs = $this->jobWatcher()->enabled();
 
-        $this->jobLogger()->enable();
+        $this->jobWatcher()->enable();
 
         if ($callable) {
             $callable();
 
             if (! $wasLoggingJobs) {
-                $this->jobLogger()->disable();
+                $this->jobWatcher()->disable();
             }
         }
 
@@ -175,25 +178,22 @@ class Ray extends BaseRay
 
     public function stopShowingJobs(): self
     {
-        /** @var \Spatie\LaravelRay\JobLogger $jobLogger */
-        $jobLogger = app(JobLogger::class);
-
-        $jobLogger->disable();
+        $this->jobWatcher()->disable();
 
         return $this;
     }
 
     public function showQueries($callable = null): self
     {
-        $wasLoggingQueries = $this->queryLogger()->isLoggingQueries();
+        $wasLoggingQueries = $this->queryWatcher()->enabled();
 
-        $this->queryLogger()->startLoggingQueries();
+        $this->queryWatcher()->enable();
 
         if (! is_null($callable)) {
             $callable();
 
             if (! $wasLoggingQueries) {
-                $this->stopShowingQueries();
+                $this->disable();
             }
         }
 
@@ -207,7 +207,7 @@ class Ray extends BaseRay
 
     public function stopShowingQueries(): self
     {
-        $this->queryLogger()->stopLoggingQueries();
+        $this->queryWatcher()->disable();
 
         return $this;
     }
@@ -219,19 +219,19 @@ class Ray extends BaseRay
         $this->sendRequest($payload);
     }
 
-    protected function eventLogger(): EventLogger
+    protected function eventWatcher(): EventWatcher
     {
-        return app(EventLogger::class);
+        return app(EventWatcher::class);
     }
 
-    protected function jobLogger(): JobLogger
+    protected function jobWatcher(): JobWatcher
     {
-        return app(JobLogger::class);
+        return app(JobWatcher::class);
     }
 
-    protected function queryLogger(): QueryLogger
+    protected function queryWatcher(): QueryWatcher
     {
-        return app(QueryLogger::class);
+        return app(QueryWatcher::class);
     }
 
     /**
