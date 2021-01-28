@@ -10,7 +10,7 @@ use Spatie\Ray\Payloads\Payload;
 class ExceptionPayload extends Payload
 {
     /** @var \Exception */
-    private $exception;
+    protected $exception;
 
     public function __construct(Exception  $exception)
     {
