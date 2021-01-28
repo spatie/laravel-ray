@@ -56,15 +56,6 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function exception(Exception $exception): self
-    {
-        $payload = new ExceptionPayload($exception);
-
-        $this->sendRequest($payload);
-
-        return $this;
-    }
-
     public function mailable(Mailable $mailable): self
     {
         $payload = MailablePayload::forMailable($mailable);
