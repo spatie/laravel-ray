@@ -12,15 +12,13 @@ class QueryWatcher extends Watcher
     public function register(): void
     {
         DB::listen(function (QueryExecuted $query) {
-
-            if (!$this->enabled()) {
+            if (! $this->enabled()) {
                 return;
             }
 
             $payload = new ExecutedQueryPayload($query);
 
             app(Ray::class)->sendRequest($payload);
-
         });
     }
 

@@ -12,7 +12,7 @@ class ExceptionWatcher extends Watcher
     public function register(): void
     {
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
-            if (! $this->enabled())  {
+            if (! $this->enabled()) {
                 return;
             }
 
@@ -31,11 +31,11 @@ class ExceptionWatcher extends Watcher
 
     public function concernsException(MessageLogged $messageLogged): bool
     {
-        if (!isset($messageLogged->context['exception'])) {
+        if (! isset($messageLogged->context['exception'])) {
             return false;
         }
 
-        if (!$messageLogged->context['exception'] instanceof Exception) {
+        if (! $messageLogged->context['exception'] instanceof Exception) {
             return false;
         }
 

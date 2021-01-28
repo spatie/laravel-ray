@@ -8,7 +8,8 @@ use Spatie\LaravelRay\Ray;
 
 class EventWatcher extends Watcher
 {
-    public function register(): void    {
+    public function register(): void
+    {
         Event::listen('*', function (string $eventName, array $arguments) {
             if (! $this->enabled()) {
                 return;

@@ -2,27 +2,17 @@
 
 namespace Spatie\LaravelRay;
 
-use Exception;
-use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\Events\JobFailed;
-use Illuminate\Queue\Events\JobProcessed;
-use Illuminate\Queue\Events\JobProcessing;
-use Illuminate\Queue\Events\JobQueued;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Watchers\ApplicationLogWatcher;
 use Spatie\LaravelRay\Watchers\DumpWatcher;
-use Spatie\LaravelRay\Watchers\EventLogger;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
@@ -62,7 +52,7 @@ class RayServiceProvider extends ServiceProvider
             $settings = SettingsFactory::createFromConfigFile($this->app->configPath());
 
             return $settings->setDefaultSettings([
-                'enable' => !app()->environment('production'),
+                'enable' => ! app()->environment('production'),
                 'send_log_calls_to_ray' => true,
                 'send_dumps_to_ray' => true,
             ]);
@@ -86,7 +76,7 @@ class RayServiceProvider extends ServiceProvider
 
             $ray = new Ray($settings, $client);
 
-            if (!$settings->enable) {
+            if (! $settings->enable) {
                 $ray->disable();
             }
 
@@ -111,10 +101,10 @@ class RayServiceProvider extends ServiceProvider
         ];
 
         collect($watchers)
-            ->each(function(string $watcherClass) {
+            ->each(function (string $watcherClass) {
                 $this->app->singleton($watcherClass);
             })
-            ->each(function(string $watcherClass) {
+            ->each(function (string $watcherClass) {
                 /** @var \Spatie\LaravelRay\Watchers\Watcher $watcher */
                 $watcher = app($watcherClass);
 
@@ -145,7 +135,7 @@ class RayServiceProvider extends ServiceProvider
 
     protected function registerBladeDirectives(): self
     {
-        if (!$this->app->has('blade.compiler')) {
+        if (! $this->app->has('blade.compiler')) {
             return $this;
         }
 

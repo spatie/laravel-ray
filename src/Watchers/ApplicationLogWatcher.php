@@ -36,8 +36,6 @@ class ApplicationLogWatcher extends Watcher
                 $ray->color('orange');
             }
         });
-
-
     }
 
     protected function shouldLogMessage(MessageLogged  $message): bool
@@ -49,7 +47,7 @@ class ApplicationLogWatcher extends Watcher
         /** @var Ray $ray */
         $ray = app(Ray::class);
 
-        if (!$ray->settings->send_log_calls_to_ray) {
+        if (! $ray->settings->send_log_calls_to_ray) {
             return false;
         }
 
