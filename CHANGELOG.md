@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.9.3 - 2021-01-28
+
+- internals cleanup
+
 ## 1.9.2 - 2021-01-28
 
 - improve dependencies
