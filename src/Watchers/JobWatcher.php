@@ -7,7 +7,6 @@ use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\Events\JobQueued;
 use Illuminate\Support\Facades\Event;
-use Spatie\LaravelRay\JobLogger;
 use Spatie\LaravelRay\Payloads\JobEventPayload;
 use Spatie\LaravelRay\Ray;
 
@@ -21,7 +20,7 @@ class JobWatcher extends Watcher
             JobProcessed::class,
             JobFailed::class,
         ], function (object $event) {
-            if (!$this->enabled()) {
+            if (! $this->enabled()) {
                 return;
             }
 

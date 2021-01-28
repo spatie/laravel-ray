@@ -37,7 +37,7 @@ class ExceptionPayload extends Payload
     {
         $frames = Backtrace::createForThrowable($this->exception)->frames();
 
-        return array_map(function(Frame $frame) {
+        return array_map(function (Frame $frame) {
             return [
                 'file_name' => $this->replaceRemotePathWithLocalPath($frame->file),
                 'line_number' => $frame->lineNumber,
