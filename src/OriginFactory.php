@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Spatie\Backtrace\Backtrace;
 use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
+use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
 
@@ -69,7 +70,7 @@ class OriginFactory
             return $this->findFrameForCollectionMacro($frames, $indexOfRay);
         }
 
-        if ($rayFrame->class === QueryLogger::class) {
+        if ($rayFrame->class === QueryWatcher::class) {
             return $this->findFrameForQuery($frames);
         }
 

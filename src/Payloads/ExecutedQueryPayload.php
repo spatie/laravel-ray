@@ -27,7 +27,6 @@ class ExecutedQueryPayload extends Payload
             'bindings' => $this->query->bindings,
             'connection_name' => $this->query->connectionName,
             'time' => $this->query->time,
-
         ];
     }
 }
