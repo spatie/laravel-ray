@@ -10,7 +10,7 @@ class ViewWatcher extends Watcher
     public function register(): void
     {
         Event::listen('composing:*', function ($event, $data) {
-            if (!$this->enabled()) {
+            if (! $this->enabled()) {
                 return;
             }
 

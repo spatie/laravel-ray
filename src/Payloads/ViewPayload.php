@@ -26,7 +26,7 @@ class ViewPayload extends Payload
     {
         return [
             'view_path' => $this->view->getPath(),
-            'view_path_relative_to_project_root' =>  Str::after($this->pathRelativeToProjectRoot($this->view), '/'),
+            'view_path_relative_to_project_root' => Str::after($this->pathRelativeToProjectRoot($this->view), '/'),
             'data' => ArgumentConverter::convertToPrimitive($this->getData($this->view)),
         ];
     }
@@ -46,7 +46,7 @@ class ViewPayload extends Payload
     {
         return collect($view->getData())
             ->filter(function ($value, $key) {
-                return !in_array($key, ['app', '__env', 'obLevel', 'errors']);
+                return ! in_array($key, ['app', '__env', 'obLevel', 'errors']);
             })
             ->toArray();
     }
