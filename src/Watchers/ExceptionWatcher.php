@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay\Watchers;
 
 use Exception;
+use Facade\FlareClient\Flare;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
 use Spatie\LaravelRay\Ray;
@@ -11,6 +12,8 @@ class ExceptionWatcher extends Watcher
 {
     public function register(): void
     {
+        $this->enable();
+
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
             if (! $this->enabled()) {
                 return;
@@ -25,7 +28,14 @@ class ExceptionWatcher extends Watcher
             /** @var Ray $ray */
             $ray = app(Ray::class);
 
-            $ray->exception($exception);
+
+            /** @var Flare $flare */
+            $flare = app(Flare::class);
+
+            /** @var \Facade\FlareClient\Report $report */
+            $report = $flare->createReport($exception);
+
+            $ray->exception($exception, ['flare_report' => $report->toArray()]);
         });
     }
 
