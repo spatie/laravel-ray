@@ -6,14 +6,17 @@ use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Illuminate\Testing\TestResponse;
+use Illuminate\View\View;
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
+use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
+use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Ray as BaseRay;
 
 class Ray extends BaseRay
@@ -183,6 +186,42 @@ class Ray extends BaseRay
         return $this;
     }
 
+    public function view(View $view): self
+    {
+        $payload = new ViewPayload($view);
+
+        return $this->sendRequest($payload);
+    }
+
+    public function showViews($callable = null): self
+    {
+        $wasWatchingViews = $this->viewWatcher()->enabled();
+
+        $this->viewWatcher()->enable();
+
+        if ($callable) {
+            $callable();
+
+            if (! $wasWatchingViews) {
+                $this->jobWatcher()->disable();
+            }
+        }
+
+        return $this;
+    }
+
+    public function views($callable = null): self
+    {
+        return $this->showViews($callable);
+    }
+
+    public function stopShowingViews(): self
+    {
+        $this->viewWatcher()->disable();
+
+        return $this;
+    }
+
     public function showQueries($callable = null): self
     {
         $wasLoggingQueries = $this->queryWatcher()->enabled();
@@ -232,6 +271,11 @@ class Ray extends BaseRay
     protected function queryWatcher(): QueryWatcher
     {
         return app(QueryWatcher::class);
+    }
+
+    protected function viewWatcher(): ViewWatcher
+    {
+        return app(ViewWatcher::class);
     }
 
     /**

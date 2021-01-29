@@ -18,6 +18,7 @@ use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\LoggedMailWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
+use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Client;
 use Spatie\Ray\PayloadFactory;
 use Spatie\Ray\Payloads\Payload;
@@ -98,6 +99,7 @@ class RayServiceProvider extends ServiceProvider
             EventWatcher::class,
             DumpWatcher::class,
             QueryWatcher::class,
+            ViewWatcher::class,
         ];
 
         collect($watchers)

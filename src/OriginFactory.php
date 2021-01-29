@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay;
 
 use Illuminate\Events\Dispatcher;
+use Illuminate\Http\Response;
 use Illuminate\Log\Logger;
 use Illuminate\Log\LogManager;
 use Illuminate\Support\Collection;
@@ -12,6 +13,7 @@ use Spatie\Backtrace\Backtrace;
 use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
+use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
 
@@ -74,6 +76,10 @@ class OriginFactory
             return $this->findFrameForQuery($frames);
         }
 
+        if ($rayFrame->class === ViewWatcher::class) {
+            return $this->findFrameForView($frames, $indexOfRay);
+        }
+
         if ($rayFrame->class === DumpRecorder::class) {
             return $this->findFrameForDump($frames);
         }
@@ -106,6 +112,11 @@ class OriginFactory
             });
 
         return $frames[$indexOfLastDatabaseCall + 1] ?? null;
+    }
+
+    protected function findFrameForView(Collection $frames, int $indexOfRayFrame): ?Frame
+    {
+        return $frames[$indexOfRayFrame + 6] ?? null;
     }
 
     protected function findFrameForDump(Collection $frames): ?Frame
