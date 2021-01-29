@@ -4,7 +4,6 @@ namespace Spatie\LaravelRay\Watchers;
 
 use Exception;
 use Facade\FlareClient\Flare;
-use Facade\FlareClient\Report;
 use Facade\FlareClient\Truncation\ReportTrimmer;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
