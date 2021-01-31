@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay;
 
 use Illuminate\Events\Dispatcher;
-use Illuminate\Http\Response;
 use Illuminate\Log\Logger;
 use Illuminate\Log\LogManager;
 use Illuminate\Support\Collection;
