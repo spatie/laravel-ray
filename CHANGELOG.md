@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.10.1 - 201-01-31
+
+- display logged exceptions
+
 ## 1.10.0 - 2021-01-29
 
 - add view methods
