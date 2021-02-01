@@ -7,7 +7,7 @@ use Spatie\Ray\Payloads\Payload;
 
 class CachePayload extends Payload
 {
-    /**  @var string */
+    /** @var string */
     protected $type;
 
     /** @var string */

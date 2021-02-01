@@ -13,7 +13,7 @@ class CacheWatcher extends Watcher
 {
     public function register(): void
     {
-        app('events')->listen(CacheHit::class, function(CacheHit $event) {
+        app('events')->listen(CacheHit::class, function (CacheHit $event) {
             if (! $this->enabled()) {
                 return;
             }
@@ -23,7 +23,7 @@ class CacheWatcher extends Watcher
             $this->ray()->sendRequest($payload);
         });
 
-        app('events')->listen(CacheMissed::class, function(CacheMissed $event) {
+        app('events')->listen(CacheMissed::class, function (CacheMissed $event) {
             if (! $this->enabled()) {
                 return;
             }
@@ -33,7 +33,7 @@ class CacheWatcher extends Watcher
             $this->ray()->sendRequest($payload);
         });
 
-        app('events')->listen(KeyWritten::class, function(KeyWritten $event) {
+        app('events')->listen(KeyWritten::class, function (KeyWritten $event) {
             if (! $this->enabled()) {
                 return;
             }
@@ -48,7 +48,7 @@ class CacheWatcher extends Watcher
             $this->ray()->sendRequest($payload);
         });
 
-        app('events')->listen(KeyForgotten::class, function(KeyForgotten $event) {
+        app('events')->listen(KeyForgotten::class, function (KeyForgotten $event) {
             if (! $this->enabled()) {
                 return;
             }
