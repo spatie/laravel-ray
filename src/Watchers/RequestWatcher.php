@@ -49,18 +49,18 @@ class RequestWatcher extends Watcher
             : [];
 
         $payload = new TablePayload([
-            'ip_address' => $request->ip(),
-            'uri' => str_replace($request->root(), '', $request->fullUrl()) ?: '/',
-            'method' => $request->method(),
-            'controller_action' => optional($request->route())->getActionName(),
-            'middleware' => array_values(optional($request->route())->gatherMiddleware() ?? []),
-            'headers' => $headers,
-            'payload' => $this->payload($request),
-            'session' => $session,
-            'response_status' => $response->getStatusCode(),
-            'response' => $this->response($response),
-            'duration' => $startTime ? floor((microtime(true) - $startTime) * 1000) : null,
-            'memory' => round(memory_get_peak_usage(true) / 1024 / 1024, 1),
+            'IP Address' => $request->ip(),
+            'URI' => str_replace($request->root(), '', $request->fullUrl()) ?: '/',
+            'Method' => $request->method(),
+            'Controller Action' => optional($request->route())->getActionName(),
+            'Middleware' => array_values(optional($request->route())->gatherMiddleware() ?? []),
+            'Headers' => $headers,
+            'Payload' => $this->payload($request),
+            'Session' => $session,
+            'Response code' => $response->getStatusCode(),
+            'Response' => $this->response($response),
+            'Duration' => $startTime ? floor((microtime(true) - $startTime) * 1000) : null,
+            'Memory' => round(memory_get_peak_usage(true) / 1024 / 1024, 1),
         ], 'Request');
 
         app(Ray::class)->sendRequest($payload);
