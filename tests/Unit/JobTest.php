@@ -9,8 +9,6 @@ use Spatie\LaravelRay\Tests\TestClasses\TestJob;
 
 class JobTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_can_automatically_send_jobs_to_ray()
     {

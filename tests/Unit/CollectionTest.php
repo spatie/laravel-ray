@@ -9,8 +9,6 @@ use Spatie\LaravelRay\Tests\TestClasses\User;
 
 class CollectionTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_has_a_chainable_collection_macro_to_send_things_to_ray()
     {

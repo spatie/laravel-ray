@@ -8,8 +8,6 @@ use Spatie\LaravelRay\Tests\TestCase;
 
 class DumpTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_can_log_dumps()
     {

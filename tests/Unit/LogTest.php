@@ -9,8 +9,6 @@ use Spatie\Ray\Settings\Settings;
 
 class LogTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_will_send_logs_to_ray_by_default()
     {

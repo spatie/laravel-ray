@@ -10,8 +10,6 @@ use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 
 class EventTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_can_send_a_class_based_event_to_ray()
     {

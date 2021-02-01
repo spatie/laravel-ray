@@ -17,8 +17,6 @@ use Spatie\Ray\Settings\Settings;
 
 class RayTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function when_disabled_nothing_will_be_sent_to_ray()
     {
@@ -72,18 +70,6 @@ class RayTest extends TestCase
     }
 
 
-
-    /** @test */
-    public function it_can_send_the_view_payload()
-    {
-        ray()->showViews();
-
-        view('test')->render();
-
-        $payloads = $this->client->sentPayloads();
-        $this->assertCount(1, $payloads);
-        $this->assertEquals('view', $payloads[0]['payloads'][0]['type']);
-    }
 
     /** @test */
     public function it_can_replace_the_remote_path_with_the_local_one()

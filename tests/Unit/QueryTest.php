@@ -8,8 +8,6 @@ use Spatie\LaravelRay\Tests\TestCase;
 
 class QueryTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_can_start_logging_queries()
     {

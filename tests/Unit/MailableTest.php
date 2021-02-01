@@ -10,8 +10,6 @@ use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 
 class MailableTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_can_send_the_mailable_payload()
     {

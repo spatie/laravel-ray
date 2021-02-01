@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
+use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\FakeClient;
 use Spatie\Ray\Settings\Settings;
 
 class TestCase extends Orchestra
 {
+    use MatchesOsSafeSnapshots;
+
     /** @var \Spatie\LaravelRay\Tests\TestClasses\FakeClient */
     protected $client;
 

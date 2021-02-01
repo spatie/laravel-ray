@@ -9,8 +9,6 @@ use Spatie\LaravelRay\Tests\TestClasses\User;
 
 class ModelTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_can_send_one_model_to_ray()
     {

@@ -10,8 +10,6 @@ use Spatie\LaravelRay\Tests\TestCase;
 
 class JsonTest extends TestCase
 {
-    use MatchesOsSafeSnapshots;
-
     /** @test */
     public function it_can_send_a_json_test_response_to_ray()
     {
