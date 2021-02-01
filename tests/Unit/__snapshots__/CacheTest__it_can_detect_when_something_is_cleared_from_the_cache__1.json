@@ -6,16 +6,16 @@
                 "type": "table",
                 "content": {
                     "values": {
-                        "Event": "Key written",
+                        "Event": "<code>Key written<\/code>",
                         "Key": "cached-key",
-                        "value": "cached-value",
+                        "Value": "cached-value",
                         "Expiration in seconds": "10"
                     },
                     "label": "Cache"
                 },
                 "origin": {
-                    "file": "\/vendor\/laravel\/framework\/src\/Illuminate\/Cache\/Repository.php",
-                    "line_number": 214
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 79
                 }
             }
         ],
@@ -28,15 +28,15 @@
                 "type": "table",
                 "content": {
                     "values": {
-                        "Event": "Hit",
+                        "Event": "<code>Hit<\/code>",
                         "Key": "cached-key",
-                        "value": "cached-value"
+                        "Value": "cached-value"
                     },
                     "label": "Cache"
                 },
                 "origin": {
-                    "file": "\/vendor\/laravel\/framework\/src\/Illuminate\/Cache\/Repository.php",
-                    "line_number": 107
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 81
                 }
             }
         ],
@@ -49,14 +49,14 @@
                 "type": "table",
                 "content": {
                     "values": {
-                        "Event": "Key forgotten",
+                        "Event": "<code>Key forgotten<\/code>",
                         "Key": "cached-key"
                     },
                     "label": "Cache"
                 },
                 "origin": {
-                    "file": "\/vendor\/laravel\/framework\/src\/Illuminate\/Cache\/Repository.php",
-                    "line_number": 435
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 81
                 }
             }
         ],

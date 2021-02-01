@@ -14,6 +14,7 @@ use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
+use Spatie\LaravelRay\Watchers\RequestWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
@@ -153,7 +154,6 @@ class OriginFactory
             ->search(function (Frame $frame) {
                 return ($frame->class === Dispatcher::class) && $frame->method === 'dispatch';
             });
-
 
         /** @var Frame $foundFrame */
         if ($foundFrame = $frames[$indexOfEventDispatcherCall + 2]) {

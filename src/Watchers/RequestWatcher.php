@@ -52,7 +52,7 @@ class RequestWatcher extends Watcher
             'IP Address' => $request->ip(),
             'URI' => str_replace($request->root(), '', $request->fullUrl()) ?: '/',
             'Method' => $request->method(),
-            'Controller Action' => optional($request->route())->getActionName(),
+            'Controller action' => optional($request->route())->getActionName(),
             'Middleware' => array_values(optional($request->route())->gatherMiddleware() ?? []),
             'Headers' => $headers,
             'Payload' => $this->payload($request),

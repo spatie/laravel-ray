@@ -6,14 +6,14 @@
                 "type": "table",
                 "content": {
                     "values": {
-                        "Event": "Missed",
+                        "Event": "<code>Missed<\/code>",
                         "Key": "cached-key"
                     },
                     "label": "Cache"
                 },
                 "origin": {
-                    "file": "\/vendor\/laravel\/framework\/src\/Illuminate\/Cache\/Repository.php",
-                    "line_number": 103
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 59
                 }
             }
         ],
