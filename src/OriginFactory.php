@@ -14,7 +14,6 @@ use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
-use Spatie\LaravelRay\Watchers\RequestWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
