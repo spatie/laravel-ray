@@ -1,0 +1,75 @@
+<?php
+
+namespace Spatie\LaravelRay\Watchers;
+
+use Illuminate\Cache\Events\CacheHit;
+use Illuminate\Cache\Events\CacheMissed;
+use Illuminate\Cache\Events\KeyForgotten;
+use Illuminate\Cache\Events\KeyWritten;
+use Spatie\LaravelRay\Payloads\CachePayload;
+use Spatie\LaravelRay\Ray;
+
+class CacheWatcher extends Watcher
+{
+    public function register(): void
+    {
+        app('events')->listen(CacheHit::class, function(CacheHit $event) {
+            if (! $this->enabled()) {
+                return;
+            }
+
+            $payload = new CachePayload('Hit', $event->key, $event->value);
+
+            $this->ray()->sendRequest($payload);
+        });
+
+        app('events')->listen(CacheMissed::class, function(CacheMissed $event) {
+            if (! $this->enabled()) {
+                return;
+            }
+
+            $payload = new CachePayload('Missed', $event->key);
+
+            $this->ray()->sendRequest($payload);
+        });
+
+        app('events')->listen(KeyWritten::class, function(KeyWritten $event) {
+            if (! $this->enabled()) {
+                return;
+            }
+
+            $payload = new CachePayload(
+                'Key written',
+                $event->key,
+                $event->value,
+                $this->formatExpiration($event)
+            );
+
+            $this->ray()->sendRequest($payload);
+        });
+
+        app('events')->listen(KeyForgotten::class, function(KeyForgotten $event) {
+            if (! $this->enabled()) {
+                return;
+            }
+
+            $payload = new CachePayload(
+                'Key forgotten',
+                $event->key,
+            );
+
+            $this->ray()->sendRequest($payload);
+        });
+    }
+
+    protected function formatExpiration(KeyWritten $event)
+    {
+        return property_exists($event, 'seconds')
+            ? $event->seconds : $event->minutes * 60;
+    }
+
+    public function ray(): Ray
+    {
+        return app(Ray::class);
+    }
+}

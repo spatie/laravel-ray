@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay;
 
+use Closure;
 use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
@@ -17,6 +18,7 @@ use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
+use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Ray as BaseRay;
 
 class Ray extends BaseRay
@@ -127,19 +129,9 @@ class Ray extends BaseRay
 
     public function showEvents($callable = null): self
     {
-        $wasLoggingEvents = $this->eventWatcher()->enabled();
+        $watcher = app(EventWatcher::class);
 
-        $this->eventWatcher()->enable();
-
-        if ($callable) {
-            $callable();
-
-            if (! $wasLoggingEvents) {
-                $this->eventWatcher()->disable();
-            }
-        }
-
-        return $this;
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function events($callable = null): self
@@ -159,19 +151,9 @@ class Ray extends BaseRay
 
     public function showJobs($callable = null): self
     {
-        $wasLoggingJobs = $this->jobWatcher()->enabled();
+        $watcher = app(JobWatcher::class);
 
-        $this->jobWatcher()->enable();
-
-        if ($callable) {
-            $callable();
-
-            if (! $wasLoggingJobs) {
-                $this->jobWatcher()->disable();
-            }
-        }
-
-        return $this;
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function jobs($callable = null): self
@@ -181,7 +163,7 @@ class Ray extends BaseRay
 
     public function stopShowingJobs(): self
     {
-        $this->jobWatcher()->disable();
+        app(JobWatcher::class)->disable();
 
         return $this;
     }
@@ -195,19 +177,9 @@ class Ray extends BaseRay
 
     public function showViews($callable = null): self
     {
-        $wasWatchingViews = $this->viewWatcher()->enabled();
+        $watcher = app(ViewWatcher::class);
 
-        $this->viewWatcher()->enable();
-
-        if ($callable) {
-            $callable();
-
-            if (! $wasWatchingViews) {
-                $this->jobWatcher()->disable();
-            }
-        }
-
-        return $this;
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function views($callable = null): self
@@ -217,26 +189,16 @@ class Ray extends BaseRay
 
     public function stopShowingViews(): self
     {
-        $this->viewWatcher()->disable();
+        app(ViewWatcher::class)->disable();
 
         return $this;
     }
 
     public function showQueries($callable = null): self
     {
-        $wasLoggingQueries = $this->queryWatcher()->enabled();
+        $watcher = app(QueryWatcher::class);
 
-        $this->queryWatcher()->enable();
-
-        if (! is_null($callable)) {
-            $callable();
-
-            if (! $wasLoggingQueries) {
-                $this->disable();
-            }
-        }
-
-        return $this;
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function queries($callable = null): self
@@ -246,7 +208,24 @@ class Ray extends BaseRay
 
     public function stopShowingQueries(): self
     {
-        $this->queryWatcher()->disable();
+        app(QueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function handleWatcherCallable(Watcher $watcher, Closure $callable = null): self
+    {
+        $wasEnabled = $watcher->enabled();
+
+        $watcher->enable();
+
+        if ($callable) {
+            $callable();
+
+            if (! $wasEnabled) {
+                $watcher->disable();
+            }
+        }
 
         return $this;
     }
@@ -256,26 +235,6 @@ class Ray extends BaseRay
         $payload = ResponsePayload::fromTestResponse($testResponse);
 
         $this->sendRequest($payload);
-    }
-
-    protected function eventWatcher(): EventWatcher
-    {
-        return app(EventWatcher::class);
-    }
-
-    protected function jobWatcher(): JobWatcher
-    {
-        return app(JobWatcher::class);
-    }
-
-    protected function queryWatcher(): QueryWatcher
-    {
-        return app(QueryWatcher::class);
-    }
-
-    protected function viewWatcher(): ViewWatcher
-    {
-        return app(ViewWatcher::class);
     }
 
     /**
