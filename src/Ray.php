@@ -18,6 +18,7 @@ use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
+use Spatie\LaravelRay\Watchers\RequestWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Ray as BaseRay;
@@ -228,7 +229,28 @@ class Ray extends BaseRay
         return $this;
     }
 
+    public function showRequests($callable = null): self
+    {
+        $watcher = app(RequestWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function requests($callable = null): self
+    {
+        return $this->showRequests($callable);
+    }
+
+    public function stopShowingRequests(): self
+    {
+        $this->requestWatcher()->disable();
+
+        return $this;
+    }
+
+
     public function handleWatcherCallable(Watcher $watcher, Closure $callable = null): self
+
     {
         $wasEnabled = $watcher->enabled();
 
@@ -250,6 +272,11 @@ class Ray extends BaseRay
         $payload = ResponsePayload::fromTestResponse($testResponse);
 
         $this->sendRequest($payload);
+    }
+
+    protected function requestWatcher(): RequestWatcher
+    {
+        return app(RequestWatcher::class);
     }
 
     /**
