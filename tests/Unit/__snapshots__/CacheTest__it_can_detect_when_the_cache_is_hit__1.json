@@ -1,0 +1,44 @@
+[
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "table",
+                "content": {
+                    "values": {
+                        "Event": "Key written",
+                        "Key": "cached-key",
+                        "value": "cached-value"
+                    },
+                    "label": "Cache"
+                },
+                "origin": {
+                    "file": "\/vendor\/laravel\/framework\/src\/Illuminate\/Cache\/Repository.php",
+                    "line_number": 360
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "table",
+                "content": {
+                    "values": {
+                        "Event": "Hit",
+                        "Key": "cached-key",
+                        "value": "cached-value"
+                    },
+                    "label": "Cache"
+                },
+                "origin": {
+                    "file": "\/vendor\/laravel\/framework\/src\/Illuminate\/Cache\/Repository.php",
+                    "line_number": 107
+                }
+            }
+        ],
+        "meta": []
+    }
+]

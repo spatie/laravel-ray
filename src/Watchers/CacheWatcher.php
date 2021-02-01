@@ -8,11 +8,16 @@ use Illuminate\Cache\Events\KeyForgotten;
 use Illuminate\Cache\Events\KeyWritten;
 use Spatie\LaravelRay\Payloads\CachePayload;
 use Spatie\LaravelRay\Ray;
+use Spatie\Ray\Settings\Settings;
 
 class CacheWatcher extends Watcher
 {
     public function register(): void
     {
+        $settings = app(Settings::class);
+
+        $this->enabled = $settings->send_cache_to_ray;
+
         app('events')->listen(CacheHit::class, function (CacheHit $event) {
             if (! $this->enabled()) {
                 return;

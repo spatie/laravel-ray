@@ -14,6 +14,7 @@ use Spatie\LaravelRay\Payloads\MarkdownPayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\LaravelRay\Payloads\ViewPayload;
+use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
@@ -154,6 +155,20 @@ class Ray extends BaseRay
         $watcher = app(JobWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function showCache($callable = null): self
+    {
+        $watcher = app(CacheWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingCache(): self
+    {
+        app(CacheWatcher::class)->disable();
+
+        return $this;
     }
 
     public function jobs($callable = null): self

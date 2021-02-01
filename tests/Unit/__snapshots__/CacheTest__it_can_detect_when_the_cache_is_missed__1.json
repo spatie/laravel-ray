@@ -1,0 +1,22 @@
+[
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "table",
+                "content": {
+                    "values": {
+                        "Event": "Missed",
+                        "Key": "cached-key"
+                    },
+                    "label": "Cache"
+                },
+                "origin": {
+                    "file": "\/vendor\/laravel\/framework\/src\/Illuminate\/Cache\/Repository.php",
+                    "line_number": 103
+                }
+            }
+        ],
+        "meta": []
+    }
+]

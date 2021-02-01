@@ -12,6 +12,7 @@ use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Watchers\ApplicationLogWatcher;
+use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\DumpWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
@@ -56,6 +57,9 @@ class RayServiceProvider extends ServiceProvider
                 'enable' => ! app()->environment('production'),
                 'send_log_calls_to_ray' => true,
                 'send_dumps_to_ray' => true,
+                'send_views_to_ray' => false,
+                'send_jobs_to_ray' => false,
+                'send_cache_to_ray' => false,
             ]);
         });
 
@@ -100,6 +104,7 @@ class RayServiceProvider extends ServiceProvider
             DumpWatcher::class,
             QueryWatcher::class,
             ViewWatcher::class,
+            CacheWatcher::class,
         ];
 
         collect($watchers)
