@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\LaravelRay\Ray;
-use Spatie\Ray\ArgumentConverter;
 use Spatie\Ray\Payloads\TablePayload;
+use Spatie\Ray\Settings\Settings;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +19,10 @@ class RequestWatcher extends Watcher
 {
     public function register(): void
     {
+        $settings = app(Settings::class);
+
+        $this->enabled = $settings->send_requests_to_ray;
+
         Event::listen(RequestHandled::class, function (RequestHandled $event) {
             if (!$this->enabled()) {
                 return;

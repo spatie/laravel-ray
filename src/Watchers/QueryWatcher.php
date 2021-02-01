@@ -6,11 +6,16 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
 use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
 use Spatie\LaravelRay\Ray;
+use Spatie\Ray\Settings\Settings;
 
 class QueryWatcher extends Watcher
 {
     public function register(): void
     {
+        $settings = app(Settings::class);
+
+        $this->enabled = $settings->send_queries_to_ray;
+
         DB::listen(function (QueryExecuted $query) {
             if (! $this->enabled()) {
                 return;

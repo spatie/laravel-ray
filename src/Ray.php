@@ -248,7 +248,6 @@ class Ray extends BaseRay
         return $this;
     }
 
-
     public function handleWatcherCallable(Watcher $watcher, Closure $callable = null): self
 
     {

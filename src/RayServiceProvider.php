@@ -56,11 +56,13 @@ class RayServiceProvider extends ServiceProvider
 
             return $settings->setDefaultSettings([
                 'enable' => ! app()->environment('production'),
-                'send_log_calls_to_ray' => true,
-                'send_dumps_to_ray' => true,
-                'send_views_to_ray' => false,
-                'send_jobs_to_ray' => false,
                 'send_cache_to_ray' => false,
+                'send_dumps_to_ray' => true,
+                'send_jobs_to_ray' => false,
+                'send_log_calls_to_ray' => true,
+                'send_queries_to_ray' => false,
+                'send_requests_to_ray' => false,
+                'send_views_to_ray' => false,
             ]);
         });
 
