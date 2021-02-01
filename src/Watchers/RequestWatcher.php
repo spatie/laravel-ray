@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\LaravelRay\Ray;
-use Spatie\Ray\ArgumentConverter;
 use Spatie\Ray\Payloads\TablePayload;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,7 @@ class RequestWatcher extends Watcher
     public function register(): void
     {
         Event::listen(RequestHandled::class, function (RequestHandled $event) {
-            if (!$this->enabled()) {
+            if (! $this->enabled()) {
                 return;
             }
 

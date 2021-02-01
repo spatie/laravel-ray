@@ -3,7 +3,6 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
-
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelRay\Tests\TestCase;
 

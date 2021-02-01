@@ -3,13 +3,8 @@
 namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Route;
 use Log;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
-use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
-use Spatie\LaravelRay\Tests\TestClasses\TestJob;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
