@@ -376,4 +376,16 @@ class RayTest extends TestCase
 
         $this->assertEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
     }
+
+    /** @test */
+    public function it_can_listen_to_requests()
+    {
+        Route::get('test', function () {
+            return 'ok';
+        });
+
+        ray()->requests();
+
+        $this->get('test');
+    }
 }
