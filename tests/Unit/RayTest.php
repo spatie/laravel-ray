@@ -32,73 +32,6 @@ class RayTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_blow_up_when_not_passing_anything()
-    {
-        ray();
-
-        $this->assertCount(0, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_start_logging_queries()
-    {
-        ray()->showQueries();
-
-        DB::table('users')->get('id');
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_start_logging_queries_using_alias()
-    {
-        ray()->queries();
-
-        DB::table('users')->get('id');
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_stop_logging_queries()
-    {
-        ray()->showQueries();
-
-        DB::table('users')->get('id');
-        DB::table('users')->get('id');
-        $this->assertCount(2, $this->client->sentPayloads());
-
-        ray()->stopShowingQueries();
-        DB::table('users')->get('id');
-        $this->assertCount(2, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function calling_log_queries_twice_will_not_log_all_queries_twice()
-    {
-        ray()->showQueries();
-        ray()->showQueries();
-
-        DB::table('users')->get('id');
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_log_all_queries_in_a_callable()
-    {
-        ray()->showQueries(function () {
-            // will be logged
-            DB::table('users')->where('id', 1)->get();
-        });
-        $this->assertCount(1, $this->client->sentPayloads());
-
-        // will not be logged
-        DB::table('users')->get('id');
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
     public function it_can_be_disabled()
     {
         ray()->disable();
@@ -108,6 +41,14 @@ class RayTest extends TestCase
         ray()->enable();
         ray('not test');
         $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_will_not_blow_up_when_not_passing_anything()
+    {
+        ray();
+
+        $this->assertCount(0, $this->client->sentPayloads());
     }
 
     /** @test */
@@ -130,74 +71,7 @@ class RayTest extends TestCase
         $this->assertEquals(false, ray()->disabled());
     }
 
-    /** @test */
-    public function it_can_log_dumps()
-    {
-        dump('test');
 
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_send_one_model_to_ray()
-    {
-        $user = User::make(['email' => 'john@example.com']);
-
-        ray()->model($user);
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_send_multiple_models_to_ray()
-    {
-        $user1 = User::make(['email' => 'john@example.com']);
-        $user2 = User::make(['email' => 'paul@example.com']);
-
-        ray()->model($user1, $user2);
-        $this->assertCount(2, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_send_a_single_models_to_ray_using_models()
-    {
-        $user = User::make(['email' => 'john@example.com']);
-
-        ray()->models($user);
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_send_a_collection_of_models_to_ray_using_models()
-    {
-        $user1 = User::make(['email' => 'john@example.com']);
-        $user2 = User::make(['email' => 'paul@example.com']);
-
-        ray()->models(collect([$user1, $user2]));
-
-        $this->assertCount(2, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_has_a_chainable_collection_macro_to_send_things_to_ray()
-    {
-        $array = ['a', 'b', 'c'];
-
-        $newArray = collect($array)->ray()->toArray();
-
-        $this->assertEquals($newArray, $array);
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_send_the_mailable_payload()
-    {
-        ray()->mailable(new TestMailable());
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
 
     /** @test */
     public function it_can_send_the_view_payload()
@@ -209,90 +83,6 @@ class RayTest extends TestCase
         $payloads = $this->client->sentPayloads();
         $this->assertCount(1, $payloads);
         $this->assertEquals('view', $payloads[0]['payloads'][0]['type']);
-    }
-
-    /** @test */
-    public function it_can_send_a_logged_mailable()
-    {
-        Mail::mailer('log')
-            ->cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
-            ->bcc(['willem@spatie.be', 'jef@spatie.be'])
-            ->to(['freek@spatie.be', 'ruben@spatie.be'])
-            ->send(new TestMailable());
-
-        $this->assertCount(1, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_send_a_class_based_event_to_ray()
-    {
-        ray()->showEvents();
-
-        event(new TestEvent());
-
-        ray()->stopShowingEvents();
-
-        event('not showing this event');
-
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals(TestEvent::class, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
-        $this->assertTrue(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.class_based_event'));
-    }
-
-    /** @test */
-    public function it_can_send_a_string_based_event_to_ray()
-    {
-        ray()->showEvents();
-
-        $eventName = 'this is my event';
-
-        event($eventName);
-
-        ray()->stopShowingEvents();
-
-        event('not showing this event');
-
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals($eventName, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
-        $this->assertFalse(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.class_based_event'));
-    }
-
-    /** @test */
-    public function it_will_not_send_any_events_if_it_is_not_enabled()
-    {
-        event('test event');
-
-        $this->assertCount(0, $this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function the_show_events_function_accepts_a_callable()
-    {
-        event('start event');
-
-        ray()->showEvents(function () {
-            event('event in callable');
-        });
-
-        event('end event');
-
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals('event in callable', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
-    }
-
-    /** @test */
-    public function it_can_automatically_send_jobs_to_ray()
-    {
-        ray()->showJobs();
-
-        dispatch(new TestJob());
-
-        ray()->stopShowingJobs();
-
-        dispatch(new TestJob());
-
-        $this->assertEquals('job_event', Arr::get($this->client->sentPayloads(), '0.payloads.0.type'));
-        $this->assertCount(2, $this->client->sentPayloads());
     }
 
     /** @test */
@@ -310,36 +100,6 @@ class RayTest extends TestCase
     }
 
     /** @test */
-    public function it_can_render_and_send_markdown()
-    {
-        ray()->markdown('## Hello World!');
-
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
-    }
-
-    /** @test */
-    public function it_can_send_a_json_test_response_to_ray()
-    {
-        Route::get('test', function () {
-            return response()->json(['a' => 1]);
-        });
-
-        $this
-            ->get('test')
-            ->ray()
-            ->assertSuccessful();
-
-        $this->assertCount(1, $this->client->sentPayloads());
-
-        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.status_code'));
-        $this->assertStringContainsString('application/json', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers'));
-
-        $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
-        $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
-        $this->assertNotEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
-    }
-
-    /** @test */
     public function it_will_automatically_use_specialized_payloads()
     {
         ray(new TestMailable(), new User());
@@ -348,26 +108,5 @@ class RayTest extends TestCase
 
         $this->assertEquals('mailable', $payloads[0]['payloads'][0]['type']);
         $this->assertEquals('eloquent_model', $payloads[0]['payloads'][1]['type']);
-    }
-
-    /** @test */
-    public function it_can_send_a_regular_test_response_to_ray()
-    {
-        Route::get('test', function () {
-            return response('hello', 201);
-        });
-
-        $this
-            ->get('test')
-            ->ray();
-
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals(201, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.status_code'));
-
-        $this->assertStringContainsString('text/html; charset=UTF-8', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers'));
-
-        $this->assertEquals('hello', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
-
-        $this->assertEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
     }
 }

@@ -1,3 +1,0 @@
--
-    uuid: fakeUuid
-    payloads: [{ type: log, content: { values: [a] }, origin: { file: helpers.php, line_number: 10 } }]
