@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay\Tests\Unit;
 
 use Illuminate\Support\Facades\Mail;
-use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 

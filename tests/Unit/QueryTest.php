@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay\Tests\Unit;
 
 use Illuminate\Support\Facades\DB;
-use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
 
 class QueryTest extends TestCase
