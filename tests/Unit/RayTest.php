@@ -3,14 +3,8 @@
 namespace Spatie\LaravelRay\Tests\Unit;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Route;
-use Log;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
-use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
-use Spatie\LaravelRay\Tests\TestClasses\TestJob;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
@@ -68,8 +62,6 @@ class RayTest extends TestCase
         ray()->enable();
         $this->assertEquals(false, ray()->disabled());
     }
-
-
 
     /** @test */
     public function it_can_replace_the_remote_path_with_the_local_one()
