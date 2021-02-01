@@ -2,10 +2,8 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
-use Illuminate\Support\Facades\DB;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
-use Spatie\LaravelRay\Tests\TestClasses\User;
 
 class CollectionTest extends TestCase
 {
