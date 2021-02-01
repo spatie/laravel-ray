@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay;
 
+use Illuminate\Cache\CacheManager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Log\Logger;
 use Illuminate\Log\LogManager;
@@ -11,6 +12,7 @@ use Illuminate\Support\Str;
 use Spatie\Backtrace\Backtrace;
 use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
+use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Origin\Origin;
@@ -83,6 +85,10 @@ class OriginFactory
             return $this->findFrameForDump($frames);
         }
 
+        if ($rayFrame->class === CacheWatcher::class) {
+            return $this->findFrameForCache($frames);
+        }
+
         if ($originFrame->class === Dispatcher::class) {
             return $this->findFrameForEvent($frames);
         }
@@ -134,6 +140,7 @@ class OriginFactory
 
     protected function findFrameForEvent(Collection $frames): ?Frame
     {
+
         $indexOfLoggerCall = $frames
             ->search(function (Frame $frame) {
                 return $frame->class === Logger::class;
@@ -177,6 +184,19 @@ class OriginFactory
         }
 
         return $foundFrame ?? null;
+    }
+
+    public function findFrameForCache(Collection $frames): ?Frame
+    {
+        $index =  $frames->search(function(Frame $frame) {
+            return $frame->class === CacheManager::class;
+        });
+
+        while(Str::startsWith($frames[$index]->class, 'Illuminate')) {
+            $index++;
+        }
+
+        return $frames[$index] ?? null;
     }
 
     protected function replaceCompiledViewPathWithOriginalViewPath(Frame $frame): Frame

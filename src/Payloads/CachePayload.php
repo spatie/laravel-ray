@@ -38,9 +38,9 @@ class CachePayload extends Payload
     public function getContent(): array
     {
         $values = array_filter([
-            'Event' => $this->type,
+            'Event' => '<code>' . $this->type . '</code>',
             'Key' => $this->key,
-            'value' => ArgumentConverter::convertToPrimitive($this->value),
+            'Value' => ArgumentConverter::convertToPrimitive($this->value),
             'Expiration in seconds' => $this->expirationInSeconds,
         ]);
 
