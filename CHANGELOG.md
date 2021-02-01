@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.11.1 - 2021-02-01
+
+- update config file
+
 ## 1.11.0 - 2021-01-31
 
 - add view requests
