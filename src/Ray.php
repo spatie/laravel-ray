@@ -249,7 +249,6 @@ class Ray extends BaseRay
     }
 
     public function handleWatcherCallable(Watcher $watcher, Closure $callable = null): self
-
     {
         $wasEnabled = $watcher->enabled();
 

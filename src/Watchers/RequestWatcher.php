@@ -24,7 +24,7 @@ class RequestWatcher extends Watcher
         $this->enabled = $settings->send_requests_to_ray;
 
         Event::listen(RequestHandled::class, function (RequestHandled $event) {
-            if (!$this->enabled()) {
+            if (! $this->enabled()) {
                 return;
             }
 
