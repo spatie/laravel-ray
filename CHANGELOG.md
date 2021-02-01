@@ -2,7 +2,12 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
-## 1.10.1 - 201-01-31
+## 1.11.0 - 2021-01-31
+
+- add view requests
+- add view cache
+
+## 1.10.1 - 2021-01-31
 
 - display logged exceptions
 
