@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay\Tests\Unit;
 
 use Log;
-use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\Ray\Settings\Settings;
 

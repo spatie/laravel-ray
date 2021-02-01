@@ -2,11 +2,7 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
-use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 
 class ViewTest extends TestCase
 {

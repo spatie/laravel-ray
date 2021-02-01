@@ -2,7 +2,6 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
-use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 

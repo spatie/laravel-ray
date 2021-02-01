@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay\Tests\Payloads;
 
 use Spatie\LaravelRay\Payloads\MailablePayload;
-use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 
