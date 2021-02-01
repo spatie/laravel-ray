@@ -140,7 +140,6 @@ class OriginFactory
 
     protected function findFrameForEvent(Collection $frames): ?Frame
     {
-
         $indexOfLoggerCall = $frames
             ->search(function (Frame $frame) {
                 return $frame->class === Logger::class;
@@ -188,11 +187,11 @@ class OriginFactory
 
     public function findFrameForCache(Collection $frames): ?Frame
     {
-        $index =  $frames->search(function(Frame $frame) {
+        $index = $frames->search(function (Frame $frame) {
             return $frame->class === CacheManager::class;
         });
 
-        while(Str::startsWith($frames[$index]->class, 'Illuminate')) {
+        while (Str::startsWith($frames[$index]->class, 'Illuminate')) {
             $index++;
         }
 
