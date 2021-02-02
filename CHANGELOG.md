@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.11.2 - 2021-02-02
+
+- do not blow up when using `Mail::fake()`
+
 ## 1.11.1 - 2021-02-01
 
 - update config file
