@@ -2,7 +2,6 @@
 
 namespace Spatie\LaravelRay\Payloads;
 
-use Exception;
 use Illuminate\Mail\Mailable;
 use Spatie\Ray\Payloads\Payload;
 use Throwable;
