@@ -3,6 +3,7 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelRay\Tests\TestCase;
 
@@ -15,11 +16,10 @@ class RequestTest extends TestCase
             return 'ok';
         });
 
-        ray()->enable();
         ray()->requests();
 
         $this->get('test');
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
     }
 }
