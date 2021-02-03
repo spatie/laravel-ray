@@ -15,6 +15,7 @@ class RequestTest extends TestCase
             return 'ok';
         });
 
+        ray()->enable();
         ray()->requests();
 
         $this->get('test');
