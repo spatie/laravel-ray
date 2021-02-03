@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.12.0 - 2021-02-03
+
+- remove enabled methods (#132)
+
 ## 1.11.2 - 2021-02-02
 
 - do not blow up when using `Mail::fake()`
