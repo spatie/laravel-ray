@@ -87,8 +87,10 @@ class RayTest extends TestCase
     /** @test */
     public function it_can_replace_the_remote_path_with_the_local_one()
     {
-        app(Settings::class)->remote_path = 'tests';
-        app(Settings::class)->local_path = 'local_tests';
+        $settings = app(Settings::class);
+
+        $settings->remote_path = __DIR__;
+        $settings->local_path = 'local_tests';
 
         ray('test');
 

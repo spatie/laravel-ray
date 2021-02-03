@@ -21,35 +21,20 @@ use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
+use Spatie\Ray\Client;
 use Spatie\Ray\Ray as BaseRay;
+use Spatie\Ray\Settings\Settings;
 
 class Ray extends BaseRay
 {
-    /** @var bool */
-    public static $enabled = true;
-
-    public function enable(): self
+    public function __construct(Settings $settings, Client $client = null, string $uuid = null)
     {
-        self::$enabled = true;
+        // persist the enabled setting across multiple instantiations
+        $enabled = static::$enabled;
 
-        return $this;
-    }
+        parent::__construct($settings, $client, $uuid);
 
-    public function disable(): self
-    {
-        self::$enabled = false;
-
-        return $this;
-    }
-
-    public function enabled(): bool
-    {
-        return self::$enabled;
-    }
-
-    public function disabled(): bool
-    {
-        return ! self::$enabled;
+        static::$enabled = $enabled;
     }
 
     public function loggedMail(string $loggedMail): self
@@ -286,7 +271,7 @@ class Ray extends BaseRay
      */
     public function sendRequest($payloads, array $meta = []): BaseRay
     {
-        if (! static::$enabled) {
+        if (! $this->enabled()) {
             return $this;
         }
 
