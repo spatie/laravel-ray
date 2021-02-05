@@ -22,4 +22,46 @@ class RequestTest extends TestCase
 
         $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
     }
+
+    /** @test */
+    public function it_can_listen_to_requests_that_return_json()
+    {
+        Route::get('test-json', function () {
+            return response()->json(['message' => 'ok']);
+        });
+
+        ray()->requests();
+
+        $this->get('test-json');
+
+        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
+    }
+
+    /** @test */
+    public function it_can_listen_to_requests_that_return_text()
+    {
+        Route::get('test-text', function () {
+            return response('ok', 200, ['content-type' => 'text/plain']);
+        });
+
+        ray()->requests();
+
+        $this->get('test-text');
+
+        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
+    }
+
+    /** @test */
+    public function it_can_listen_to_requests_that_return_redirects()
+    {
+        Route::get('test-redirect', function () {
+            return response()->redirectTo('/');
+        });
+
+        ray()->requests();
+
+        $this->get('test-redirect');
+
+        $this->assertEquals(302, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
+    }
 }

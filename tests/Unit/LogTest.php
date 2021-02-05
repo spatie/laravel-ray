@@ -2,7 +2,7 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
-use Log;
+use Illuminate\Support\Facades\Log;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\Ray\Settings\Settings;
 
