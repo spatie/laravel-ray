@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.12.1 - 2021-02-05
+
+- register watchers on boot (#138)
+
 ## 1.12.0 - 2021-02-03
 
 - remove enabled methods (#132)
