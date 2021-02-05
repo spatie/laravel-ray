@@ -42,6 +42,11 @@ class RayServiceProvider extends ServiceProvider
             ->registerPayloadFinder();
     }
 
+    public function boot()
+    {
+        $this->bootWatchers();
+    }
+
     protected function registerCommands(): self
     {
         $this->commands(PublishConfigCommand::class);
@@ -114,7 +119,27 @@ class RayServiceProvider extends ServiceProvider
         collect($watchers)
             ->each(function (string $watcherClass) {
                 $this->app->singleton($watcherClass);
-            })
+            });
+
+        return $this;
+    }
+
+    protected function bootWatchers(): self
+    {
+        $watchers = [
+            ExceptionWatcher::class,
+            LoggedMailWatcher::class,
+            ApplicationLogWatcher::class,
+            JobWatcher::class,
+            EventWatcher::class,
+            DumpWatcher::class,
+            QueryWatcher::class,
+            ViewWatcher::class,
+            CacheWatcher::class,
+            RequestWatcher::class,
+        ];
+
+        collect($watchers)
             ->each(function (string $watcherClass) {
                 /** @var \Spatie\LaravelRay\Watchers\Watcher $watcher */
                 $watcher = app($watcherClass);
