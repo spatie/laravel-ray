@@ -23,6 +23,7 @@ class ExceptionPayload extends Payload
     {
         return [
             'message' => $this->exception->getMessage(),
+            'label' => 'Exception',
         ];
     }
 }
