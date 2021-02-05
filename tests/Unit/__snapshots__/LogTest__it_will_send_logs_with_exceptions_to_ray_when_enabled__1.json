@@ -1,0 +1,114 @@
+[
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "custom",
+                "content": {
+                    "message": "test"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/LogTest.php",
+                    "line_number": 45
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "application_log",
+                "content": {
+                    "value": "hey"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/LogTest.php",
+                    "line_number": 45
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "color",
+                "content": {
+                    "color": "red"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/LogTest.php",
+                    "line_number": 45
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "application_log",
+                "content": {
+                    "value": "hey"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/LogTest.php",
+                    "line_number": 45
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "color",
+                "content": {
+                    "color": "red"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/LogTest.php",
+                    "line_number": 45
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "application_log",
+                "content": {
+                    "value": "hey"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/LogTest.php",
+                    "line_number": 45
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "color",
+                "content": {
+                    "color": "red"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/LogTest.php",
+                    "line_number": 45
+                }
+            }
+        ],
+        "meta": []
+    }
+]
