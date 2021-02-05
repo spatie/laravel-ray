@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
 use Illuminate\Testing\TestResponse;
 use Illuminate\View\View;
+use Spatie\LaravelRay\Payloads\ExceptionPayload;
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
@@ -229,6 +230,15 @@ class Ray extends BaseRay
     public function stopShowingRequests(): self
     {
         $this->requestWatcher()->disable();
+
+        return $this;
+    }
+
+    public function exception(\Exception $e): self
+    {
+        $payload = new ExceptionPayload($e);
+
+        $this->sendRequest($payload);
 
         return $this;
     }
