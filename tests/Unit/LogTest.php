@@ -41,7 +41,7 @@ class LogTest extends TestCase
             7 => [],
         ];
 
-        foreach($contexts as $counter => $context) {
+        foreach ($contexts as $counter => $context) {
             Log::error('hey', $context);
 
             $this->assertCount($counter, $this->client->sentPayloads());
