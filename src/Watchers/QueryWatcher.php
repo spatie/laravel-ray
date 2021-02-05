@@ -15,12 +15,11 @@ class QueryWatcher extends Watcher
         $settings = app(Settings::class);
 
         $this->enabled = $settings->send_queries_to_ray;
+        if (! $this->enabled()) {
+                return;
+        }
 
         DB::listen(function (QueryExecuted $query) {
-            if (! $this->enabled()) {
-                return;
-            }
-
             $payload = new ExecutedQueryPayload($query);
 
             app(Ray::class)->sendRequest($payload);
