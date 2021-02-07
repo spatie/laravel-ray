@@ -2,7 +2,9 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.12.2 - 2021-02-07
 
+- ignore errors caused by using `storage_path`
 
 ## 1.12.1 - 2021-02-05
 
