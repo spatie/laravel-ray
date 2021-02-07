@@ -14,19 +14,19 @@ class LoggedMailPayload extends Payload
     protected $html = '';
 
     /** @var array */
-    private $from;
+    protected $from;
 
     /** @var string|null */
-    private $subject;
+    protected $subject;
 
     /** @var array */
-    private $to;
+    protected $to;
 
     /** @var array */
-    private $cc;
+    protected $cc;
 
     /** @var array */
-    private $bcc;
+    protected $bcc;
 
     public static function forLoggedMail(string $loggedMail): self
     {
