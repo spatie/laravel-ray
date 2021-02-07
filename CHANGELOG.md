@@ -2,6 +2,8 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+
+
 ## 1.12.1 - 2021-02-05
 
 - register watchers on boot (#138)

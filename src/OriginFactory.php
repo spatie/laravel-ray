@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay;
 
 use Illuminate\Cache\CacheManager;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Log\Logger;
 use Illuminate\Log\LogManager;
@@ -65,7 +66,7 @@ class OriginFactory
             $originFrame = $frames[$indexOfRay + $framesAbove] ?? null;
         }
 
-        if (! $rayFrame) {
+        if (!$rayFrame) {
             return null;
         }
 
@@ -97,8 +98,12 @@ class OriginFactory
             $this->returnTinkerFrame();
         }
 
-        if (Str::startsWith($originFrame->file, storage_path('framework/views'))) {
-            return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
+        try {
+            if (Str::startsWith($originFrame->file, storage_path('framework/views'))) {
+                return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
+            }
+        } catch (BindingResolutionException $exception) {
+            // ignore errors caused by using `storage_path`
         }
 
         return $originFrame;
@@ -128,7 +133,7 @@ class OriginFactory
     {
         $indexOfDumpCall = $frames
             ->search(function (Frame $frame) {
-                if (! is_null($frame->class)) {
+                if (!is_null($frame->class)) {
                     return false;
                 }
 
@@ -199,7 +204,7 @@ class OriginFactory
 
     protected function replaceCompiledViewPathWithOriginalViewPath(Frame $frame): Frame
     {
-        if (! file_exists($frame->file)) {
+        if (!file_exists($frame->file)) {
             return $frame;
         }
 
@@ -207,7 +212,7 @@ class OriginFactory
 
         $originalViewPath = trim(Str::between($fileContents, '/**PATH', 'ENDPATH**/'));
 
-        if (! file_exists($originalViewPath)) {
+        if (!file_exists($originalViewPath)) {
             return $frame;
         }
 
