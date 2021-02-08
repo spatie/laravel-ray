@@ -63,11 +63,10 @@ class TestCase extends Orchestra
 
     protected function useRealUuid()
     {
-        $this->app->bind(Ray::class, function() {
+        $this->app->bind(Ray::class, function () {
             Ray::$fakeUuid = null;
 
             return Ray::create($this->client);
-
         });
     }
 }

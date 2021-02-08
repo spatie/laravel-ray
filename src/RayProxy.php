@@ -16,7 +16,7 @@ class RayProxy
 
     public function applyCalledMethods(Ray $ray)
     {
-        foreach($this->methodsCalled as $methodCalled) {
+        foreach ($this->methodsCalled as $methodCalled) {
             call_user_func_array([$ray, $methodCalled['method']], $methodCalled['arguments']);
         }
     }
