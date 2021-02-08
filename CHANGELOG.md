@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.12.3 - 2021-02-08
+
+- chain colours on `show*` methods (#149)
+
 ## 1.12.2 - 2021-02-07
 
 - ignore errors caused by using `storage_path`
