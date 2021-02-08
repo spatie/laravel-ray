@@ -60,4 +60,13 @@ class TestCase extends Orchestra
             $table->bigInteger('id');
         });
     }
+
+    protected function useRealUuid()
+    {
+        $this->app->bind(Ray::class, function () {
+            Ray::$fakeUuid = null;
+
+            return Ray::create($this->client);
+        });
+    }
 }

@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay\Tests\Unit;
 
 use Illuminate\Support\Arr;
+use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 
@@ -63,5 +64,21 @@ class EventTest extends TestCase
 
         $this->assertCount(1, $this->client->sentPayloads());
         $this->assertEquals('event in callable', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
+    }
+
+    /** @test */
+    public function show_events_can_be_colorized()
+    {
+        $this->useRealUuid();
+
+        ray()->showEvents()->green();
+
+        event('my event');
+
+        $sentPayloads = $this->client->sentPayloads();
+
+        $this->assertCount(2, $sentPayloads);
+        $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
+        $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
     }
 }

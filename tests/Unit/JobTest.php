@@ -22,4 +22,20 @@ class JobTest extends TestCase
         $this->assertEquals('job_event', Arr::get($this->client->sentPayloads(), '0.payloads.0.type'));
         $this->assertCount(2, $this->client->sentPayloads());
     }
+
+    /** @test */
+    public function show_jobs_can_be_colorized()
+    {
+        $this->useRealUuid();
+
+        ray()->showJobs()->green();
+
+        dispatch(new TestJob());
+
+        $sentPayloads = $this->client->sentPayloads();
+
+        $this->assertCount(4, $sentPayloads);
+        $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
+        $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
+    }
 }

@@ -114,14 +114,19 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function showEvents($callable = null): self
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showEvents($callable = null)
     {
         $watcher = app(EventWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
     }
 
-    public function events($callable = null): self
+    public function events($callable = null)
     {
         return $this->showEvents($callable);
     }
@@ -136,14 +141,24 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function showJobs($callable = null): self
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showJobs($callable = null)
     {
         $watcher = app(JobWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
     }
 
-    public function showCache($callable = null): self
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showCache($callable = null)
     {
         $watcher = app(CacheWatcher::class);
 
@@ -157,7 +172,7 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function jobs($callable = null): self
+    public function jobs($callable = null)
     {
         return $this->showJobs($callable);
     }
@@ -176,14 +191,19 @@ class Ray extends BaseRay
         return $this->sendRequest($payload);
     }
 
-    public function showViews($callable = null): self
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showViews($callable = null)
     {
         $watcher = app(ViewWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
     }
 
-    public function views($callable = null): self
+    public function views($callable = null)
     {
         return $this->showViews($callable);
     }
@@ -195,14 +215,19 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function showQueries($callable = null): self
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showQueries($callable = null)
     {
         $watcher = app(QueryWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
     }
 
-    public function queries($callable = null): self
+    public function queries($callable = null)
     {
         return $this->showQueries($callable);
     }
@@ -214,14 +239,19 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function showRequests($callable = null): self
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showRequests($callable = null)
     {
         $watcher = app(RequestWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
     }
 
-    public function requests($callable = null): self
+    public function requests($callable = null)
     {
         return $this->showRequests($callable);
     }
@@ -233,11 +263,17 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function handleWatcherCallable(Watcher $watcher, Closure $callable = null): self
+    protected function handleWatcherCallable(Watcher $watcher, Closure $callable = null): RayProxy
     {
+        $rayProxy = new RayProxy();
+
         $wasEnabled = $watcher->enabled();
 
         $watcher->enable();
+
+        if ($rayProxy) {
+            $watcher->setRayProxy($rayProxy);
+        }
 
         if ($callable) {
             $callable();
@@ -247,7 +283,7 @@ class Ray extends BaseRay
             }
         }
 
-        return $this;
+        return $rayProxy;
     }
 
     public function testResponse(TestResponse $testResponse)

@@ -23,7 +23,9 @@ class QueryWatcher extends Watcher
 
             $payload = new ExecutedQueryPayload($query);
 
-            app(Ray::class)->sendRequest($payload);
+            $ray = app(Ray::class)->sendRequest($payload);
+
+            $this->rayProxy->applyCalledMethods($ray);
         });
     }
 

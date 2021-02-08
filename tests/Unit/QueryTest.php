@@ -65,4 +65,20 @@ class QueryTest extends TestCase
         DB::table('users')->get('id');
         $this->assertCount(1, $this->client->sentPayloads());
     }
+
+    /** @test */
+    public function show_queries_can_be_colorized()
+    {
+        $this->useRealUuid();
+
+        ray()->showQueries()->green();
+
+        DB::table('users')->where('id', 1)->get();
+
+        $sentPayloads = $this->client->sentPayloads();
+
+        $this->assertCount(2, $sentPayloads);
+        $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
+        $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
+    }
 }

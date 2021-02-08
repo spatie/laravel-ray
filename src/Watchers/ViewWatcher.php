@@ -22,7 +22,9 @@ class ViewWatcher extends Watcher
             /** @var \Illuminate\View\View $view */
             $view = $data[0];
 
-            app(Ray::class)->view($view);
+            $ray = app(Ray::class)->view($view);
+
+            $this->rayProxy->applyCalledMethods($ray);
         });
     }
 }
