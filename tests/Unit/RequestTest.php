@@ -64,4 +64,20 @@ class RequestTest extends TestCase
 
         $this->assertEquals(302, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
     }
+
+    /** @test */
+    public function show_request_can_be_colorized()
+    {
+        $this->useRealUuid();
+
+        ray()->showRequests()->green();
+
+        $this->get('test-redirect');
+
+        $sentPayloads = $this->client->sentPayloads();
+
+        $this->assertCount(2, $sentPayloads);
+        $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
+        $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
+    }
 }

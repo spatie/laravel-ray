@@ -31,7 +31,9 @@ class JobWatcher extends Watcher
 
             $payload = new JobEventPayload($event);
 
-            app(Ray::class)->sendRequest($payload);
+            $ray = app(Ray::class)->sendRequest($payload);
+
+            $this->rayProxy->applyCalledMethods($ray);
         });
     }
 }

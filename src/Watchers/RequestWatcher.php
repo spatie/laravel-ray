@@ -28,11 +28,13 @@ class RequestWatcher extends Watcher
                 return;
             }
 
-            $this->handleRequest($event->request, $event->response);
+            $ray = $this->handleRequest($event->request, $event->response);
+
+            $this->rayProxy->applyCalledMethods($ray);
         });
     }
 
-    protected function handleRequest(Request $request, Response $response)
+    protected function handleRequest(Request $request, Response $response): Ray
     {
         $startTime = defined('LARAVEL_START')
             ? LARAVEL_START
@@ -63,7 +65,7 @@ class RequestWatcher extends Watcher
             'Memory' => round(memory_get_peak_usage(true) / 1024 / 1024, 1),
         ], 'Request');
 
-        app(Ray::class)->sendRequest($payload);
+        return app(Ray::class)->sendRequest($payload);
     }
 
     private function payload(Request $request)

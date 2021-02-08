@@ -17,7 +17,9 @@ class EventWatcher extends Watcher
 
             $payload = new EventPayload($eventName, $arguments);
 
-            app(Ray::class)->sendRequest($payload);
+            $ray = app(Ray::class)->sendRequest($payload);
+
+            $this->rayProxy->applyCalledMethods($ray);
         });
     }
 }

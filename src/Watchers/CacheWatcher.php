@@ -25,7 +25,9 @@ class CacheWatcher extends Watcher
 
             $payload = new CachePayload('Hit', $event->key, $event->value);
 
-            $this->ray()->sendRequest($payload);
+            $ray = $this->ray()->sendRequest($payload);
+
+            $this->rayProxy->applyCalledMethods($ray);
         });
 
         app('events')->listen(CacheMissed::class, function (CacheMissed $event) {

@@ -2,10 +2,15 @@
 
 namespace Spatie\LaravelRay\Watchers;
 
+use Spatie\LaravelRay\RayProxy;
+
 abstract class Watcher
 {
     /** @var bool */
     protected $enabled = false;
+
+    /** @var \Spatie\LaravelRay\RayProxy|null */
+    protected $rayProxy;
 
     abstract public function register(): void;
 
@@ -24,6 +29,13 @@ abstract class Watcher
     public function disable(): Watcher
     {
         $this->enabled = false;
+
+        return $this;
+    }
+
+    public function setRayProxy(RayProxy $rayProxy): Watcher
+    {
+        $this->rayProxy = $rayProxy;
 
         return $this;
     }
