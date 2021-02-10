@@ -123,6 +123,6 @@ class RayTest extends TestCase
         $this->assertEquals('local', $payloads[0]['payloads'][0]['content']['values']['APP_ENV']);
         $this->assertEquals('ray_test', $payloads[0]['payloads'][0]['content']['values']['DB_DATABASE']);
         $this->assertEquals('120', $payloads[0]['payloads'][0]['content']['values']['SESSION_LIFETIME']);
-        $this->assertCount(17, $payloads[0]['payloads'][0]['content']['values']);
+        $this->assertGreaterThanOrEqual(17, $payloads[0]['payloads'][0]['content']['values']);
     }
 }
