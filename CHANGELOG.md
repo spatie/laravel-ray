@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.12.5 - 2021-02-10
+
+- fix "Package spatie/laravel-ray is not installed" exception (#156)
+
 ## 1.12.4 - 2021-02-10
 
 - handle edge case where ray proxy would not be set
