@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.12.4 - 2021-02-10
+
+- handle edge case where ray proxy would not be set
+
 ## 1.12.3 - 2021-02-08
 
 - chain colours on `show*` methods (#149)
