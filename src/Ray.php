@@ -6,7 +6,6 @@ use Closure;
 use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
-use Illuminate\Support\Env;
 use Illuminate\Testing\TestResponse;
 use Illuminate\View\View;
 use Spatie\LaravelRay\Payloads\EnvironmentPayload;
