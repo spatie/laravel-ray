@@ -6,8 +6,10 @@ use Closure;
 use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
+use Illuminate\Support\Env;
 use Illuminate\Testing\TestResponse;
 use Illuminate\View\View;
+use Spatie\LaravelRay\Payloads\EnvironmentPayload;
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
@@ -108,6 +110,17 @@ class Ray extends BaseRay
     public function markdown(string $markdown): self
     {
         $payload = new MarkdownPayload($markdown);
+
+        $this->sendRequest($payload);
+
+        return $this;
+    }
+
+    public function environment(string $filename = null): self
+    {
+        $filename = $filename ?? app()->environmentPath() . DIRECTORY_SEPARATOR . app()->environmentFile();
+
+        $payload = new EnvironmentPayload(dirname($filename), basename($filename));
 
         $this->sendRequest($payload);
 
