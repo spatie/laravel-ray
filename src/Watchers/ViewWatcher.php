@@ -24,7 +24,7 @@ class ViewWatcher extends Watcher
 
             $ray = app(Ray::class)->view($view);
 
-            $this->rayProxy->applyCalledMethods($ray);
+            optional($this->rayProxy)->applyCalledMethods($ray);
         });
     }
 }

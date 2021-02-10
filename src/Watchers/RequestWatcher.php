@@ -30,7 +30,7 @@ class RequestWatcher extends Watcher
 
             $ray = $this->handleRequest($event->request, $event->response);
 
-            $this->rayProxy->applyCalledMethods($ray);
+            optional($this->rayProxy)->applyCalledMethods($ray);
         });
     }
 
