@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.12.6 - 2021-02-10
+
+- replace spaces with underscores in `env()` calls (#154)
+
 ## 1.12.5 - 2021-02-10
 
 - fix "Package spatie/laravel-ray is not installed" exception (#156)
