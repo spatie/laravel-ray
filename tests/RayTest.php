@@ -110,4 +110,19 @@ class RayTest extends TestCase
         $this->assertEquals('mailable', $payloads[0]['payloads'][0]['type']);
         $this->assertEquals('eloquent_model', $payloads[0]['payloads'][1]['type']);
     }
+
+    /** @test */
+    public function it_sends_an_environment_payload()
+    {
+        ray()->environment(__DIR__ . '/stubs/dotenv.env');
+
+        $payloads = $this->client->sentPayloads();
+
+        $this->assertEquals('table', $payloads[0]['payloads'][0]['type']);
+        $this->assertEquals('.env', $payloads[0]['payloads'][0]['content']['label']);
+        $this->assertEquals('local', $payloads[0]['payloads'][0]['content']['values']['APP_ENV']);
+        $this->assertEquals('ray_test', $payloads[0]['payloads'][0]['content']['values']['DB_DATABASE']);
+        $this->assertEquals('120', $payloads[0]['payloads'][0]['content']['values']['SESSION_LIFETIME']);
+        $this->assertCount(17, $payloads[0]['payloads'][0]['content']['values']);
+    }
 }
