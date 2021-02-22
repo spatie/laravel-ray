@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.13.0 -2021-02-22
+
+- add exception watcher
+
 ## 1.12.6 - 2021-02-10
 
 - replace spaces with underscores in `env()` calls (#154)
