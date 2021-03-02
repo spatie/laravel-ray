@@ -334,7 +334,11 @@ class Ray extends BaseRay
         ];
 
         if (class_exists(InstalledVersions::class)) {
-            $meta['laravel_ray_package_version'] = InstalledVersions::getVersion('spatie/laravel-ray');
+            try {
+                $meta['laravel_ray_package_version'] = InstalledVersions::getVersion('spatie/laravel-ray');
+            } catch (\Exception $e) {
+                $meta['laravel_ray_package_version'] = '0.0.0';
+            }
         }
 
         return BaseRay::sendRequest($payloads, $meta);
