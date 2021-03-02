@@ -119,7 +119,7 @@ class Ray extends BaseRay
      * @param string[]|array|null $onlyShowNames
      * @param string|null $filename
      *
-     * @return $this
+     * @return \Spatie\LaravelRay\Ray
      */
     public function environment(?array $onlyShowNames = null, ?string $filename = null): self
     {
