@@ -97,11 +97,11 @@ class EnvironmentPayload extends Payload
     {
         $values = $this->loadDotEnv();
 
-        if (!$filterNames) {
+        if (! $filterNames) {
             return $values;
         }
 
-        return array_filter($values, function($value) use ($filterNames) {
+        return array_filter($values, function ($value) use ($filterNames) {
             return in_array($value, $filterNames, true);
         }, ARRAY_FILTER_USE_KEY);
     }
