@@ -18,13 +18,19 @@ class EnvironmentPayload extends Payload
     /** @var string */
     protected $filename;
 
-    public function __construct(string $environmentPath, string $environmentFile)
+    /**
+     * @param string[]|array|null $onlyShowNames
+     * @param string|null $filename
+     */
+    public function __construct(?array $onlyShowNames = null, ?string $filename = null)
     {
-        $this->path = $environmentPath;
+        $filename = $filename ?? app()->environmentFilePath();
 
-        $this->filename = $environmentFile;
+        $this->path = dirname($filename);
 
-        $this->values = $this->loadDotEnv();
+        $this->filename = basename($filename);
+
+        $this->values = $this->getDotEnvValues($onlyShowNames);
     }
 
     public function getType(): string
@@ -52,7 +58,7 @@ class EnvironmentPayload extends Payload
             return '<div class="text-gray-400">(empty)</div>';
         }
 
-        if ($value === 'null') {
+        if ($value === 'null' || $value === 'NULL') {
             return '<div class="text-gray-400">NULL</div>';
         }
 
@@ -70,6 +76,7 @@ class EnvironmentPayload extends Payload
             return "<div class=\"text-gray-400\">{$value}</div>";
         }
 
+        // ip addresses
         if (preg_match('~(\d{1,3}\.){3}\d{1,3}~', $value) === 1) {
             return "<div href=\"{$value}\" class=\"text-indigo-700\">{$value}</div>";
         }
@@ -84,5 +91,18 @@ class EnvironmentPayload extends Payload
             $this->path,
             $this->filename
         )->safeLoad();
+    }
+
+    protected function getDotEnvValues(?array $filterNames): array
+    {
+        $values = $this->loadDotEnv();
+
+        if (!$filterNames) {
+            return $values;
+        }
+
+        return array_filter($values, function($value) use ($filterNames) {
+            return in_array($value, $filterNames, true);
+        }, ARRAY_FILTER_USE_KEY);
     }
 }

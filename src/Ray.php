@@ -115,11 +115,17 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function environment(string $filename = null): self
+    /**
+     * @param string[]|array|null $onlyShowNames
+     * @param string|null $filename
+     *
+     * @return $this
+     */
+    public function environment(?array $onlyShowNames = null, ?string $filename = null): self
     {
-        $filename = $filename ?? app()->environmentPath() . DIRECTORY_SEPARATOR . app()->environmentFile();
+        $filename = $filename ?? app()->environmentFilePath();
 
-        $payload = new EnvironmentPayload(dirname($filename), basename($filename));
+        $payload = new EnvironmentPayload($onlyShowNames, $filename);
 
         $this->sendRequest($payload);
 
