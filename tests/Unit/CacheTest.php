@@ -4,9 +4,17 @@ namespace Spatie\LaravelRay\Tests\Unit;
 
 use Illuminate\Support\Facades\Cache;
 use Spatie\LaravelRay\Tests\TestCase;
+use Spatie\Ray\Origin\Hostname;
 
 class CacheTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Hostname::set('fake-hostname');
+    }
+
     /** @test */
     public function it_can_detect_when_something_gets_cached()
     {
