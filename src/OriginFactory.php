@@ -20,8 +20,6 @@ use Spatie\Ray\Origin\Hostname;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
 
-
-
 class OriginFactory
 {
     public function getOrigin(): Origin
