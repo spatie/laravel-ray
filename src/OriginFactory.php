@@ -28,6 +28,7 @@ class OriginFactory
         return new Origin(
             optional($frame)->file,
             optional($frame)->lineNumber,
+            optional($frame)->hostname,
         );
     }
 
