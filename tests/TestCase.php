@@ -10,6 +10,7 @@ use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\FakeClient;
+use Spatie\Ray\Origin\Hostname;
 use Spatie\Ray\Settings\Settings;
 
 class TestCase extends Orchestra
@@ -36,6 +37,8 @@ class TestCase extends Orchestra
 
             return $ray;
         });
+
+        Hostname::set('fake-hostname');
 
         View::addLocation(__DIR__ . '/resources/views');
     }
