@@ -2,7 +2,11 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
-## 1.13.0 -2021-02-22
+## 1.14.0 - 2021-03-04
+
+- add support for hostname
+
+## 1.13.0 - 2021-02-22
 
 - add exception watcher
 
