@@ -121,7 +121,7 @@ class Ray extends BaseRay
      *
      * @return \Spatie\LaravelRay\Ray
      */
-    public function environment(?array $onlyShowNames = null, ?string $filename = null): self
+    public function env(?array $onlyShowNames = null, ?string $filename = null): self
     {
         $filename = $filename ?? app()->environmentFilePath();
 

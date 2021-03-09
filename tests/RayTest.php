@@ -114,7 +114,7 @@ class RayTest extends TestCase
     /** @test */
     public function it_sends_an_environment_payload()
     {
-        ray()->environment([], __DIR__ . '/stubs/dotenv.env');
+        ray()->env([], __DIR__ . '/stubs/dotenv.env');
 
         $payloads = $this->client->sentPayloads();
 
@@ -129,7 +129,7 @@ class RayTest extends TestCase
     /** @test */
     public function it_sends_a_filtered_environment_payload()
     {
-        ray()->environment(['APP_ENV', 'DB_DATABASE'], __DIR__ . '/stubs/dotenv.env');
+        ray()->env(['APP_ENV', 'DB_DATABASE'], __DIR__ . '/stubs/dotenv.env');
 
         $payloads = $this->client->sentPayloads();
 
