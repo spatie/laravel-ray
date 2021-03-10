@@ -44,6 +44,10 @@ class ApplicationLogWatcher extends Watcher
             return false;
         }
 
+        if(is_null($message->message)) {
+            return false;
+        }
+
         /** @var Ray $ray */
         $ray = app(Ray::class);
 
