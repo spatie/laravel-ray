@@ -44,7 +44,7 @@ class ApplicationLogWatcher extends Watcher
             return false;
         }
 
-        if(is_null($message->message)) {
+        if (is_null($message->message)) {
             return false;
         }
 
