@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.15.1 - 2021-03-10`
+
+- fix handling of null logs (#171)
+
 ## 1.15.0 - 2021-03-09
 
 - add `env` method
