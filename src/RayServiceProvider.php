@@ -60,14 +60,14 @@ class RayServiceProvider extends ServiceProvider
             $settings = SettingsFactory::createFromConfigFile($this->app->configPath());
 
             return $settings->setDefaultSettings([
-                'enable' => ! app()->environment('production'),
-                'send_cache_to_ray' => false,
-                'send_dumps_to_ray' => true,
-                'send_jobs_to_ray' => false,
-                'send_log_calls_to_ray' => true,
-                'send_queries_to_ray' => false,
-                'send_requests_to_ray' => false,
-                'send_views_to_ray' => false,
+                'enable' => env('RAY_ENABLED', ! app()->environment('production')),
+                'send_cache_to_ray' => env('SEND_CACHE_TO_RAY', false),
+                'send_dumps_to_ray' => env('SEND_DUMPS_TO_RAY', true),
+                'send_jobs_to_ray' => env('SEND_JOBS_TO_RAY', false),
+                'send_log_calls_to_ray' =>env('SEND_LOG_CALLS_TO_RAY', true),
+                'send_queries_to_ray' => env('SEND_QUERIES_TO_RAY', false),
+                'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
+                'send_views_to_ray' => env('SEND_VIEWS_TO_RAY', false),
             ]);
         });
 
