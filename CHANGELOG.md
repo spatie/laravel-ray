@@ -12,7 +12,7 @@ All notable changes to `laravel-ray` will be documented in this file
 
 ## 1.16.0 - 2021-03-12
 
-- allow to use `env()ù  when config is not available (#172)
+- allow using `env()`  when config is not available (#172)
 
 ## 1.15.1 - 2021-03-10
 
