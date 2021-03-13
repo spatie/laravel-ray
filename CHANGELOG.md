@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.17.1 - 2021-03-14
+
+- send exceptions by default
+
 ## 1.17.0 - 2021-03-13
 
 - enable/disable sending exceptions to Ray (#173)

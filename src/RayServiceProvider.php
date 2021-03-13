@@ -68,7 +68,7 @@ class RayServiceProvider extends ServiceProvider
                 'send_queries_to_ray' => env('SEND_QUERIES_TO_RAY', false),
                 'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
                 'send_views_to_ray' => env('SEND_VIEWS_TO_RAY', false),
-                'send_exceptions_to_ray' => env('SEND_EXCEPTIONS_TO_RAY', false),
+                'send_exceptions_to_ray' => env('SEND_EXCEPTIONS_TO_RAY', true),
             ]);
         });
 
