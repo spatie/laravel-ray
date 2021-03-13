@@ -17,6 +17,7 @@ use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
+use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
@@ -155,6 +156,26 @@ class Ray extends BaseRay
         $eventWatcher = app(EventWatcher::class);
 
         $eventWatcher->disable();
+
+        return $this;
+    }
+
+    public function showExceptions(): self
+    {
+        /** @var \Spatie\LaravelRay\Watchers\ExceptionWatcher $exceptionWatcher */
+        $exceptionWatcher = app(ExceptionWatcher::class);
+
+        $exceptionWatcher->enable();
+
+        return $this;
+    }
+
+    public function stopShowingExceptions(): self
+    {
+        /** @var \Spatie\LaravelRay\Watchers\ExceptionWatcher $exceptionWatcher */
+        $exceptionWatcher = app(ExceptionWatcher::class);
+
+        $exceptionWatcher->disable();
 
         return $this;
     }
