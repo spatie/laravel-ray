@@ -133,8 +133,6 @@ class RayTest extends TestCase
 
         $payloads = $this->client->sentPayloads();
 
-        print_r($payloads[0]['payloads'][0]['content']['values']);
-
         $this->assertEquals('table', $payloads[0]['payloads'][0]['type']);
         $this->assertEquals('.env', $payloads[0]['payloads'][0]['content']['label']);
         $this->assertEquals('local', $payloads[0]['payloads'][0]['content']['values']['APP_ENV']);
