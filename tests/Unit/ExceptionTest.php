@@ -16,11 +16,10 @@ class ExceptionTest extends TestCase
 
         try {
             event(new MessageLogged('warning', 'test', ['exception' => new \Exception('test')]));
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $hasError = true;
         }
 
         $this->assertFalse($hasError);
     }
-
 }

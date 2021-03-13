@@ -180,7 +180,6 @@ class Ray extends BaseRay
         return $this;
     }
 
-
     /**
      * @param null $callable
      *
