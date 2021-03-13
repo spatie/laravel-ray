@@ -68,6 +68,7 @@ class RayServiceProvider extends ServiceProvider
                 'send_queries_to_ray' => false,
                 'send_requests_to_ray' => false,
                 'send_views_to_ray' => false,
+                'send_exceptions_to_ray' => true,
             ]);
         });
 

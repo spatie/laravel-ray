@@ -8,13 +8,16 @@ use Facade\FlareClient\Truncation\ReportTrimmer;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
 use Spatie\LaravelRay\Ray;
+use Spatie\Ray\Settings\Settings;
 use Throwable;
 
 class ExceptionWatcher extends Watcher
 {
     public function register(): void
     {
-        $this->enable();
+        $settings = app(Settings::class);
+
+        $this->enabled = $settings->send_exceptions_to_ray;
 
         Event::listen(MessageLogged::class, function (MessageLogged $message) {
             if (! $this->enabled()) {
