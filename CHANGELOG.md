@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.17.2 - 2021-04-06
+
+- Laravel Octane Compatibility (#178)
+ 
 ## 1.17.1 - 2021-03-14
 
 - send exceptions by default
