@@ -56,8 +56,8 @@ class RayServiceProvider extends ServiceProvider
 
     protected function registerSettings(): self
     {
-        $this->app->singleton(Settings::class, function () {
-            $settings = SettingsFactory::createFromConfigFile($this->app->configPath());
+        $this->app->singleton(Settings::class, function ($app) {
+            $settings = SettingsFactory::createFromConfigFile($app->configPath());
 
             return $settings->setDefaultSettings([
                 'enable' => env('RAY_ENABLED', ! app()->environment('production')),
