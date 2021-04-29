@@ -35,6 +35,24 @@ class RayTest extends TestCase
     }
 
     /** @test */
+    public function it_will_not_send_dumps_to_ray_when_disabled()
+    {
+        app(Settings::class)->send_dumps_to_ray = false;
+
+        dump('');
+
+        $this->assertCount(0, $this->client->sentPayloads());
+    }
+
+    /** @test */
+    public function it_will_send_dumps_to_ray_by_default()
+    {
+        dump('spatie');
+
+        $this->assertCount(1, $this->client->sentPayloads());
+    }
+
+    /** @test */
     public function it_will_not_send_logs_to_ray_when_disabled()
     {
         app(Settings::class)->send_log_calls_to_ray = false;

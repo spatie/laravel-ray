@@ -32,7 +32,9 @@ class DumpRecorder
         });
 
         VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
-            $multiDumpHandler->dump($dumpedVariable);
+            if ($this->shouldDump()) {
+                $multiDumpHandler->dump($dumpedVariable);
+            }
         });
 
         $multiDumpHandler
@@ -42,6 +44,14 @@ class DumpRecorder
             });
 
         return $this;
+    }
+
+    protected function shouldDump(): bool
+    {
+        /** @var Ray $ray */
+        $ray = app(Ray::class);
+
+        return $ray->settings->send_dumps_to_ray;
     }
 
     protected function getDefaultHandler(): Closure
