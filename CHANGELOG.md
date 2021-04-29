@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.17.3 - 2021-04-29
+
+- the package won't send dumps to Ray when dump sending is disabled
+
 ## 1.17.2 - 2021-04-06
 
 - Laravel Octane Compatibility (#178)
