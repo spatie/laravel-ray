@@ -55,14 +55,9 @@ class ApplicationLogWatcher extends Watcher
             return false;
         }
 
-        /*
-         * uncomment this when exception logging is stable in Ray
-         *
         if ((new ExceptionWatcher())->concernsException($message)) {
             return false;
         }
-        */
-
 
         if ((new LoggedMailWatcher())->concernsLoggedMail($message)) {
             return false;
