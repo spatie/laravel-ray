@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.17.4 - 2021-04-30
+
+- check if an exception is passed before log dumping
+
 ## 1.17.3 - 2021-04-29
 
 - the package won't send dumps to Ray when dump sending is disabled
