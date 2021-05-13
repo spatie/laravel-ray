@@ -33,7 +33,7 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/simbiant/ray.git"
+            "url": "https://github.com/ninthspace/ray.git"
         }
     ],
     "autoload": {
