@@ -7,14 +7,6 @@
     ],
     "homepage": "https://github.com/spatie/laravel-ray",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Freek Van der Herten",
-            "email": "freek@spatie.be",
-            "homepage": "https://spatie.be",
-            "role": "Developer"
-        }
-    ],
     "require": {
         "ext-json": "*",
         "php": "^7.2|^7.3|^8.0",
