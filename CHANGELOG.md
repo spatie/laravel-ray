@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.18.0 - 2021-03-23
+
+- colorize high severity messages (#197)
+
 ## 1.17.4 - 2021-04-30
 
 - check if an exception is passed before log dumping
