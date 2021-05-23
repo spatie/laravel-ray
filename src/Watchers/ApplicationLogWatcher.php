@@ -28,12 +28,16 @@ class ApplicationLogWatcher extends Watcher
 
             $ray->sendRequest($payload);
 
-            if ($message->level === 'error') {
-                $ray->color('red');
-            }
-
-            if ($message->level === 'warning') {
-                $ray->color('orange');
+            switch ($message->level) {
+                case 'error':
+                case 'critical':
+                case 'alert':
+                case 'emergency':
+                    $ray->color('red');
+                    break;
+                case 'warning':
+                    $ray->color('orange');
+                    break;
             }
         });
     }
