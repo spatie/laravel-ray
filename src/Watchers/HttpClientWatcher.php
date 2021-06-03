@@ -1,0 +1,102 @@
+<?php
+
+
+namespace Spatie\LaravelRay\Watchers;
+
+
+use Illuminate\Http\Client\Events\RequestSending;
+use Illuminate\Http\Client\Events\ResponseReceived;
+use Illuminate\Http\Client\Request;
+use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Event;
+use Spatie\Ray\Payloads\TablePayload;
+use Spatie\LaravelRay\Ray;
+use Spatie\Ray\Settings\Settings;
+use SplObjectStorage;
+
+class HttpClientWatcher extends Watcher
+{
+    protected SplObjectStorage $requestTimings;
+
+    public function __construct()
+    {
+        $this->requestTimings = new SplObjectStorage();
+    }
+
+    public function register(): void
+    {
+        $settings = app(Settings::class);
+
+        $this->enabled = $settings->send_http_client_requests_to_ray;
+
+        Event::listen(RequestSending::class, function (RequestSending $event) {
+            if (! $this->enabled()) {
+                return;
+            }
+
+            $ray = $this->handleRequest($event->request);
+
+            optional($this->rayProxy)->applyCalledMethods($ray);
+
+            $this->requestTimings[$event->request] = microtime(true);
+        });
+
+        Event::listen(ResponseReceived::class, function (ResponseReceived $event) {
+            if (! $this->enabled()) {
+                return;
+            }
+
+            $ray = $this->handleResponse($event->request, $event->response);
+
+            optional($this->rayProxy)->applyCalledMethods($ray);
+        });
+    }
+
+    protected function handleRequest(Request $request)
+    {
+        $payload = new TablePayload([
+            'Method' => $request->method(),
+            'URL' => $request->url(),
+            'Headers' => $request->headers(),
+            'Data' => $request->data(),
+            'Body' => $request->body(),
+            'Type' => $this->getRequestType($request),
+        ], 'Http Request');
+
+        return app(Ray::class)->sendRequest($payload);
+    }
+
+    protected function getRequestType(Request $request)
+    {
+        if ($request->isJson()) {
+            return "Json";
+        }
+
+        if ($request->isMultipart()) {
+            return "Multipart";
+        }
+
+        return "Form";
+    }
+
+    protected function handleResponse(Request $request, Response $response)
+    {
+        $timing = isset($this->requestTimings[$request])
+            ? floor((microtime(true) - $this->requestTimings[$request]) * 1000)
+            : null;
+
+        unset($this->requestTimings[$request]);
+
+        $payload = new TablePayload([
+            'URL' => $request->url(),
+            'Success' => $response->successful(),
+            'Status' => $response->status(),
+            'Headers' => $response->headers(),
+            'Body' => rescue(fn() => $response->json(), $response->body(), false),
+            'Cookies' => $response->cookies(),
+            'Duration' => $timing,
+        ], 'Http Response');
+
+        return app(Ray::class)->sendRequest($payload);
+    }
+}

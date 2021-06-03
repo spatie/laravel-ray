@@ -16,6 +16,7 @@ use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\DumpWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
+use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\LoggedMailWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
@@ -67,6 +68,7 @@ class RayServiceProvider extends ServiceProvider
                 'send_log_calls_to_ray' => env('SEND_LOG_CALLS_TO_RAY', true),
                 'send_queries_to_ray' => env('SEND_QUERIES_TO_RAY', false),
                 'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
+                'send_http_client_requests_to_ray' => env('SEND_HTTP_CLIENT_REQUESTS_TO_RAY', false),
                 'send_views_to_ray' => env('SEND_VIEWS_TO_RAY', false),
                 'send_exceptions_to_ray' => env('SEND_EXCEPTIONS_TO_RAY', true),
             ]);
@@ -115,6 +117,7 @@ class RayServiceProvider extends ServiceProvider
             ViewWatcher::class,
             CacheWatcher::class,
             RequestWatcher::class,
+            HttpClientWatcher::class,
         ];
 
         collect($watchers)
@@ -138,6 +141,7 @@ class RayServiceProvider extends ServiceProvider
             ViewWatcher::class,
             CacheWatcher::class,
             RequestWatcher::class,
+            HttpClientWatcher::class,
         ];
 
         collect($watchers)

@@ -18,10 +18,10 @@
     "require": {
         "ext-json": "*",
         "php": "^7.3|^8.0",
-        "illuminate/contracts": "^7.20|^8.19",
-        "illuminate/database": "^7.20|^8.19",
-        "illuminate/queue": "^7.20|^8.19",
-        "illuminate/support": "^7.20|^8.19",
+        "illuminate/contracts": "^7.20|^8.19|dev-master",
+        "illuminate/database": "^7.20|^8.19|dev-master",
+        "illuminate/queue": "^7.20|^8.19|dev-master",
+        "illuminate/support": "^7.20|^8.45|dev-master",
         "spatie/backtrace": "^1.0",
         "spatie/ray": "^1.21.2",
         "symfony/stopwatch": "4.2|^5.1",
@@ -29,6 +29,7 @@
     },
     "require-dev": {
         "facade/ignition": "^2.5",
+        "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^7.20|^8.19",
         "orchestra/testbench-core": "^5.0|^6.0",
         "phpunit/phpunit": "^9.3",

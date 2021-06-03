@@ -40,6 +40,11 @@ return [
     */
     'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
 
+    /**
+     * When enabled, all Http Client requests made by this app will be automatically sent to Ray.
+     */
+    'send_http_client_requests_to_ray' => env('SEND_HTTP_CLIENT_REQUESTS_TO_RAY', false),
+
     /*
     * When enabled, all views that are rendered automatically be sent to Ray.
     */
