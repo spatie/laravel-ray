@@ -24,19 +24,19 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-//        $this->client = new FakeClient();
-//
-//        $this->app->bind(Ray::class, function () {
-//            $settings = app(Settings::class);
-//
-//            $ray = new Ray($settings, $this->client, 'fakeUuid');
-//
-//            if (! $settings->enable) {
-//                $ray->disable();
-//            }
-//
-//            return $ray;
-//        });
+        $this->client = new FakeClient();
+
+        $this->app->bind(Ray::class, function () {
+            $settings = app(Settings::class);
+
+            $ray = new Ray($settings, $this->client, 'fakeUuid');
+
+            if (! $settings->enable) {
+                $ray->disable();
+            }
+
+            return $ray;
+        });
 
         Hostname::set('fake-hostname');
 
