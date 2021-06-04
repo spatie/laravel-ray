@@ -18,6 +18,7 @@ use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
+use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
@@ -298,6 +299,36 @@ class Ray extends BaseRay
     public function stopShowingRequests(): self
     {
         $this->requestWatcher()->disable();
+
+        return $this;
+    }
+
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showHttpClientRequests($callable = null)
+    {
+        if (HttpClientWatcher::unsupportedByLaravelVersion()) {
+            $this->send("Http logging is not available in your Laravel version")->red();
+
+            return $this;
+        }
+
+        $watcher = app(HttpClientWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function httpClientRequests($callable = null)
+    {
+        return $this->showHttpClientRequests($callable);
+    }
+
+    public function stopShowingHttpClientRequests(): self
+    {
+        app(HttpClientWatcher::class)->disable();
 
         return $this;
     }

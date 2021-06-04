@@ -29,6 +29,7 @@
     },
     "require-dev": {
         "facade/ignition": "^2.5",
+        "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^7.20|^8.19",
         "orchestra/testbench-core": "^5.0|^6.0",
         "phpunit/phpunit": "^9.3",
