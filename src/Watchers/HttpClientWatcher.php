@@ -15,16 +15,6 @@ use SplObjectStorage;
 
 class HttpClientWatcher extends Watcher
 {
-    /**
-     * @var SplObjectStorage
-     */
-    protected $requestTimings;
-
-    public function __construct()
-    {
-        $this->requestTimings = new SplObjectStorage();
-    }
-
     public function register(): void
     {
         if (! static::supportedByLaravelVersion()) {
@@ -43,8 +33,6 @@ class HttpClientWatcher extends Watcher
             $ray = $this->handleRequest($event->request);
 
             optional($this->rayProxy)->applyCalledMethods($ray);
-
-            $this->requestTimings[$event->request] = microtime(true);
         });
 
         Event::listen(ResponseReceived::class, function (ResponseReceived $event) {
