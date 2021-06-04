@@ -3,7 +3,6 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Spatie\LaravelRay\Tests\TestCase;
@@ -23,7 +22,7 @@ class HttpClientTest extends TestCase
             [
                 '*/ok*' => Http::response(['hello' => 'world'], 200, ['Content-Type' => 'application/json']),
                 '*/not-found*' => Http::response(null, 404),
-                '*/json*' => Http::response(['foo' => 'bar'])
+                '*/json*' => Http::response(['foo' => 'bar']),
             ]
         );
     }
@@ -83,5 +82,4 @@ class HttpClientTest extends TestCase
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
         $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
     }
-
 }

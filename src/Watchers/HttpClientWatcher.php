@@ -3,14 +3,13 @@
 
 namespace Spatie\LaravelRay\Watchers;
 
-
 use Illuminate\Http\Client\Events\RequestSending;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Event;
-use Spatie\Ray\Payloads\TablePayload;
 use Spatie\LaravelRay\Ray;
+use Spatie\Ray\Payloads\TablePayload;
 use Spatie\Ray\Settings\Settings;
 use SplObjectStorage;
 
@@ -93,7 +92,9 @@ class HttpClientWatcher extends Watcher
             'Success' => $response->successful(),
             'Status' => $response->status(),
             'Headers' => $response->headers(),
-            'Body' => rescue(function() use ($response) { return $response->json(); }, $response->body(), false),
+            'Body' => rescue(function () use ($response) {
+                return $response->json();
+            }, $response->body(), false),
             'Cookies' => $response->cookies(),
             'Duration' => $this->calculateResponseTime($request),
         ], 'Http');
@@ -112,7 +113,8 @@ class HttpClientWatcher extends Watcher
         return $timing;
     }
 
-    public static function supportedByLaravelVersion() {
+    public static function supportedByLaravelVersion()
+    {
         return version_compare(app()->version(), '8.45.0',  '>=');
     }
 }
