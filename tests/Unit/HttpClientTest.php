@@ -17,9 +17,9 @@ class HttpClientTest extends TestCase
     {
         ray()->showHttpClientRequests();
 
-        Http::get('test.com/ok');
+        Http::get('test.com/ok', ['hello' => 'world']);
 
-        $this->assertEquals('test.com/ok', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['URL']);
+        $this->assertEquals('test.com/ok?hello=world', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['URL']);
         $this->assertEquals('Http Request', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.label'));
     }
 
@@ -74,9 +74,9 @@ class HttpClientTest extends TestCase
 
         Http::fake(
             [
-                '*/ok' => Http::response(['hello' => 'world']),
-                '*/not-found' => Http::response(null, 404),
-                '*/json' => Http::response(['foo' => 'bar'])
+                '*/ok*' => Http::response(['hello' => 'world'], 200, ['Content-Type' => 'application/json']),
+                '*/not-found*' => Http::response(null, 404),
+                '*/json*' => Http::response(['foo' => 'bar'])
             ]
         );
     }
