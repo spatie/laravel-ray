@@ -28,7 +28,7 @@ class HttpClientWatcher extends Watcher
 
     public function register(): void
     {
-        if (static::unsupportedByLaravelVersion()) {
+        if (! static::supportedByLaravelVersion()) {
             return;
         }
 
@@ -112,7 +112,7 @@ class HttpClientWatcher extends Watcher
         return $timing;
     }
 
-    public static function unsupportedByLaravelVersion() {
-        return version_compare('8.45.0', app()->version(), '>=');
+    public static function supportedByLaravelVersion() {
+        return version_compare(app()->version(), '8.45.0',  '>=');
     }
 }

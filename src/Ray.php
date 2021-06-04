@@ -310,7 +310,7 @@ class Ray extends BaseRay
      */
     public function showHttpClientRequests($callable = null)
     {
-        if (HttpClientWatcher::unsupportedByLaravelVersion()) {
+        if (! HttpClientWatcher::supportedByLaravelVersion()) {
             $this->send("Http logging is not available in your Laravel version")->red();
 
             return $this;

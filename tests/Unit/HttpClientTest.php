@@ -15,7 +15,7 @@ class HttpClientTest extends TestCase
     {
         parent::setUp();
 
-        if (HttpClientWatcher::unsupportedByLaravelVersion()) {
+        if (! HttpClientWatcher::supportedByLaravelVersion()) {
             $this->markTestSkipped('Tests require Laravel 8.45.0 or greater.');
         }
 
