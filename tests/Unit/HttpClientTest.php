@@ -10,6 +10,7 @@ use Spatie\LaravelRay\Tests\TestCase;
 
 class HttpClientTest extends TestCase
 {
+    protected $minimumLaravelVersion = '8.45.0';
 
     /** @test */
     public function it_can_listen_to_http_client_requests()

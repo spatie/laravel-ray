@@ -24,6 +24,10 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
+        if (isset($this->minimumLaravelVersion)) {
+            $this->requireMinimumLaravelVersion($this->minimumLaravelVersion);
+        }
+
         $this->client = new FakeClient();
 
         $this->app->bind(Ray::class, function () {
@@ -71,5 +75,19 @@ class TestCase extends Orchestra
 
             return Ray::create($this->client);
         });
+    }
+
+    protected function requireMinimumLaravelVersion($version)
+    {
+        [$compareMajor, $compareMinor] = explode(".", $this->app->version());
+        [$major, $minor] = explode(".", $this->app->version());
+
+        if (intval($major) < intval($compareMajor)) {
+            $this->markTestSkipped("Test requires Laravel $version or greater.");
+        }
+
+        if (intval($major) == intval($compareMajor) && intval($minor) < intval($compareMinor)) {
+            $this->markTestSkipped("Test requires Laravel $version or greater.");
+        }
     }
 }
