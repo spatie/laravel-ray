@@ -34,9 +34,11 @@ class ApplicationLogWatcher extends Watcher
                 case 'alert':
                 case 'emergency':
                     $ray->color('red');
+
                     break;
                 case 'warning':
                     $ray->color('orange');
+
                     break;
             }
         });
