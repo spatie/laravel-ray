@@ -16,7 +16,10 @@ use SplObjectStorage;
 
 class HttpClientWatcher extends Watcher
 {
-    protected SplObjectStorage $requestTimings;
+    /**
+     * @var SplObjectStorage
+     */
+    protected $requestTimings;
 
     public function __construct()
     {
@@ -61,7 +64,7 @@ class HttpClientWatcher extends Watcher
             'Data' => $request->data(),
             'Body' => $request->body(),
             'Type' => $this->getRequestType($request),
-        ], 'Http Request');
+        ], 'Http');
 
         return app(Ray::class)->sendRequest($payload);
     }
@@ -69,17 +72,32 @@ class HttpClientWatcher extends Watcher
     protected function getRequestType(Request $request)
     {
         if ($request->isJson()) {
-            return "Json";
+            return 'Json';
         }
 
         if ($request->isMultipart()) {
-            return "Multipart";
+            return 'Multipart';
         }
 
-        return "Form";
+        return 'Form';
     }
 
     protected function handleResponse(Request $request, Response $response)
+    {
+        $payload = new TablePayload([
+            'URL' => $request->url(),
+            'Success' => $response->successful(),
+            'Status' => $response->status(),
+            'Headers' => $response->headers(),
+            'Body' => rescue(function() use ($response) { return $response->json(); }, $response->body(), false),
+            'Cookies' => $response->cookies(),
+            'Duration' => $this->calculateResponseTime($request),
+        ], 'Http');
+
+        return app(Ray::class)->sendRequest($payload);
+    }
+
+    protected function calculateResponseTime(Request $request)
     {
         $timing = isset($this->requestTimings[$request])
             ? floor((microtime(true) - $this->requestTimings[$request]) * 1000)
@@ -87,16 +105,6 @@ class HttpClientWatcher extends Watcher
 
         unset($this->requestTimings[$request]);
 
-        $payload = new TablePayload([
-            'URL' => $request->url(),
-            'Success' => $response->successful(),
-            'Status' => $response->status(),
-            'Headers' => $response->headers(),
-            'Body' => rescue(fn() => $response->json(), $response->body(), false),
-            'Cookies' => $response->cookies(),
-            'Duration' => $timing,
-        ], 'Http Response');
-
-        return app(Ray::class)->sendRequest($payload);
+        return $timing;
     }
 }
