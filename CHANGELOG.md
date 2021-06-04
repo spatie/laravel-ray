@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.19.0 - 2021-06-04
+
+- add http logging methods
+
 ## 1.18.0 - 2021-03-23
 
 - colorize high severity messages (#197)
