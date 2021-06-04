@@ -96,21 +96,13 @@ class HttpClientWatcher extends Watcher
                 return $response->json();
             }, $response->body(), false),
             'Cookies' => $response->cookies(),
-            'Duration' => $this->calculateResponseTime($request),
+            'Size' => $response->handlerStats()['size_download'] ?? null,
+            'Connection time' => $response->handlerStats()['connect_time'] ?? null,
+            'Duration' => $response->handlerStats()['total_time'] ?? null,
+            'Request Size' => $response->handlerStats()['request_size'] ?? null,
         ], 'Http');
 
         return app(Ray::class)->sendRequest($payload);
-    }
-
-    protected function calculateResponseTime(Request $request)
-    {
-        $timing = isset($this->requestTimings[$request])
-            ? floor((microtime(true) - $this->requestTimings[$request]) * 1000)
-            : null;
-
-        unset($this->requestTimings[$request]);
-
-        return $timing;
     }
 
     public static function supportedByLaravelVersion()
