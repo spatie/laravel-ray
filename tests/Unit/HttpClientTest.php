@@ -7,6 +7,7 @@ namespace Spatie\LaravelRay\Tests\Unit;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Spatie\LaravelRay\Tests\TestCase;
+use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 
 class HttpClientTest extends TestCase
 {
@@ -14,7 +15,7 @@ class HttpClientTest extends TestCase
     {
         parent::setUp();
 
-        if (version_compare('8.45.0', $this->app->version(), '>=')) {
+        if (HttpClientWatcher::unsupportedByLaravelVersion()) {
             $this->markTestSkipped('Tests require Laravel 8.45.0 or greater.');
         }
 

@@ -28,6 +28,10 @@ class HttpClientWatcher extends Watcher
 
     public function register(): void
     {
+        if (static::unsupportedByLaravelVersion()) {
+            return;
+        }
+
         $settings = app(Settings::class);
 
         $this->enabled = $settings->send_http_client_requests_to_ray;
@@ -106,5 +110,9 @@ class HttpClientWatcher extends Watcher
         unset($this->requestTimings[$request]);
 
         return $timing;
+    }
+
+    public static function unsupportedByLaravelVersion() {
+        return version_compare('8.45.0', app()->version(), '>=');
     }
 }
