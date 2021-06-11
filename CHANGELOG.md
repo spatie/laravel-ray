@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.19.1 - 2021-06-11
+
+- better HTTP Client logging (#201)
+
 ## 1.19.0 - 2021-06-04
 
 - add http logging methods
