@@ -77,6 +77,7 @@ class HttpClientWatcher extends Watcher
     {
         $payload = new TablePayload([
             'URL' => $request->url(),
+            'Real Request' => ! empty($response->handlerStats()),
             'Success' => $response->successful(),
             'Status' => $response->status(),
             'Headers' => $response->headers(),
@@ -95,6 +96,6 @@ class HttpClientWatcher extends Watcher
 
     public static function supportedByLaravelVersion()
     {
-        return version_compare(app()->version(), '8.45.0',  '>=');
+        return version_compare(app()->version(), '8.46.0',  '>=');
     }
 }
