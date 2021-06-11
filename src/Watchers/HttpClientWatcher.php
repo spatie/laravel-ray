@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Event;
 use Spatie\LaravelRay\Ray;
 use Spatie\Ray\Payloads\TablePayload;
 use Spatie\Ray\Settings\Settings;
-use SplObjectStorage;
 
 class HttpClientWatcher extends Watcher
 {
