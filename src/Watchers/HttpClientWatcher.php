@@ -15,16 +15,6 @@ use SplObjectStorage;
 
 class HttpClientWatcher extends Watcher
 {
-    /**
-     * @var SplObjectStorage
-     */
-    protected $requestTimings;
-
-    public function __construct()
-    {
-        $this->requestTimings = new SplObjectStorage();
-    }
-
     public function register(): void
     {
         if (! static::supportedByLaravelVersion()) {
@@ -43,8 +33,6 @@ class HttpClientWatcher extends Watcher
             $ray = $this->handleRequest($event->request);
 
             optional($this->rayProxy)->applyCalledMethods($ray);
-
-            $this->requestTimings[$event->request] = microtime(true);
         });
 
         Event::listen(ResponseReceived::class, function (ResponseReceived $event) {
@@ -89,6 +77,7 @@ class HttpClientWatcher extends Watcher
     {
         $payload = new TablePayload([
             'URL' => $request->url(),
+            'Real Request' => ! empty($response->handlerStats()),
             'Success' => $response->successful(),
             'Status' => $response->status(),
             'Headers' => $response->headers(),
@@ -96,25 +85,17 @@ class HttpClientWatcher extends Watcher
                 return $response->json();
             }, $response->body(), false),
             'Cookies' => $response->cookies(),
-            'Duration' => $this->calculateResponseTime($request),
+            'Size' => $response->handlerStats()['size_download'] ?? null,
+            'Connection time' => $response->handlerStats()['connect_time'] ?? null,
+            'Duration' => $response->handlerStats()['total_time'] ?? null,
+            'Request Size' => $response->handlerStats()['request_size'] ?? null,
         ], 'Http');
 
         return app(Ray::class)->sendRequest($payload);
     }
 
-    protected function calculateResponseTime(Request $request)
-    {
-        $timing = isset($this->requestTimings[$request])
-            ? floor((microtime(true) - $this->requestTimings[$request]) * 1000)
-            : null;
-
-        unset($this->requestTimings[$request]);
-
-        return $timing;
-    }
-
     public static function supportedByLaravelVersion()
     {
-        return version_compare(app()->version(), '8.45.0',  '>=');
+        return version_compare(app()->version(), '8.46.0',  '>=');
     }
 }
