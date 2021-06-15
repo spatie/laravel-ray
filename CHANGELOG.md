@@ -2,7 +2,7 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
-## 1.21.1 - 2021-06-15
+## 1.20.1 - 2021-06-15
 
 - fix origin of stringable
 
