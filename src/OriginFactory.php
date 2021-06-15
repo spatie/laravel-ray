@@ -10,6 +10,7 @@ use Illuminate\Log\LogManager;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 use Spatie\Backtrace\Backtrace;
 use Spatie\Backtrace\Frame;
 use Spatie\LaravelRay\DumpRecorder\DumpRecorder;
@@ -70,6 +71,10 @@ class OriginFactory
             return null;
         }
 
+        if ($rayFrame->class === Stringable::class) {
+            return $this->findFrameForStringableMacro($frames, $indexOfRay);
+        }
+
         if ($rayFrame->class === Collection::class && Str::startsWith($rayFrame->method, 'Spatie\LaravelRay')) {
             return $this->findFrameForCollectionMacro($frames, $indexOfRay);
         }
@@ -107,6 +112,11 @@ class OriginFactory
         }
 
         return $originFrame;
+    }
+
+    protected function findFrameForStringableMacro(Collection $frames, int $indexOfFoundFrame): ?Frame
+    {
+        return $frames[$indexOfFoundFrame + 2];
     }
 
     protected function findFrameForCollectionMacro(Collection $frames, int $indexOfFoundFrame): ?Frame
