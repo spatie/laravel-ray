@@ -6,6 +6,9 @@ use Closure;
 use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\MailManager;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Testing\Fakes\MailFake;
 use Illuminate\Testing\TestResponse;
 use Illuminate\View\View;
 use Spatie\LaravelRay\Payloads\EnvironmentPayload;
@@ -51,7 +54,19 @@ class Ray extends BaseRay
 
     public function mailable(Mailable $mailable): self
     {
+        $shouldRestoreFake = false;
+
+        if (get_class(app(MailManager::class)) === MailFake::class) {
+            $shouldRestoreFake = true;
+
+            Mail::swap(new MailManager(app()));
+        }
+
         $payload = MailablePayload::forMailable($mailable);
+
+        if ($shouldRestoreFake) {
+            Mail::fake();
+        }
 
         $this->sendRequest($payload);
 

@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.20.2 - 2021-06-21
+
+- fix `mailable` when using `Mail::fake` 
+
 ## 1.20.1 - 2021-06-15
 
 - fix origin of stringable
