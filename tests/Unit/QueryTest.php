@@ -86,7 +86,7 @@ class QueryTest extends TestCase
     /** @test */
     public function it_can_count_the_amount_of_executed_queries()
     {
-        ray()->countQueries(function() {
+        ray()->countQueries(function () {
             DB::table('users')->get('id');
             DB::table('users')->get('id');
             DB::table('users')->get('id');
