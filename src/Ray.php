@@ -299,12 +299,12 @@ class Ray extends BaseRay
 
         $executedQueryStatistics = collect($watcher->getExecutedQueries())
 
-            ->pipe(function(Collection $queries) {
+            ->pipe(function (Collection $queries) {
                 return [
                     'Count' => $queries->count(),
-                    'Total time' => $queries->sum(function(QueryExecuted $query) {
+                    'Total time' => $queries->sum(function (QueryExecuted $query) {
                         return $query->time;
-                    })
+                    }),
                 ];
             });
 
