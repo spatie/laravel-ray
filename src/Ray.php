@@ -5,8 +5,10 @@ namespace Spatie\LaravelRay;
 use Closure;
 use Composer\InstalledVersions;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\MailManager;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Testing\Fakes\MailFake;
 use Illuminate\Testing\TestResponse;
@@ -280,6 +282,39 @@ class Ray extends BaseRay
         $watcher = app(QueryWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function countQueries(callable $callable)
+    {
+        /** @var QueryWatcher $watcher */
+        $watcher = app(QueryWatcher::class);
+
+        $watcher->keepExecutedQueries();
+
+        if (! $watcher->enabled()) {
+            $watcher->doNotSendIndividualQueries();
+        }
+
+        $this->handleWatcherCallable($watcher, $callable);
+
+        $executedQueryStatistics = collect($watcher->getExecutedQueries())
+
+            ->pipe(function(Collection $queries) {
+                return [
+                    'Count' => $queries->count(),
+                    'Total time' => $queries->sum(function(QueryExecuted $query) {
+                        return $query->time;
+                    })
+                ];
+            });
+
+        $executedQueryStatistics['Total time'] .= ' ms';
+
+        $watcher
+            ->stopKeepingAndClearExecutedQueries()
+            ->sendIndividualQueries();
+
+        $this->table($executedQueryStatistics, 'Queries');
     }
 
     public function queries($callable = null)

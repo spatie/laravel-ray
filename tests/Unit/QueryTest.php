@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Spatie\LaravelRay\Tests\TestCase;
 
@@ -80,5 +81,21 @@ class QueryTest extends TestCase
         $this->assertCount(2, $sentPayloads);
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
         $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
+    }
+
+    /** @test */
+    public function it_can_count_the_amount_of_executed_queries()
+    {
+        ray()->countQueries(function() {
+            DB::table('users')->get('id');
+            DB::table('users')->get('id');
+            DB::table('users')->get('id');
+        });
+
+        $this->assertCount(1, $this->client->sentPayloads());
+
+        $payload = $this->client->sentPayloads()[0];
+
+        $this->assertEquals(3, Arr::get($payload, 'payloads.0.content.values.Count'));
     }
 }
