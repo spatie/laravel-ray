@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.21.0 - 2021-06-22
+
+- add `countQueries`
+
 ## 1.20.2 - 2021-06-21
 
 - fix `mailable` when using `Mail::fake` 
