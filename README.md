@@ -4,7 +4,17 @@
 ![Tests](https://github.com/spatie/laravel-ray/workflows/Tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-ray.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-ray)
 
-This package can be installed in a Laravel application to send messages to [the Ray app](https://myray.app).
+This package can be installed in any PHP application to send messages to [the Ray app](https://myray.app). 
+
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-ray.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-ray)
+
+The desktop app:
+
+- can be used in WordPress, Laravel, PHP, JavaScript function
+- shows you models, mails, queries, ... IN Laravel
+- helps you to debug locally or via SSH
+- lets you measure performance & set breakpoints
+
 
 ## Documentation
 
