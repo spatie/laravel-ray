@@ -27,4 +27,12 @@ class MailableTest extends TestCase
 
         $this->assertCount(1, $this->client->sentPayloads());
     }
+
+    /** @test */
+    public function it_can_send_multiple_mailable_payloads()
+    {
+        ray()->mailable(new TestMailable(), new TestMailable());
+
+        $this->assertCount(2, $this->client->sentPayloads());
+    }
 }
