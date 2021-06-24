@@ -11,7 +11,7 @@ class DumpTest extends TestCase
     {
         dump('test');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -22,11 +22,11 @@ class DumpTest extends TestCase
         dump('test 1');
         ob_end_clean();
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
 
         $_SERVER['VAR_DUMPER_FORMAT'] = 'cli';
         dump('test 2');
 
-        $this->assertCount(2, $this->client->sentPayloads());
+        $this->assertCount(2, $this->client->sentRequests());
     }
 }

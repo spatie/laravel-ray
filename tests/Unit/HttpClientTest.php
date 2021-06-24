@@ -34,8 +34,8 @@ class HttpClientTest extends TestCase
 
         Http::get('test.com/ok', ['hello' => 'world']);
 
-        $this->assertEquals('test.com/ok?hello=world', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['URL']);
-        $this->assertEquals('Http', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.label'));
+        $this->assertEquals('test.com/ok?hello=world', Arr::get($this->client->sentRequests(), '0.payloads.0.content.values')['URL']);
+        $this->assertEquals('Http', Arr::get($this->client->sentRequests(), '0.payloads.0.content.label'));
     }
 
     /** @test */
@@ -45,8 +45,8 @@ class HttpClientTest extends TestCase
 
         Http::get('test.com/json');
 
-        $this->assertEquals('test.com/json', Arr::get($this->client->sentPayloads(), '1.payloads.0.content.values')['URL']);
-        $this->assertEquals('Http', Arr::get($this->client->sentPayloads(), '1.payloads.0.content.label'));
+        $this->assertEquals('test.com/json', Arr::get($this->client->sentRequests(), '1.payloads.0.content.values')['URL']);
+        $this->assertEquals('Http', Arr::get($this->client->sentRequests(), '1.payloads.0.content.label'));
     }
 
     /** @test */
@@ -56,7 +56,7 @@ class HttpClientTest extends TestCase
 
         Http::get('test.com/not-found');
 
-        $this->assertEquals('404', Arr::get($this->client->sentPayloads(), '1.payloads.0.content.values')['Status']);
+        $this->assertEquals('404', Arr::get($this->client->sentRequests(), '1.payloads.0.content.values')['Status']);
     }
 
     /** @test */
@@ -64,7 +64,7 @@ class HttpClientTest extends TestCase
     {
         Http::get('test.com/not-found');
 
-        $this->assertEmpty($this->client->sentPayloads());
+        $this->assertEmpty($this->client->sentRequests());
     }
 
     /** @test */
@@ -76,7 +76,7 @@ class HttpClientTest extends TestCase
 
         Http::get('test.com/ok');
 
-        $sentPayloads = $this->client->sentPayloads();
+        $sentPayloads = $this->client->sentRequests();
 
         $this->assertCount(4, $sentPayloads); // 2 for the request and 2 for the response.
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);

@@ -20,14 +20,14 @@ class JsonTest extends TestCase
             ->ray()
             ->assertSuccessful();
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
 
-        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.status_code'));
-        $this->assertStringContainsString('application/json', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers'));
+        $this->assertEquals(200, Arr::get($this->client->sentRequests(), '0.payloads.0.content.status_code'));
+        $this->assertStringContainsString('application/json', Arr::get($this->client->sentRequests(), '0.payloads.0.content.headers'));
 
-        $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
-        $this->assertEquals('{"a":1}', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
-        $this->assertNotEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
+        $this->assertEquals('{"a":1}', Arr::get($this->client->sentRequests(), '0.payloads.0.content.content'));
+        $this->assertEquals('{"a":1}', Arr::get($this->client->sentRequests(), '0.payloads.0.content.content'));
+        $this->assertNotEmpty(Arr::get($this->client->sentRequests(), '0.payloads.0.content.json'));
     }
 
     /** @test */
@@ -41,13 +41,13 @@ class JsonTest extends TestCase
             ->get('test')
             ->ray();
 
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals(201, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.status_code'));
+        $this->assertCount(1, $this->client->sentRequests());
+        $this->assertEquals(201, Arr::get($this->client->sentRequests(), '0.payloads.0.content.status_code'));
 
-        $this->assertStringContainsString('text/html; charset=UTF-8', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.headers'));
+        $this->assertStringContainsString('text/html; charset=UTF-8', Arr::get($this->client->sentRequests(), '0.payloads.0.content.headers'));
 
-        $this->assertEquals('hello', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.content'));
+        $this->assertEquals('hello', Arr::get($this->client->sentRequests(), '0.payloads.0.content.content'));
 
-        $this->assertEmpty(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.json'));
+        $this->assertEmpty(Arr::get($this->client->sentRequests(), '0.payloads.0.content.json'));
     }
 }

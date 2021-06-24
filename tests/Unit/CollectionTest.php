@@ -15,6 +15,6 @@ class CollectionTest extends TestCase
 
         $this->assertEquals($newArray, $array);
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 }

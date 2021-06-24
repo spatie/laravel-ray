@@ -20,9 +20,9 @@ class EventTest extends TestCase
 
         event('not showing this event');
 
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals(TestEvent::class, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
-        $this->assertTrue(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.class_based_event'));
+        $this->assertCount(1, $this->client->sentRequests());
+        $this->assertEquals(TestEvent::class, Arr::get($this->client->sentRequests(), '0.payloads.0.content.name'));
+        $this->assertTrue(Arr::get($this->client->sentRequests(), '0.payloads.0.content.class_based_event'));
     }
 
     /** @test */
@@ -38,9 +38,9 @@ class EventTest extends TestCase
 
         event('not showing this event');
 
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals($eventName, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
-        $this->assertFalse(Arr::get($this->client->sentPayloads(), '0.payloads.0.content.class_based_event'));
+        $this->assertCount(1, $this->client->sentRequests());
+        $this->assertEquals($eventName, Arr::get($this->client->sentRequests(), '0.payloads.0.content.name'));
+        $this->assertFalse(Arr::get($this->client->sentRequests(), '0.payloads.0.content.class_based_event'));
     }
 
     /** @test */
@@ -48,7 +48,7 @@ class EventTest extends TestCase
     {
         event('test event');
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 
     /** @test */
@@ -62,8 +62,8 @@ class EventTest extends TestCase
 
         event('end event');
 
-        $this->assertCount(1, $this->client->sentPayloads());
-        $this->assertEquals('event in callable', Arr::get($this->client->sentPayloads(), '0.payloads.0.content.name'));
+        $this->assertCount(1, $this->client->sentRequests());
+        $this->assertEquals('event in callable', Arr::get($this->client->sentRequests(), '0.payloads.0.content.name'));
     }
 
     /** @test */
@@ -75,7 +75,7 @@ class EventTest extends TestCase
 
         event('my event');
 
-        $sentPayloads = $this->client->sentPayloads();
+        $sentPayloads = $this->client->sentRequests();
 
         $this->assertCount(2, $sentPayloads);
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);

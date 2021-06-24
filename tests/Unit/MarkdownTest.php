@@ -11,6 +11,6 @@ class MarkdownTest extends TestCase
     {
         ray()->markdown('## Hello World!');
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+        $this->assertMatchesOsSafeSnapshot($this->client->sentRequests());
     }
 }

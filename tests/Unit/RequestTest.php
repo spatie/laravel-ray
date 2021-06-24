@@ -20,7 +20,7 @@ class RequestTest extends TestCase
 
         $this->get('test');
 
-        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
+        $this->assertEquals(200, Arr::get($this->client->sentRequests(), '0.payloads.0.content.values')['Response code']);
     }
 
     /** @test */
@@ -34,7 +34,7 @@ class RequestTest extends TestCase
 
         $this->get('test-json');
 
-        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
+        $this->assertEquals(200, Arr::get($this->client->sentRequests(), '0.payloads.0.content.values')['Response code']);
     }
 
     /** @test */
@@ -48,7 +48,7 @@ class RequestTest extends TestCase
 
         $this->get('test-text');
 
-        $this->assertEquals(200, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
+        $this->assertEquals(200, Arr::get($this->client->sentRequests(), '0.payloads.0.content.values')['Response code']);
     }
 
     /** @test */
@@ -62,7 +62,7 @@ class RequestTest extends TestCase
 
         $this->get('test-redirect');
 
-        $this->assertEquals(302, Arr::get($this->client->sentPayloads(), '0.payloads.0.content.values')['Response code']);
+        $this->assertEquals(302, Arr::get($this->client->sentRequests(), '0.payloads.0.content.values')['Response code']);
     }
 
     /** @test */
@@ -74,7 +74,7 @@ class RequestTest extends TestCase
 
         $this->get('test-redirect');
 
-        $sentPayloads = $this->client->sentPayloads();
+        $sentPayloads = $this->client->sentRequests();
 
         $this->assertCount(2, $sentPayloads);
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);

@@ -73,9 +73,12 @@ class Ray extends BaseRay
             Mail::fake();
         }
 
+        $payloads = [];
         foreach ($mailables as $mailable) {
-            $this->sendRequest(MailablePayload::forMailable($mailable));
+            $payloads[] = MailablePayload::forMailable($mailable);
         }
+
+        $this->sendRequest($payloads);
 
         return $this;
     }
@@ -426,6 +429,7 @@ class Ray extends BaseRay
     public function exception(Throwable $exception, array $meta = [])
     {
         $payloads[] = new ExceptionPayload($exception, $meta);
+
         if ($exception instanceof QueryException) {
             $executedQuery = new QueryExecuted($exception->getSql(), $exception->getBindings(), null, DB::connection(config('database.default')));
 
