@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.23.0 - 2021-06-24
+
+- allow multiple mailables ([#204](https://github.com/spatie/laravel-ray/pull/204))
+
 ## 1.22.0 - 2021-06-24
 
 - when a query exception occurs, the query itself will also be sent to Ray.
