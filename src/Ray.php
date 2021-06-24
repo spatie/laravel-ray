@@ -73,10 +73,9 @@ class Ray extends BaseRay
             Mail::fake();
         }
 
-        $payloads = [];
-        foreach ($mailables as $mailable) {
-            $payloads[] = MailablePayload::forMailable($mailable);
-        }
+        $payloads = array_map(function (Mailable $mailable) {
+            return MailablePayload::forMailable($mailable);
+        }, $mailables);
 
         $this->sendRequest($payloads);
 
