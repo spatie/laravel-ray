@@ -13,7 +13,7 @@ class ViewTest extends TestCase
 
         view('test')->render();
 
-        $payloads = $this->client->sentPayloads();
+        $payloads = $this->client->sentRequests();
         $this->assertCount(1, $payloads);
         $this->assertEquals('view', $payloads[0]['payloads'][0]['type']);
     }
@@ -27,7 +27,7 @@ class ViewTest extends TestCase
 
         view('test')->render();
 
-        $sentPayloads = $this->client->sentPayloads();
+        $sentPayloads = $this->client->sentRequests();
 
         $this->assertCount(2, $sentPayloads);
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);

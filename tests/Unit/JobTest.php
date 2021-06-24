@@ -19,8 +19,8 @@ class JobTest extends TestCase
 
         dispatch(new TestJob());
 
-        $this->assertEquals('job_event', Arr::get($this->client->sentPayloads(), '0.payloads.0.type'));
-        $this->assertCount(2, $this->client->sentPayloads());
+        $this->assertEquals('job_event', Arr::get($this->client->sentRequests(), '0.payloads.0.type'));
+        $this->assertCount(2, $this->client->sentRequests());
     }
 
     /** @test */
@@ -32,7 +32,7 @@ class JobTest extends TestCase
 
         dispatch(new TestJob());
 
-        $sentPayloads = $this->client->sentPayloads();
+        $sentPayloads = $this->client->sentRequests();
 
         $this->assertCount(4, $sentPayloads);
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);

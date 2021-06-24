@@ -13,7 +13,7 @@ class LogTest extends TestCase
     {
         Log::info('hey');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -23,7 +23,7 @@ class LogTest extends TestCase
 
         Log::info('hey');
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 
     /** @test */
@@ -31,6 +31,6 @@ class LogTest extends TestCase
     {
         Log::info(null);
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 }

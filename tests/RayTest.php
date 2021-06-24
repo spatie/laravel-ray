@@ -23,7 +23,7 @@ class RayTest extends TestCase
         // re-enable for next tests
         ray()->enable();
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class RayTest extends TestCase
     {
         Log::info('hey');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -41,7 +41,7 @@ class RayTest extends TestCase
 
         dump('');
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 
     /** @test */
@@ -49,7 +49,7 @@ class RayTest extends TestCase
     {
         dump('spatie');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -59,7 +59,7 @@ class RayTest extends TestCase
 
         Log::info('hey');
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 
     /** @test */
@@ -67,7 +67,7 @@ class RayTest extends TestCase
     {
         ray();
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 
     /** @test */
@@ -75,11 +75,11 @@ class RayTest extends TestCase
     {
         ray()->disable();
         ray('test');
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
 
         ray()->enable();
         ray('not test');
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -114,7 +114,7 @@ class RayTest extends TestCase
 
         $this->assertStringContainsString(
             'local_tests',
-            Arr::get($this->client->sentPayloads(), '0.payloads.0.origin.file')
+            Arr::get($this->client->sentRequests(), '0.payloads.0.origin.file')
         );
     }
 
@@ -123,7 +123,7 @@ class RayTest extends TestCase
     {
         ray(new TestMailable(), new User());
 
-        $payloads = $this->client->sentPayloads();
+        $payloads = $this->client->sentRequests();
 
         $this->assertEquals('mailable', $payloads[0]['payloads'][0]['type']);
         $this->assertEquals('eloquent_model', $payloads[0]['payloads'][1]['type']);
@@ -134,7 +134,7 @@ class RayTest extends TestCase
     {
         ray()->env([], __DIR__ . '/stubs/dotenv.env');
 
-        $payloads = $this->client->sentPayloads();
+        $payloads = $this->client->sentRequests();
 
         $this->assertEquals('table', $payloads[0]['payloads'][0]['type']);
         $this->assertEquals('.env', $payloads[0]['payloads'][0]['content']['label']);
@@ -149,7 +149,7 @@ class RayTest extends TestCase
     {
         ray()->env(['APP_ENV', 'DB_DATABASE'], __DIR__ . '/stubs/dotenv.env');
 
-        $payloads = $this->client->sentPayloads();
+        $payloads = $this->client->sentRequests();
 
         $this->assertEquals('table', $payloads[0]['payloads'][0]['type']);
         $this->assertEquals('.env', $payloads[0]['payloads'][0]['content']['label']);

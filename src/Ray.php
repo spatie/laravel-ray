@@ -59,7 +59,7 @@ class Ray extends BaseRay
         return $this;
     }
 
-    public function mailable(Mailable $mailable): self
+    public function mailable(Mailable ...$mailables): self
     {
         $shouldRestoreFake = false;
 
@@ -69,13 +69,15 @@ class Ray extends BaseRay
             Mail::swap(new MailManager(app()));
         }
 
-        $payload = MailablePayload::forMailable($mailable);
-
         if ($shouldRestoreFake) {
             Mail::fake();
         }
 
-        $this->sendRequest($payload);
+        $payloads = array_map(function (Mailable $mailable) {
+            return MailablePayload::forMailable($mailable);
+        }, $mailables);
+
+        $this->sendRequest($payloads);
 
         return $this;
     }
@@ -426,7 +428,7 @@ class Ray extends BaseRay
     public function exception(Throwable $exception, array $meta = [])
     {
         $payloads[] = new ExceptionPayload($exception, $meta);
-        
+
         if ($exception instanceof QueryException) {
             $executedQuery = new QueryExecuted($exception->getSql(), $exception->getBindings(), null, DB::connection(config('database.default')));
 
