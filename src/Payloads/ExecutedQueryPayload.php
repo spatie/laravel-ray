@@ -22,11 +22,23 @@ class ExecutedQueryPayload extends Payload
 
     public function getContent(): array
     {
-        return [
+        $properties = [
             'sql' => $this->query->sql,
             'bindings' => $this->query->bindings,
-            'connection_name' => $this->query->connectionName,
-            'time' => $this->query->time,
         ];
+
+        if ($this->hasAllProperties()) {
+            $properties = array_merge($properties, [
+                'connection_name' => $this->query->connectionName,
+                'time' => $this->query->time,
+            ]);
+        }
+
+        return $properties;
+    }
+
+    protected function hasAllProperties(): bool
+    {
+        return ! is_null($this->query->time);
     }
 }

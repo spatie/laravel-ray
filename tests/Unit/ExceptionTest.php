@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay\Tests\Unit;
 
+use Exception;
 use Illuminate\Log\Events\MessageLogged;
 use Spatie\LaravelRay\Tests\TestCase;
 
@@ -15,8 +16,8 @@ class ExceptionTest extends TestCase
         $hasError = false;
 
         try {
-            event(new MessageLogged('warning', 'test', ['exception' => new \Exception('test')]));
-        } catch (\Exception $e) {
+            event(new MessageLogged('warning', 'test', ['exception' => new Exception('test')]));
+        } catch (Exception $e) {
             $hasError = true;
         }
 
