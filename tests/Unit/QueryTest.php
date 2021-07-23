@@ -111,7 +111,7 @@ class QueryTest extends TestCase
 
         $payload = $this->client->sentPayloads()[0];
 
-        $this->assertEquals('executed_query', Arr::get($payload, 'payloads.0.type'));
+        $this->assertEquals('executed_query', Arr::get($payload, 'type'));
 
         $this->assertInstanceOf(User::class, $user);
     }
