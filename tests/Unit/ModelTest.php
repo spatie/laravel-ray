@@ -14,7 +14,7 @@ class ModelTest extends TestCase
 
         ray()->model($user);
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -24,7 +24,7 @@ class ModelTest extends TestCase
         $user2 = User::make(['email' => 'paul@example.com']);
 
         ray()->model($user1, $user2);
-        $this->assertCount(2, $this->client->sentPayloads());
+        $this->assertCount(2, $this->client->sentRequests());
     }
 
     /** @test */
@@ -34,7 +34,7 @@ class ModelTest extends TestCase
 
         ray()->models($user);
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -45,6 +45,6 @@ class ModelTest extends TestCase
 
         ray()->models(collect([$user1, $user2]));
 
-        $this->assertCount(2, $this->client->sentPayloads());
+        $this->assertCount(2, $this->client->sentRequests());
     }
 }

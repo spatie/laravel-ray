@@ -11,6 +11,9 @@ class FakeClient extends Client
     /** @var array */
     protected $sentRequests = [];
 
+    /** @var array */
+    protected $sentPayloads = [];
+
     public function send(Request $request): void
     {
         $requestProperties = $request->toArray();
@@ -29,6 +32,8 @@ class FakeClient extends Client
             if (isset($payload['content']['attributes'])) {
                 $payload['content']['attributes'] = preg_replace('/sf-dump-[0-9]{1,10}/', 'sf-dump-xxxxxxxxxx', $payload['content']['attributes']);
             }
+
+            $this->sentPayloads[] = $payload;
         }
 
         $requestProperties['meta'] = [];
@@ -37,6 +42,11 @@ class FakeClient extends Client
     }
 
     public function sentPayloads(): array
+    {
+        return $this->sentPayloads;
+    }
+
+    public function sentRequests(): array
     {
         return $this->sentRequests;
     }

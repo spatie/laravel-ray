@@ -14,7 +14,7 @@ class CacheTest extends TestCase
 
         Cache::put('cached-key', 'cached-value');
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+        $this->assertMatchesOsSafeSnapshot($this->client->sentRequests());
     }
 
     /** @test */
@@ -22,7 +22,7 @@ class CacheTest extends TestCase
     {
         Cache::put('cached-key', 'cached-value');
 
-        $this->assertCount(0, $this->client->sentPayloads());
+        $this->assertCount(0, $this->client->sentRequests());
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class CacheTest extends TestCase
 
         Cache::put('another-key', 'another-value');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -48,7 +48,7 @@ class CacheTest extends TestCase
 
         Cache::get('cached-key');
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+        $this->assertMatchesOsSafeSnapshot($this->client->sentRequests());
     }
 
     /** @test */
@@ -58,7 +58,7 @@ class CacheTest extends TestCase
 
         Cache::get('cached-key');
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+        $this->assertMatchesOsSafeSnapshot($this->client->sentRequests());
     }
 
     /** @test */
@@ -68,7 +68,7 @@ class CacheTest extends TestCase
 
         Cache::put('cached-key', 'cached-value', 10);
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+        $this->assertMatchesOsSafeSnapshot($this->client->sentRequests());
     }
 
     /** @test */
@@ -80,6 +80,6 @@ class CacheTest extends TestCase
 
         Cache::pull('cached-key');
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentPayloads());
+        $this->assertMatchesOsSafeSnapshot($this->client->sentRequests());
     }
 }

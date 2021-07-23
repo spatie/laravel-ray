@@ -2,9 +2,13 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
-## 1.23.0 - 2021-07-23
+## 1.24.0 - 2021-07-23
 
 - add `ray` macro on query builder
+
+## 1.23.0 - 2021-06-24
+
+- allow multiple mailables ([#204](https://github.com/spatie/laravel-ray/pull/204))
 
 ## 1.22.0 - 2021-06-24
 

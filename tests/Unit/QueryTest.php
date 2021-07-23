@@ -16,7 +16,7 @@ class QueryTest extends TestCase
 
         DB::table('users')->get('id');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -26,7 +26,7 @@ class QueryTest extends TestCase
 
         DB::table('users')->get('id');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -36,11 +36,11 @@ class QueryTest extends TestCase
 
         DB::table('users')->get('id');
         DB::table('users')->get('id');
-        $this->assertCount(2, $this->client->sentPayloads());
+        $this->assertCount(2, $this->client->sentRequests());
 
         ray()->stopShowingQueries();
         DB::table('users')->get('id');
-        $this->assertCount(2, $this->client->sentPayloads());
+        $this->assertCount(2, $this->client->sentRequests());
     }
 
     /** @test */
@@ -51,7 +51,7 @@ class QueryTest extends TestCase
 
         DB::table('users')->get('id');
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -61,11 +61,11 @@ class QueryTest extends TestCase
             // will be logged
             DB::table('users')->where('id', 1)->get();
         });
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
 
         // will not be logged
         DB::table('users')->get('id');
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -77,7 +77,7 @@ class QueryTest extends TestCase
 
         DB::table('users')->where('id', 1)->get();
 
-        $sentPayloads = $this->client->sentPayloads();
+        $sentPayloads = $this->client->sentRequests();
 
         $this->assertCount(2, $sentPayloads);
         $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
@@ -93,9 +93,9 @@ class QueryTest extends TestCase
             DB::table('users')->get('id');
         });
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
 
-        $payload = $this->client->sentPayloads()[0];
+        $payload = $this->client->sentRequests()[0];
 
         $this->assertEquals(3, Arr::get($payload, 'payloads.0.content.values.Count'));
     }

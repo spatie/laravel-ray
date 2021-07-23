@@ -18,7 +18,7 @@ class StringableTest extends TestCase
         $this->assertInstanceOf(Stringable::class, $str);
         $this->assertSame('Lorem Ipsum Dolor Sit Amen', (string) $str);
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -29,6 +29,6 @@ class StringableTest extends TestCase
         $this->assertInstanceOf(Stringable::class, $str);
         $this->assertSame('Lorem Ipsum Dolor Sit Amen', (string) $str);
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 }

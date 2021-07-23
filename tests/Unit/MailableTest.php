@@ -13,7 +13,7 @@ class MailableTest extends TestCase
     {
         ray()->mailable(new TestMailable());
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 
     /** @test */
@@ -25,6 +25,15 @@ class MailableTest extends TestCase
             ->to(['freek@spatie.be', 'ruben@spatie.be'])
             ->send(new TestMailable());
 
-        $this->assertCount(1, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
+    }
+
+    /** @test */
+    public function it_can_send_multiple_mailable_payloads()
+    {
+        ray()->mailable(new TestMailable(), new TestMailable());
+
+        $this->assertCount(2, $this->client->sentPayloads());
+        $this->assertCount(1, $this->client->sentRequests());
     }
 }
