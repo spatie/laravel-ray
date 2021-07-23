@@ -6,16 +6,6 @@ parameters:
 			path: src/OriginFactory.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: src/Payloads/MailablePayload.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: src/Payloads/ResponsePayload.php
-
-		-
 			message: "#^Access to an undefined property Spatie\\\\LaravelRay\\\\RayServiceProvider\\:\\:\\$items\\.$#"
 			count: 2
 			path: src/RayServiceProvider.php

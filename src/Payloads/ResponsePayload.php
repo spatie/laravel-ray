@@ -22,7 +22,7 @@ class ResponsePayload extends Payload
 
     public static function fromTestResponse(TestResponse $testResponse): self
     {
-        return new static(
+        return new self(
             $testResponse->getStatusCode(),
             $testResponse->headers->all(),
             $testResponse->content(),
