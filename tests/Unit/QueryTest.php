@@ -5,6 +5,7 @@ namespace Spatie\LaravelRay\Tests\Unit;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Spatie\LaravelRay\Tests\TestCase;
+use Spatie\LaravelRay\Tests\TestClasses\User;
 
 class QueryTest extends TestCase
 {
@@ -97,5 +98,21 @@ class QueryTest extends TestCase
         $payload = $this->client->sentPayloads()[0];
 
         $this->assertEquals(3, Arr::get($payload, 'payloads.0.content.values.Count'));
+    }
+
+    /** @test */
+    public function an_eloquent_query_can_be_sent_to_ray()
+    {
+        User::create(['email' => 'john@example.com']);
+
+        $user = User::query()->where('email', 'john@example.com')->ray()->first();
+
+        $this->assertCount(1, $this->client->sentPayloads());
+
+        $payload = $this->client->sentPayloads()[0];
+
+        $this->assertEquals('executed_query', Arr::get($payload, 'payloads.0.type'));
+
+        $this->assertInstanceOf(User::class, $user);
     }
 }

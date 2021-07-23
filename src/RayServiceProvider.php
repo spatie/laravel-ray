@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
@@ -12,6 +13,7 @@ use Illuminate\Testing\TestResponse;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
+use Spatie\LaravelRay\Payloads\QueryPayload;
 use Spatie\LaravelRay\Watchers\ApplicationLogWatcher;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\DumpWatcher;
@@ -177,6 +179,15 @@ class RayServiceProvider extends ServiceProvider
             $description === ''
                 ? ray($this->value)
                 : ray($description, $this->value);
+
+            return $this;
+        });
+
+
+        Builder::macro('ray', function() {
+            $payload = new QueryPayload($this);
+
+            ray()->sendRequest($payload);
 
             return $this;
         });

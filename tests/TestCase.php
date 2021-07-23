@@ -60,7 +60,8 @@ class TestCase extends Orchestra
         ]);
 
         Schema::create('users', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
+            $table->string('email')->nullable();
         });
     }
 
