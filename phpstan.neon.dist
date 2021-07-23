@@ -6,3 +6,11 @@ parameters:
     paths:
         - src
         - tests
+
+    ignoreErrors:
+        -
+            message: '#^Access to an undefined property Spatie\\LaravelRay\\RayServiceProvider\:\:\$items\.$#'
+            path: src/RayServiceProvider.php
+        -
+            message: '#^Access to an undefined property Spatie\\LaravelRay\\RayServiceProvider\:\:\$value\.$#'
+            path: src/RayServiceProvider.php

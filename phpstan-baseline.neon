@@ -6,16 +6,6 @@ parameters:
 			path: src/OriginFactory.php
 
 		-
-			message: "#^Access to an undefined property Spatie\\\\LaravelRay\\\\RayServiceProvider\\:\\:\\$items\\.$#"
-			count: 2
-			path: src/RayServiceProvider.php
-
-		-
-			message: "#^Access to an undefined property Spatie\\\\LaravelRay\\\\RayServiceProvider\\:\\:\\$value\\.$#"
-			count: 2
-			path: src/RayServiceProvider.php
-
-		-
 			message: "#^Call to static method info\\(\\) on an unknown class Log\\.$#"
 			count: 2
 			path: tests/RayTest.php
