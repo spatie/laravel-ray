@@ -101,7 +101,7 @@ class OriginFactory
         }
 
         if ($originFrame->class === Builder::class) {
-            //return $this->findFrameForQueryBuilder($frames);
+            return $this->findFrameForQueryBuilder($frames);
         }
 
         if (Str::endsWith($originFrame->file, Ray::makePathOsSafe('/vendor/psy/psysh/src/ExecutionLoopClosure.php'))) {
