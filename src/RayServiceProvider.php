@@ -184,7 +184,7 @@ class RayServiceProvider extends ServiceProvider
         });
 
 
-        Builder::macro('ray', function() {
+        Builder::macro('ray', function () {
             $payload = new QueryPayload($this);
 
             ray()->sendRequest($payload);
