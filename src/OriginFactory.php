@@ -55,7 +55,7 @@ class OriginFactory
 
         $rayFunctionFrame = $frames[$indexOfRay + 2] ?? null;
 
-        /** @var Frame|null $foundFrame */
+        /** @var Frame|null $originFrame */
         $originFrame = $frames[$indexOfRay + 1] ?? null;
 
         if ($originFrame && Str::endsWith($originFrame->file, Ray::makePathOsSafe('ray/src/helpers.php'))) {
