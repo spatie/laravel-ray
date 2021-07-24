@@ -69,10 +69,9 @@ class CacheWatcher extends Watcher
         });
     }
 
-    protected function formatExpiration(KeyWritten $event)
+    protected function formatExpiration(KeyWritten $event): ?int
     {
-        return property_exists($event, 'seconds')
-            ? $event->seconds : $event->minutes * 60;
+        return $event->seconds;
     }
 
     public function ray(): Ray
