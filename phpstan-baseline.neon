@@ -1,0 +1,32 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Spatie\\\\LaravelRay\\\\OriginFactory\\:\\:returnTinkerFrame\\(\\)\\.$#"
+			count: 1
+			path: src/OriginFactory.php
+
+		-
+			message: "#^Variable \\$foundFrame in PHPDoc tag @var does not exist\\.$#"
+			count: 2
+			path: src/OriginFactory.php
+
+		-
+			message: "#^Call to static method info\\(\\) on an unknown class Log\\.$#"
+			count: 2
+			path: tests/RayTest.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\View\\:\\:addLocation\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: "#^Call to an undefined static method Spatie\\\\LaravelRay\\\\Tests\\\\TestClasses\\\\User\\:\\:make\\(\\)\\.$#"
+			count: 6
+			path: tests/Unit/ModelTest.php
+
+		-
+			message: "#^Call to an undefined static method Spatie\\\\LaravelRay\\\\Tests\\\\TestClasses\\\\User\\:\\:create\\(\\)\\.$#"
+			count: 1
+			path: tests/Unit/QueryTest.php
+

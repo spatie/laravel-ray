@@ -83,7 +83,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param Model|iterable ...$models
+     * @param Model|iterable ...$model
      *
      * @return \Spatie\LaravelRay\Ray
      */

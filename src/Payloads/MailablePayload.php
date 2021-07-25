@@ -16,7 +16,7 @@ class MailablePayload extends Payload
 
     public static function forMailable(Mailable $mailable)
     {
-        return new static(self::renderMailable($mailable), $mailable);
+        return new self(self::renderMailable($mailable), $mailable);
     }
 
     public function __construct(string $html, Mailable $mailable = null)
