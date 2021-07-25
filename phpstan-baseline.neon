@@ -11,11 +11,6 @@ parameters:
 			path: src/OriginFactory.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Cache\\\\Events\\\\KeyWritten\\:\\:\\$minutes\\.$#"
-			count: 1
-			path: src/Watchers/CacheWatcher.php
-
-		-
 			message: "#^Call to static method info\\(\\) on an unknown class Log\\.$#"
 			count: 2
 			path: tests/RayTest.php
