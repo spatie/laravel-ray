@@ -28,7 +28,7 @@ class CachePayload extends Payload
 
         $this->key = $key;
 
-        $this->tags = is_array($tags) ? [$tags] : $tags;
+        $this->tags = is_array($tags) ? $tags : [$tags] ;
 
         $this->value = $value;
 
