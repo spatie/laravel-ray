@@ -22,13 +22,13 @@ class CachePayload extends Payload
     /** @var int|null */
     protected $expirationInSeconds;
 
-    public function __construct(string $type, string $key, array|string $tags, $value = null, int $expirationInSeconds = null)
+    public function __construct(string $type, string $key, $tags, $value = null, int $expirationInSeconds = null)
     {
         $this->type = $type;
 
         $this->key = $key;
 
-        $this->tags = is_string($tags) ? [$tags] : $tags;
+        $this->tags = is_array($tags) ? [$tags] : $tags;
 
         $this->value = $value;
 
