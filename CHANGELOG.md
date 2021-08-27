@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.25.0 - 2021-08-27
+
+- add tags to cache payload (#210)
+
 ## 1.24.2 - 2021-07-23
 
 - fix origin of query builder ray calls (now for real)
