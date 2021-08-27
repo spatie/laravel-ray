@@ -23,7 +23,7 @@ class CacheWatcher extends Watcher
                 return;
             }
 
-            $payload = new CachePayload('Hit', $event->key, $event->value);
+            $payload = new CachePayload('Hit', $event->key, $event->tags, $event->value);
 
             $ray = $this->ray()->sendRequest($payload);
 
@@ -35,7 +35,7 @@ class CacheWatcher extends Watcher
                 return;
             }
 
-            $payload = new CachePayload('Missed', $event->key);
+            $payload = new CachePayload('Missed', $event->key, $event->tags);
 
             $this->ray()->sendRequest($payload);
         });
@@ -48,8 +48,9 @@ class CacheWatcher extends Watcher
             $payload = new CachePayload(
                 'Key written',
                 $event->key,
+                $event->tags,
                 $event->value,
-                $this->formatExpiration($event)
+                $this->formatExpiration($event),
             );
 
             $this->ray()->sendRequest($payload);
@@ -63,6 +64,7 @@ class CacheWatcher extends Watcher
             $payload = new CachePayload(
                 'Key forgotten',
                 $event->key,
+                $event->tags
             );
 
             $this->ray()->sendRequest($payload);

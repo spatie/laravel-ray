@@ -10,6 +10,9 @@ class CachePayload extends Payload
     /** @var string */
     protected $type;
 
+    /** @var string[] */
+    protected $tags;
+
     /** @var string */
     protected $key;
 
@@ -19,11 +22,13 @@ class CachePayload extends Payload
     /** @var int|null */
     protected $expirationInSeconds;
 
-    public function __construct(string $type, string $key, $value = null, int $expirationInSeconds = null)
+    public function __construct(string $type, string $key, $tags, $value = null, int $expirationInSeconds = null)
     {
         $this->type = $type;
 
         $this->key = $key;
+
+        $this->tags = is_array($tags) ? $tags : [$tags];
 
         $this->value = $value;
 
@@ -41,6 +46,7 @@ class CachePayload extends Payload
             'Event' => '<code>' . $this->type . '</code>',
             'Key' => $this->key,
             'Value' => ArgumentConverter::convertToPrimitive($this->value),
+            'Tags' => count($this->tags) ? ArgumentConverter::convertToPrimitive($this->tags) : null,
             'Expiration in seconds' => $this->expirationInSeconds,
         ]);
 
