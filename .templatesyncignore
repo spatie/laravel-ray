@@ -1,0 +1,14 @@
+.github/workflows/php-cs-fixer.yml
+.github/workflows/phpstan.yml
+.github/workflows/run-tests.yml
+.github/workflows/psalm.yml
+composer.json
+configure.php
+config/skeleton.php
+database/*
+src/Commands/SkeletonCommand.php
+src/Skeleton.php
+src/SkeletonFacade.php
+src/SkeletonServiceProvider.php
+testbench.yaml
+tests/ExampleTest.php
