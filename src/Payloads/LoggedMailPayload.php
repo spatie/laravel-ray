@@ -32,7 +32,7 @@ class LoggedMailPayload extends Payload
     {
         $parser = new MailMimeParser();
 
-        $message = $parser->parse($loggedMail);
+        $message = $parser->parse($loggedMail, true);
 
         return new self(
             $message->getContent(),
