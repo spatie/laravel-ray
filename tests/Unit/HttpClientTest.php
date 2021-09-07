@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Spatie\LaravelRay\Tests\Unit;
 
 use Illuminate\Support\Arr;

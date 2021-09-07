@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Spatie\LaravelRay\Watchers;
 
 use Illuminate\Http\Client\Events\RequestSending;

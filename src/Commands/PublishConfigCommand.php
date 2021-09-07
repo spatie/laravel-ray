@@ -14,7 +14,7 @@ class PublishConfigCommand extends Command
 
     public function handle()
     {
-        if ((new Filesystem)->exists('ray.php')) {
+        if ((new Filesystem())->exists('ray.php')) {
             $this->error('ray.php already exists in the project root');
 
             return;

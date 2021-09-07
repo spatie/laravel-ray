@@ -35,7 +35,7 @@ class EventPayload extends Payload
         return [
             'name' => $this->eventName,
             'event' => $this->event ? ArgumentConverter::convertToPrimitive($this->event) : null,
-            'payload' => count($this->payload) ? ArgumentConverter::convertToPrimitive($this->payload): null,
+            'payload' => count($this->payload) ? ArgumentConverter::convertToPrimitive($this->payload) : null,
             'class_based_event' => ! is_null($this->event),
         ];
     }
