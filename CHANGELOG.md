@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.25.1 - 2021-09-07
+
+- add support for zbateson/mail-mime-parser v2 (#214)
+
 ## 1.25.0 - 2021-08-27
 
 - add tags to cache payload (#210)
