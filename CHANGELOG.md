@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.25.2 - 2021-09-10
+
+- enhance metadata instead of overriding it in when sending a request (#215)
+
 ## 1.25.1 - 2021-09-07
 
 - add support for zbateson/mail-mime-parser v2 (#214)
