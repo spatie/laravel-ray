@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay\Tests\Unit;
 
 use Illuminate\Support\Arr;
-use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 
