@@ -453,9 +453,7 @@ class Ray extends BaseRay
             return $this;
         }
 
-        $meta = [
-            'laravel_version' => app()->version(),
-        ];
+        $meta['laravel_version'] = app()->version();
 
         if (class_exists(InstalledVersions::class)) {
             try {
