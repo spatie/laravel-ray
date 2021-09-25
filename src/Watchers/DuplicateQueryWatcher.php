@@ -52,39 +52,9 @@ class DuplicateQueryWatcher extends Watcher
         return $this;
     }
 
-    public function keepExecutedQueries(): self
-    {
-        $this->keepExecutedQueries = true;
-
-        return $this;
-    }
-
     public function getExecutedQueries(): array
     {
         return $this->executedQueries;
-    }
-
-    public function sendIndividualQueries(): self
-    {
-        $this->sendIndividualQueries = true;
-
-        return $this;
-    }
-
-    public function doNotSendIndividualQueries(): self
-    {
-        $this->sendIndividualQueries = false;
-
-        return $this;
-    }
-
-    public function stopKeepingAndClearExecutedQueries(): self
-    {
-        $this->keepExecutedQueries = false;
-
-        $this->executedQueries = [];
-
-        return $this;
     }
 
     public function disable(): Watcher
