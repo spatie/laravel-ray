@@ -30,3 +30,8 @@ parameters:
 			count: 1
 			path: tests/Unit/QueryTest.php
 
+        -
+			message: "#^Call to an undefined static method Spatie\\\\LaravelRay\\\\Tests\\\\TestClasses\\\\User\\:\\:create\\(\\)\\.$#"
+			count: 1
+			path: tests/Unit/DuplicateQueryTest.php
+
