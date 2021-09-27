@@ -24,6 +24,7 @@ use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
+use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
@@ -332,6 +333,25 @@ class Ray extends BaseRay
     public function stopShowingQueries(): self
     {
         app(QueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showDuplicateQueries($callable = null)
+    {
+        $watcher = app(DuplicateQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingDuplicateQueries(): self
+    {
+        app(DuplicateQueryWatcher::class)->disable();
 
         return $this;
     }
