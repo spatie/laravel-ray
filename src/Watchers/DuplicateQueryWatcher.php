@@ -21,7 +21,7 @@ class DuplicateQueryWatcher extends Watcher
         $this->enabled = $settings->send_duplicate_queries_to_ray;
 
         DB::listen(function (QueryExecuted $query) {
-            if (!$this->enabled()) {
+            if (! $this->enabled()) {
                 return;
             }
 
@@ -31,7 +31,7 @@ class DuplicateQueryWatcher extends Watcher
 
             $this->executedQueries[] = $sql;
 
-            if (!$duplicated) {
+            if (! $duplicated) {
                 return;
             }
 
@@ -46,13 +46,11 @@ class DuplicateQueryWatcher extends Watcher
     private function cleanupBindings(array $bindings): array
     {
         return array_map(function ($binding) {
-
             if ($binding instanceof \DateTime) {
                 return $binding->format('Y-m-d H:i:s');
             }
 
             return $binding;
-
         }, $bindings);
     }
 
