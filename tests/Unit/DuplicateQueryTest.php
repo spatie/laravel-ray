@@ -5,9 +5,20 @@ namespace Spatie\LaravelRay\Tests\Unit;
 use Illuminate\Support\Facades\DB;
 use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\User;
+use Spatie\Ray\Settings\Settings;
 
 class DuplicateQueryTest extends TestCase
 {
+    /** @test */
+    public function it_does_not_send_duplicate_queries_to_ray_when_connection_is_not_setup_properly()
+    {
+        config()->set('database.default', 'sqlite_bad');
+
+        ray()->showDuplicateQueries();
+
+        $this->expectNotToPerformAssertions();
+    }
+
     /** @test */
     public function it_can_start_logging_duplicate_queries()
     {

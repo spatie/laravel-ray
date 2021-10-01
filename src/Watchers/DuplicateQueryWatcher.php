@@ -20,11 +20,10 @@ class DuplicateQueryWatcher extends Watcher
 
         $this->enabled = $settings->send_duplicate_queries_to_ray;
 
-        if (! $this->enabled()) {
-            return;
-        }
-
         DB::listen(function (QueryExecuted $query) {
+            if (! $this->enabled()) {
+                return;
+            }
 
             $sql = Str::replaceArray('?', $query->bindings, $query->sql);
 
@@ -46,7 +45,11 @@ class DuplicateQueryWatcher extends Watcher
 
     public function enable(): Watcher
     {
-        DB::enableQueryLog();
+        try {
+            DB::enableQueryLog();
+        } catch (\Throwable $exception){
+            return $this;
+        }
 
         parent::enable();
 

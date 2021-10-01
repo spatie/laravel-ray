@@ -10,6 +10,16 @@ use Spatie\LaravelRay\Tests\TestClasses\User;
 class QueryTest extends TestCase
 {
     /** @test */
+    public function it_does_not_send_queries_to_ray_when_connection_is_not_setup_properly()
+    {
+        config()->set('database.default', 'sqlite_bad');
+
+        ray()->showQueries();
+
+        $this->expectNotToPerformAssertions();
+    }
+
+    /** @test */
     public function it_can_start_logging_queries()
     {
         ray()->showQueries();
