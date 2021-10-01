@@ -25,7 +25,7 @@ class DuplicateQueryWatcher extends Watcher
                 return;
             }
 
-            $sql = Str::replaceArray('?', $query->bindings, $query->sql);
+            $sql = Str::replaceArray('?', $this->cleanupBindings($query->bindings), $query->sql);
 
             $duplicated = in_array($sql, $this->executedQueries);
 
@@ -41,6 +41,17 @@ class DuplicateQueryWatcher extends Watcher
 
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
+    }
+
+    private function cleanupBindings(array $bindings): array
+    {
+        return array_map(function ($binding) {
+            if ($binding instanceof \DateTimeInterface) {
+                return $binding->format('Y-m-d H:i:s');
+            }
+
+            return $binding;
+        }, $bindings);
     }
 
     public function enable(): Watcher

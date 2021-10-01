@@ -84,4 +84,19 @@ class DuplicateQueryTest extends TestCase
 
         $this->assertCount(1, $this->client->sentPayloads());
     }
+
+    /**
+     * @test
+     *
+     * ref. issue https://github.com/spatie/laravel-ray/issues/217
+     */
+    public function it_can_log_duplicated_queries_with_datetime_parameters()
+    {
+        ray()->showDuplicateQueries();
+
+        DB::table('users')->where('created_at', '<', new \DateTime(now()))->get();
+        DB::table('users')->where('created_at', '<', new \DateTime(now()))->get();
+
+        $this->assertCount(1, $this->client->sentRequests());
+    }
 }
