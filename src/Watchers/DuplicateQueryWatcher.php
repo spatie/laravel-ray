@@ -46,7 +46,7 @@ class DuplicateQueryWatcher extends Watcher
     private function cleanupBindings(array $bindings): array
     {
         return array_map(function ($binding) {
-            if ($binding instanceof \DateTime) {
+            if ($binding instanceof \DateTimeInterface) {
                 return $binding->format('Y-m-d H:i:s');
             }
 
