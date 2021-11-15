@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.26.2 - 2021-11-15
+
+## What's Changed
+
+- Check if Laravel has been bound with `Facade\FlareClient\Flare` by @crynobone in https://github.com/spatie/laravel-ray/pull/224
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.1...1.26.2
+
 ## 1.26.1 - 2021-10-01
 
 - fix #217 error with duplicate queries log (#220)
@@ -48,7 +56,7 @@ All notable changes to `laravel-ray` will be documented in this file
 
 ## 1.20.2 - 2021-06-21
 
-- fix `mailable` when using `Mail::fake` 
+- fix `mailable` when using `Mail::fake`
 
 ## 1.20.1 - 2021-06-15
 
@@ -81,7 +89,7 @@ All notable changes to `laravel-ray` will be documented in this file
 ## 1.17.2 - 2021-04-06
 
 - Laravel Octane Compatibility (#178)
- 
+
 ## 1.17.1 - 2021-03-14
 
 - send exceptions by default
