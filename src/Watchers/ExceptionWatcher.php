@@ -58,7 +58,7 @@ class ExceptionWatcher extends Watcher
 
     public function getFlareReport(Throwable $exception): ?array
     {
-        if (! class_exists(Flare::class)) {
+        if (! app()->bound(Flare::class)) {
             return null;
         }
 
