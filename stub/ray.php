@@ -2,7 +2,7 @@
 
 return [
     /*
-    * This settings controls whether data should be sent to Ray.
+    * This setting controls whether data should be sent to Ray.
     *
     * By default, `ray()` will only transmit data in non-production environments.
     */
