@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.26.3 - 2021-11-22
+
+## What's Changed
+
+- Fix typo in ray.php docblock by @iDiegoNL in https://github.com/spatie/laravel-ray/pull/227
+
+## New Contributors
+
+- @iDiegoNL made their first contribution in https://github.com/spatie/laravel-ray/pull/227
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.2...1.26.3
+
 ## 1.26.2 - 2021-11-15
 
 ## What's Changed
