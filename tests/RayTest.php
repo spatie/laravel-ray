@@ -3,7 +3,7 @@
 namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Arr;
-use Log;
+use Illuminate\Support\Facades\Log;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
