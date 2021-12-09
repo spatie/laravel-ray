@@ -37,7 +37,8 @@ class RayTest extends TestCase
     /** @test */
     public function it_can_disable_deprecated_notices()
     {
-        trigger_error('This is deprecated', E_USER_DEPRECATED);
+        Log::warning('Deprecated');
+        Log::warning('deprecated');
 
         $this->assertCount(0, $this->client->sentRequests());
     }
@@ -47,9 +48,10 @@ class RayTest extends TestCase
     {
         app(Settings::class)->send_deprecated_notices_to_ray = true;
 
-        trigger_error('This is deprecated', E_USER_DEPRECATED);
+        Log::warning('Deprecated');
+        Log::warning('deprecated');
 
-        $this->assertCount(2, $this->client->sentRequests());
+        $this->assertCount(4, $this->client->sentRequests());
     }
 
     /** @test */
