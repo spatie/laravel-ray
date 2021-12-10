@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.26.4 - 2021-12-10
+
+## What's Changed
+
+- Added DeprecatedNoticeWatcher that piggy backs off of the Application… by @JuanRangel in https://github.com/spatie/laravel-ray/pull/229
+
+## New Contributors
+
+- @JuanRangel made their first contribution in https://github.com/spatie/laravel-ray/pull/229
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.3...1.26.4
+
 ## 1.26.3 - 2021-11-22
 
 ## What's Changed
