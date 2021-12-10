@@ -69,6 +69,10 @@ class ApplicationLogWatcher extends Watcher
             return false;
         }
 
+        if((new DeprecatedNoticeWatcher())->concernsDeprecatedNotice($message)) {
+            return false;
+        }
+
         return true;
     }
 }

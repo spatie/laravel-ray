@@ -3,7 +3,7 @@
 namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Arr;
-use Log;
+use Illuminate\Support\Facades\Log;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
@@ -32,6 +32,26 @@ class RayTest extends TestCase
         Log::info('hey');
 
         $this->assertCount(1, $this->client->sentRequests());
+    }
+
+    /** @test */
+    public function it_can_disable_deprecated_notices()
+    {
+        Log::warning('Deprecated');
+        Log::warning('deprecated');
+
+        $this->assertCount(0, $this->client->sentRequests());
+    }
+
+    /** @test */
+    public function it_can_enable_deprecated_notices()
+    {
+        app(Settings::class)->send_deprecated_notices_to_ray = true;
+
+        Log::warning('Deprecated');
+        Log::warning('deprecated');
+
+        $this->assertCount(4, $this->client->sentRequests());
     }
 
     /** @test */

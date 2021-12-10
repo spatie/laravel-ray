@@ -16,6 +16,7 @@ use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\QueryPayload;
 use Spatie\LaravelRay\Watchers\ApplicationLogWatcher;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
+use Spatie\LaravelRay\Watchers\DeprecatedNoticeWatcher;
 use Spatie\LaravelRay\Watchers\DumpWatcher;
 use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
@@ -76,6 +77,7 @@ class RayServiceProvider extends ServiceProvider
                 'send_http_client_requests_to_ray' => env('SEND_HTTP_CLIENT_REQUESTS_TO_RAY', false),
                 'send_views_to_ray' => env('SEND_VIEWS_TO_RAY', false),
                 'send_exceptions_to_ray' => env('SEND_EXCEPTIONS_TO_RAY', true),
+                'send_deprecated_notices_to_ray' => env('SEND_DEPRECATED_NOTICES_TO_RAY', false),
             ]);
         });
 
@@ -124,6 +126,7 @@ class RayServiceProvider extends ServiceProvider
             CacheWatcher::class,
             RequestWatcher::class,
             HttpClientWatcher::class,
+            DeprecatedNoticeWatcher::class
         ];
 
         collect($watchers)
@@ -149,6 +152,7 @@ class RayServiceProvider extends ServiceProvider
             CacheWatcher::class,
             RequestWatcher::class,
             HttpClientWatcher::class,
+            DeprecatedNoticeWatcher::class
         ];
 
         collect($watchers)
