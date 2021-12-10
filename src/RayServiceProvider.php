@@ -126,7 +126,7 @@ class RayServiceProvider extends ServiceProvider
             CacheWatcher::class,
             RequestWatcher::class,
             HttpClientWatcher::class,
-            DeprecatedNoticeWatcher::class
+            DeprecatedNoticeWatcher::class,
         ];
 
         collect($watchers)
@@ -152,7 +152,7 @@ class RayServiceProvider extends ServiceProvider
             CacheWatcher::class,
             RequestWatcher::class,
             HttpClientWatcher::class,
-            DeprecatedNoticeWatcher::class
+            DeprecatedNoticeWatcher::class,
         ];
 
         collect($watchers)
