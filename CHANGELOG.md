@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.26.5 - 2021-12-21
+
+## What's Changed
+
+- add support for Symfony 6 by @Nielsvanpach in https://github.com/spatie/laravel-ray/pull/231
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.4...1.26.5
+
 ## 1.26.4 - 2021-12-10
 
 ## What's Changed
