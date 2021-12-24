@@ -337,7 +337,7 @@ class Ray extends BaseRay
 
         return $this;
     }
-    
+
     public function slowQueries($milliseconds = 500, $callable = null)
     {
         return $this->showSlowQueries($milliseconds, $callable);
