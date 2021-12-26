@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.27.0 - 2021-12-26
+
+## What's Changed
+
+- Slow Query Logging by @patinthehat in https://github.com/spatie/laravel-ray/pull/232
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.5...1.27.0
+
 ## 1.26.5 - 2021-12-21
 
 ## What's Changed
