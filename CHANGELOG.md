@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.27.1 - 2021-12-27
+
+## What's Changed
+
+- Register `DumpRecorder` only once and keep original handler connected by @AlexVanderbist in https://github.com/spatie/laravel-ray/pull/233
+
+## New Contributors
+
+- @AlexVanderbist made their first contribution in https://github.com/spatie/laravel-ray/pull/233
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.27.0...1.27.1
+
 ## 1.27.0 - 2021-12-26
 
 ## What's Changed
