@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.27.2 - 2021-12-27
+
+- Fix: make sure there is always a `VarDumper` handler registered to output to HTML or CLI
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.27.1...1.27.2
+
 ## 1.27.1 - 2021-12-27
 
 ## What's Changed
