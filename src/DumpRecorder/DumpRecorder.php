@@ -31,7 +31,7 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-        if (!static::$registeredHandler) {
+        if (! static::$registeredHandler) {
             static::$registeredHandler = true;
 
             $this->ensureOriginalHandlerExists();
@@ -76,7 +76,7 @@ class DumpRecorder
         $reflectionProperty->setAccessible(true);
         $handler = $reflectionProperty->getValue();
 
-        if (!$handler) {
+        if (! $handler) {
             // No handler registered yet, so we'll force VarDumper to create one.
             $reflectionMethod = new ReflectionMethod(VarDumper::class, 'register');
             $reflectionMethod->setAccessible(true);
