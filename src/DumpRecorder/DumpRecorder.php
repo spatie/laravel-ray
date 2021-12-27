@@ -2,12 +2,8 @@
 
 namespace Spatie\LaravelRay\DumpRecorder;
 
-use Closure;
 use Illuminate\Contracts\Container\Container;
 use Spatie\LaravelRay\Ray;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\CliDumper;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper as BaseHtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
 class DumpRecorder
@@ -17,6 +13,8 @@ class DumpRecorder
 
     /** @var \Illuminate\Contracts\Container\Container */
     protected $app;
+
+    protected static $registeredHandler = false;
 
     public function __construct(Container $app)
     {
@@ -31,17 +29,23 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-        VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
-            if ($this->shouldDump()) {
-                $multiDumpHandler->dump($dumpedVariable);
-            }
-        });
+        if (! static::$registeredHandler) {
+            static::$registeredHandler = true;
 
-        $multiDumpHandler
-            ->addHandler($this->getDefaultHandler())
-            ->addHandler(function ($dumpedVariable) {
+            $originalHandler = VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
+                if ($this->shouldDump()) {
+                    $multiDumpHandler->dump($dumpedVariable);
+                }
+            });
+
+            if ($originalHandler) {
+                $multiDumpHandler->addHandler($originalHandler);
+            }
+
+            $multiDumpHandler->addHandler(function ($dumpedVariable) {
                 return app(Ray::class)->send($dumpedVariable);
             });
+        }
 
         return $this;
     }
@@ -52,31 +56,5 @@ class DumpRecorder
         $ray = app(Ray::class);
 
         return $ray->settings->send_dumps_to_ray;
-    }
-
-    protected function getDefaultHandler(): Closure
-    {
-        return function ($value) {
-            $data = (new VarCloner())->cloneVar($value);
-
-            $this->getDumper()->dump($data);
-        };
-    }
-
-    protected function getDumper()
-    {
-        if (isset($_SERVER['VAR_DUMPER_FORMAT'])) {
-            if ($_SERVER['VAR_DUMPER_FORMAT'] === 'html') {
-                return new BaseHtmlDumper();
-            }
-
-            return new CliDumper();
-        }
-
-        if (in_array(PHP_SAPI, ['cli', 'phpdbg'])) {
-            return new CliDumper() ;
-        }
-
-        return new BaseHtmlDumper();
     }
 }
