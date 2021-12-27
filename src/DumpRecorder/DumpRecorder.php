@@ -3,6 +3,8 @@
 namespace Spatie\LaravelRay\DumpRecorder;
 
 use Illuminate\Contracts\Container\Container;
+use ReflectionMethod;
+use ReflectionProperty;
 use Spatie\LaravelRay\Ray;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -29,13 +31,13 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-        if (! static::$registeredHandler) {
+        if (!static::$registeredHandler) {
             static::$registeredHandler = true;
 
+            $this->ensureOriginalHandlerExists();
+
             $originalHandler = VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
-                if ($this->shouldDump()) {
-                    $multiDumpHandler->dump($dumpedVariable);
-                }
+                $multiDumpHandler->dump($dumpedVariable);
             });
 
             if ($originalHandler) {
@@ -43,7 +45,9 @@ class DumpRecorder
             }
 
             $multiDumpHandler->addHandler(function ($dumpedVariable) {
-                return app(Ray::class)->send($dumpedVariable);
+                if ($this->shouldDump()) {
+                    app(Ray::class)->send($dumpedVariable);
+                }
             });
         }
 
@@ -56,5 +60,27 @@ class DumpRecorder
         $ray = app(Ray::class);
 
         return $ray->settings->send_dumps_to_ray;
+    }
+
+    /**
+     * Only the `VarDumper` knows how to create the orignal HTML or CLI VarDumper.
+     * Using reflection and the private VarDumper::register() method we can force it
+     * to create and register a new VarDumper::$handler before we'll overwrite it.
+     * Of course, we only need to do this if there isn't a registered VarDumper::$handler.
+     *
+     * @throws \ReflectionException
+     */
+    protected function ensureOriginalHandlerExists(): void
+    {
+        $reflectionProperty = new ReflectionProperty(VarDumper::class, 'handler');
+        $reflectionProperty->setAccessible(true);
+        $handler = $reflectionProperty->getValue();
+
+        if (!$handler) {
+            // No handler registered yet, so we'll force VarDumper to create one.
+            $reflectionMethod = new ReflectionMethod(VarDumper::class, 'register');
+            $reflectionMethod->setAccessible(true);
+            $reflectionMethod->invoke(null);
+        }
     }
 }
