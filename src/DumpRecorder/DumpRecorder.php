@@ -2,12 +2,8 @@
 
 namespace Spatie\LaravelRay\DumpRecorder;
 
-use Closure;
 use Illuminate\Contracts\Container\Container;
 use Spatie\LaravelRay\Ray;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\CliDumper;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper as BaseHtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
 class DumpRecorder
@@ -39,7 +35,7 @@ class DumpRecorder
             }
         };
 
-        if (!static::$registeredHandler) {
+        if (! static::$registeredHandler) {
             static::$registeredHandler = true;
 
             $originalHandler = VarDumper::setHandler($handler);
