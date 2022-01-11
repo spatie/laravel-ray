@@ -31,6 +31,7 @@ use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
+use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
@@ -333,6 +334,26 @@ class Ray extends BaseRay
     public function stopShowingQueries(): self
     {
         app(QueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function slowQueries($milliseconds = 500, $callable = null)
+    {
+        return $this->showSlowQueries($milliseconds, $callable);
+    }
+
+    public function showSlowQueries($milliseconds = 500, $callable = null)
+    {
+        $watcher = app(SlowQueryWatcher::class)
+            ->setMinimumTimeInMilliseconds($milliseconds);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingSlowQueries(): self
+    {
+        app(SlowQueryWatcher::class)->disable();
 
         return $this;
     }

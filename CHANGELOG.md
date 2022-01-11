@@ -2,6 +2,52 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.27.2 - 2021-12-27
+
+- Fix: make sure there is always a `VarDumper` handler registered to output to HTML or CLI
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.27.1...1.27.2
+
+## 1.27.1 - 2021-12-27
+
+## What's Changed
+
+- Register `DumpRecorder` only once and keep original handler connected by @AlexVanderbist in https://github.com/spatie/laravel-ray/pull/233
+
+## New Contributors
+
+- @AlexVanderbist made their first contribution in https://github.com/spatie/laravel-ray/pull/233
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.27.0...1.27.1
+
+## 1.27.0 - 2021-12-26
+
+## What's Changed
+
+- Slow Query Logging by @patinthehat in https://github.com/spatie/laravel-ray/pull/232
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.5...1.27.0
+
+## 1.26.5 - 2021-12-21
+
+## What's Changed
+
+- add support for Symfony 6 by @Nielsvanpach in https://github.com/spatie/laravel-ray/pull/231
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.4...1.26.5
+
+## 1.26.4 - 2021-12-10
+
+## What's Changed
+
+- Added DeprecatedNoticeWatcher that piggy backs off of the Application… by @JuanRangel in https://github.com/spatie/laravel-ray/pull/229
+
+## New Contributors
+
+- @JuanRangel made their first contribution in https://github.com/spatie/laravel-ray/pull/229
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.3...1.26.4
+
 ## 1.26.3 - 2021-11-22
 
 ## What's Changed

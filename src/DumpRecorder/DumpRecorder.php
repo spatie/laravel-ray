@@ -2,12 +2,10 @@
 
 namespace Spatie\LaravelRay\DumpRecorder;
 
-use Closure;
 use Illuminate\Contracts\Container\Container;
+use ReflectionMethod;
+use ReflectionProperty;
 use Spatie\LaravelRay\Ray;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\CliDumper;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper as BaseHtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
 class DumpRecorder
@@ -17,6 +15,8 @@ class DumpRecorder
 
     /** @var \Illuminate\Contracts\Container\Container */
     protected $app;
+
+    protected static $registeredHandler = false;
 
     public function __construct(Container $app)
     {
@@ -31,17 +31,25 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-        VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
-            if ($this->shouldDump()) {
-                $multiDumpHandler->dump($dumpedVariable);
-            }
-        });
+        if (! static::$registeredHandler) {
+            static::$registeredHandler = true;
 
-        $multiDumpHandler
-            ->addHandler($this->getDefaultHandler())
-            ->addHandler(function ($dumpedVariable) {
-                return app(Ray::class)->send($dumpedVariable);
+            $this->ensureOriginalHandlerExists();
+
+            $originalHandler = VarDumper::setHandler(function ($dumpedVariable) use ($multiDumpHandler) {
+                $multiDumpHandler->dump($dumpedVariable);
             });
+
+            if ($originalHandler) {
+                $multiDumpHandler->addHandler($originalHandler);
+            }
+
+            $multiDumpHandler->addHandler(function ($dumpedVariable) {
+                if ($this->shouldDump()) {
+                    app(Ray::class)->send($dumpedVariable);
+                }
+            });
+        }
 
         return $this;
     }
@@ -54,29 +62,25 @@ class DumpRecorder
         return $ray->settings->send_dumps_to_ray;
     }
 
-    protected function getDefaultHandler(): Closure
+    /**
+     * Only the `VarDumper` knows how to create the orignal HTML or CLI VarDumper.
+     * Using reflection and the private VarDumper::register() method we can force it
+     * to create and register a new VarDumper::$handler before we'll overwrite it.
+     * Of course, we only need to do this if there isn't a registered VarDumper::$handler.
+     *
+     * @throws \ReflectionException
+     */
+    protected function ensureOriginalHandlerExists(): void
     {
-        return function ($value) {
-            $data = (new VarCloner())->cloneVar($value);
+        $reflectionProperty = new ReflectionProperty(VarDumper::class, 'handler');
+        $reflectionProperty->setAccessible(true);
+        $handler = $reflectionProperty->getValue();
 
-            $this->getDumper()->dump($data);
-        };
-    }
-
-    protected function getDumper()
-    {
-        if (isset($_SERVER['VAR_DUMPER_FORMAT'])) {
-            if ($_SERVER['VAR_DUMPER_FORMAT'] === 'html') {
-                return new BaseHtmlDumper();
-            }
-
-            return new CliDumper();
+        if (! $handler) {
+            // No handler registered yet, so we'll force VarDumper to create one.
+            $reflectionMethod = new ReflectionMethod(VarDumper::class, 'register');
+            $reflectionMethod->setAccessible(true);
+            $reflectionMethod->invoke(null);
         }
-
-        if (in_array(PHP_SAPI, ['cli', 'phpdbg'])) {
-            return new CliDumper() ;
-        }
-
-        return new BaseHtmlDumper();
     }
 }
