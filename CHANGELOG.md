@@ -4,6 +4,12 @@ All notable changes to `laravel-ray` will be documented in this file
 
 ## 1.28.0 - 2022-01-11
 
+1.28.0
+
+- allow Laravel 9
+
+## 1.28.0 - 2022-01-11
+
 - allow Laravel 9
 
 ## 1.27.2 - 2021-12-27
