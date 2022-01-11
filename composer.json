@@ -22,6 +22,7 @@
         "illuminate/database": "^7.20|^8.19|^9.0",
         "illuminate/queue": "^7.20|^8.19|^9.0",
         "illuminate/support": "^7.20|^8.19|^9.0",
+        "laravel/framework": "^7.20|^8.19|^9.0",
         "spatie/backtrace": "^1.0",
         "spatie/ray": "^1.27.1",
         "symfony/stopwatch": "4.2|^5.1|^6.0",
@@ -30,7 +31,6 @@
     "require-dev": {
         "facade/ignition": "^2.5",
         "guzzlehttp/guzzle": "^7.3",
-        "laravel/framework": "^7.20|^8.19|^9.0",
         "orchestra/testbench-core": "^5.0|^6.0|^7.0",
         "phpstan/phpstan": "^0.12.93",
         "phpunit/phpunit": "^9.3",
