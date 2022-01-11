@@ -18,20 +18,20 @@
     "require": {
         "ext-json": "*",
         "php": "^7.3|^8.0",
-        "illuminate/contracts": "^7.20|^8.19",
-        "illuminate/database": "^7.20|^8.19",
-        "illuminate/queue": "^7.20|^8.19",
-        "illuminate/support": "^7.20|^8.19",
+        "illuminate/contracts": "^7.20|^8.19|^9.0",
+        "illuminate/database": "^7.20|^8.19|^9.0",
+        "illuminate/queue": "^7.20|^8.19|^9.0",
+        "illuminate/support": "^7.20|^8.19|^9.0",
         "spatie/backtrace": "^1.0",
         "spatie/ray": "^1.27.1",
-        "symfony/stopwatch": "4.2|^5.1",
+        "symfony/stopwatch": "4.2|^5.1|^6.0",
         "zbateson/mail-mime-parser": "^1.3.1|^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "guzzlehttp/guzzle": "^7.3",
-        "laravel/framework": "^7.20|^8.19",
-        "orchestra/testbench-core": "^5.0|^6.0",
+        "laravel/framework": "^7.20|^8.19|^9.0",
+        "orchestra/testbench-core": "^5.0|^6.0|^7.0",
         "phpstan/phpstan": "^0.12.93",
         "phpunit/phpunit": "^9.3",
         "spatie/phpunit-snapshot-assertions": "^4.2"
