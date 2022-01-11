@@ -25,12 +25,4 @@ class LogTest extends TestCase
 
         $this->assertCount(0, $this->client->sentRequests());
     }
-
-    /** @test */
-    public function it_will_not_send_logs_to_ray_when_log_is_null()
-    {
-        Log::info(null);
-
-        $this->assertCount(0, $this->client->sentRequests());
-    }
 }
