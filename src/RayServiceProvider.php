@@ -41,6 +41,7 @@ class RayServiceProvider extends ServiceProvider
         $this
             ->registerCommands()
             ->registerSettings()
+            ->setProjectName()
             ->registerBindings()
             ->registerWatchers()
             ->registerMacros()
@@ -82,6 +83,15 @@ class RayServiceProvider extends ServiceProvider
                 'send_deprecated_notices_to_ray' => env('SEND_DEPRECATED_NOTICES_TO_RAY', false),
             ]);
         });
+
+        return $this;
+    }
+
+    public function setProjectName(): self
+    {
+        if (Ray::$projectName !== '') {
+            ray()->project(config('app.name'));
+        }
 
         return $this;
     }
