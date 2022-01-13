@@ -89,8 +89,12 @@ class RayServiceProvider extends ServiceProvider
 
     public function setProjectName(): self
     {
-        if (Ray::$projectName !== '') {
-            ray()->project(config('app.name'));
+        if (Ray::$projectName === '') {
+            $projectName = config('app.name');
+
+            if ($projectName !== 'Laravel') {
+                ray()->project($projectName);
+            }
         }
 
         return $this;

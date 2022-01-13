@@ -4,6 +4,8 @@ namespace Spatie\LaravelRay\Tests;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use Spatie\LaravelRay\Ray;
+use Spatie\LaravelRay\RayServiceProvider;
 use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
@@ -176,5 +178,19 @@ class RayTest extends TestCase
         $this->assertEquals('local', $payloads[0]['payloads'][0]['content']['values']['APP_ENV']);
         $this->assertEquals('ray_test', $payloads[0]['payloads'][0]['content']['values']['DB_DATABASE']);
         $this->assertCount(2, $payloads[0]['payloads'][0]['content']['values']);
+    }
+
+    /** @test */
+    public function the_project_name_will_automatically_be_set_if_it_something_other_than_laravel()
+    {
+        (new RayServiceProvider($this->app))->setProjectName();
+
+        $this->assertEquals('', Ray::$projectName);
+
+        config()->set('app.name', 'my-project');
+
+        (new RayServiceProvider($this->app))->setProjectName();
+
+        $this->assertEquals('my-project', Ray::$projectName);
     }
 }
