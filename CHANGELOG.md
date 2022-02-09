@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.29.1 - 2022-02-09
+
+- moved dependency
+
 ## 1.29.0 - 2022-01-13
 
 - automatically set project name
