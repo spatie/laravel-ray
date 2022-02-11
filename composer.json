@@ -33,6 +33,7 @@
         "orchestra/testbench-core": "^5.0|^6.0|^7.0",
         "phpstan/phpstan": "^0.12.93",
         "phpunit/phpunit": "^9.3",
+        "spatie/ignition": "^1.0",
         "spatie/phpunit-snapshot-assertions": "^4.2"
     },
     "autoload": {
