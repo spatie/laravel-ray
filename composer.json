@@ -55,6 +55,9 @@
         "sort-packages": true
     },
     "extra": {
+        "branch-alias": {
+            "dev-main": "1.29.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Spatie\\LaravelRay\\RayServiceProvider"
