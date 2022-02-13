@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.29.2 - 2022-02-13
+
+## What's Changed
+
+- Fix deprecated by @TiiFuchs in https://github.com/spatie/laravel-ray/pull/240
+
+## New Contributors
+
+- @TiiFuchs made their first contribution in https://github.com/spatie/laravel-ray/pull/240
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.1...1.29.2
+
 ## 1.29.1 - 2022-02-09
 
 - moved dependency
