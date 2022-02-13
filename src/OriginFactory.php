@@ -145,6 +145,9 @@ class OriginFactory
     protected function findFrameForQueryBuilder(Collection $frames): ?Frame
     {
         $indexOfLastDatabaseCall = $frames
+            ->filter(function (Frame $frame) {
+                return ! is_null($frame->class);
+            })
             ->search(function (Frame $frame) {
                 return Str::startsWith($frame->class, 'Illuminate\Database');
             });
