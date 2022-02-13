@@ -16,12 +16,14 @@
         }
     ],
     "require": {
-        "ext-json": "*",
         "php": "^7.3|^8.0",
+        "ext-json": "*",
         "illuminate/contracts": "^7.20|^8.19|^9.0",
         "illuminate/database": "^7.20|^8.19|^9.0",
         "illuminate/queue": "^7.20|^8.19|^9.0",
         "illuminate/support": "^7.20|^8.19|^9.0",
+        "laravel/framework": "9.*",
+        "orchestra/testbench": "7.*",
         "spatie/backtrace": "^1.0",
         "spatie/ray": "^1.33",
         "symfony/stopwatch": "4.2|^5.1|^6.0",
@@ -29,7 +31,6 @@
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.3",
-        "laravel/framework": "^7.20|^8.19|^9.0",
         "orchestra/testbench-core": "^5.0|^6.0|^7.0",
         "phpstan/phpstan": "^0.12.93",
         "phpunit/phpunit": "^9.3",
@@ -55,6 +56,9 @@
         "sort-packages": true
     },
     "extra": {
+        "branch-alias": {
+            "dev-main": "1.29.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Spatie\\LaravelRay\\RayServiceProvider"
