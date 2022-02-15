@@ -31,11 +31,11 @@ class LoggedMailWatcher extends Watcher
 
     public function concernsLoggedMail(MessageLogged $messageLogged): bool
     {
-        if (! Str::startsWith($messageLogged->message, 'Message-ID')) {
+        if (! Str::contains($messageLogged->message, 'Message-ID')) {
             return false;
         }
 
-        if (! Str::contains($messageLogged->message, 'swift')) {
+        if (! Str::contains($messageLogged->message, 'To:')) {
             return false;
         }
 
