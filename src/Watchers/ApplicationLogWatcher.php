@@ -20,9 +20,13 @@ class ApplicationLogWatcher extends Watcher
             if (! $this->shouldLogMessage($message)) {
                 return;
             }
-
+            
+            if (! class_exists('Spatie\Ray\Payloads\ApplicationLogPayload')) {
+                return;
+            }
+            
             $payload = new ApplicationLogPayload($message->message);
-
+            
             /** @var Ray $ray */
             $ray = app(Ray::class);
 
