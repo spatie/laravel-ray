@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.29.4 - 2022-02-22
+
+## What's Changed
+
+- check if ApplicationLogPayload can be loaded by @ThomasEnssner in https://github.com/spatie/laravel-ray/pull/242
+
+## New Contributors
+
+- @ThomasEnssner made their first contribution in https://github.com/spatie/laravel-ray/pull/242
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.3...1.29.4
+
 ## 1.29.3 - 2022-02-15
 
 - correctly display mailables that are written to the log in Laravel 9
