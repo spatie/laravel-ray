@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.29.3 - 2022-02-15
+
+- correctly display mailables that are written to the log in Laravel 9
+
 ## 1.29.2 - 2022-02-13
 
 ## What's Changed
