@@ -2,7 +2,7 @@
 
 namespace Spatie\LaravelRay\Payloads;
 
-use Illuminate\Queue\Jobs\SyncJob;
+use Illuminate\Queue\Jobs\Job;
 use Spatie\Ray\ArgumentConverter;
 use Spatie\Ray\Payloads\Payload;
 
@@ -21,9 +21,9 @@ class JobEventPayload extends Payload
     {
         $this->event = $event;
 
-        // The sync driver creates an intermediate job, the orignal job is inside the stored payload
+        // Some queue driver uses an intermediate job and the orignal job is stored inside.
         // For other drivers, the job is not altered, it can directly be used
-        if ($event->job instanceof SyncJob) {
+        if ($event->job instanceof Job) {
             $this->job = unserialize($event->job->payload()['data']['command']);
         } else {
             $this->job = $event->job;
