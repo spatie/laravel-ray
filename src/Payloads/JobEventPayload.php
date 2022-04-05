@@ -21,13 +21,11 @@ class JobEventPayload extends Payload
     {
         $this->event = $event;
 
-        // Some queue driver uses an intermediate job and the orignal job is stored inside.
-        // For other drivers, the job is not altered, it can directly be used
-        if ($event->job instanceof Job) {
-            $this->job = unserialize($event->job->payload()['data']['command']);
-        } else {
-            $this->job = $event->job;
-        }
+        // Some queue drivers use an intermediate job with the orignal job stored inside.
+        // For other drivers, the job is not altered, and it can be used directly.
+        $this->job = $event->job instanceof Job
+            ? unserialize($event->job->payload()['data']['command'])
+            : $this->job = $event->job;
 
         if (property_exists($event, 'exception')) {
             $this->exception = $event->exception ?? null;
