@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.29.5 - 2022-04-05
+
+## What's Changed
+
+- Fix undefined payload when using queue driver other than sync by @stein-j in https://github.com/spatie/laravel-ray/pull/245
+
+## New Contributors
+
+- @stein-j made their first contribution in https://github.com/spatie/laravel-ray/pull/245
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.4...1.29.5
+
 ## 1.29.4 - 2022-02-22
 
 ## What's Changed
