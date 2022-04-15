@@ -48,7 +48,7 @@ class ApplicationLogWatcher extends Watcher
         });
     }
 
-    protected function shouldLogMessage(MessageLogged  $message): bool
+    protected function shouldLogMessage(MessageLogged $message): bool
     {
         if (! $this->enabled()) {
             return false;
