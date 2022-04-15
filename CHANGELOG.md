@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.29.6 - 2022-04-15
+
+## What's Changed
+
+- ignore php 8.1 deprecation notices by @Nielsvanpach in https://github.com/spatie/laravel-ray/pull/247
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.5...1.29.6
+
 ## 1.29.5 - 2022-04-05
 
 ## What's Changed
