@@ -22,6 +22,6 @@ class DeprecatedNoticeWatcher extends Watcher
             return false;
         }
 
-        return Str::contains($messageLogged->message, ['deprecated', 'Deprecated']);
+        return Str::contains($messageLogged->message, ['deprecated', 'Deprecated', '[\ReturnTypeWillChange]']);
     }
 }
