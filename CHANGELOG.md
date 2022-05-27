@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.29.7 - 2022-05-27
+
+## What's Changed
+
+- Fixes https://github.com/spatie/laravel-ray/issues/250 by @dfox288 in https://github.com/spatie/laravel-ray/pull/251
+
+## New Contributors
+
+- @dfox288 made their first contribution in https://github.com/spatie/laravel-ray/pull/251
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.6...1.29.7
+
 ## 1.29.6 - 2022-04-15
 
 ## What's Changed
