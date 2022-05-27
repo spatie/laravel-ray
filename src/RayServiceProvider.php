@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Stringable;
 use Illuminate\Testing\TestResponse;
+use Illuminate\View\Compilers\BladeCompiler;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
@@ -227,8 +228,10 @@ class RayServiceProvider extends ServiceProvider
             return $this;
         }
 
-        Blade::directive('ray', function ($expression) {
-            return "<?php ray($expression); ?>";
+        $this->callAfterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+            Blade::directive('ray', function ($expression) {
+                return "<?php ray($expression); ?>";
+            });
         });
 
         return $this;
