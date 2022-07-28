@@ -10,13 +10,14 @@ use Spatie\Ray\Settings\Settings;
 
 class SlowQueryWatcher extends QueryWatcher
 {
-    protected $minimumTimeInMs = 0;
+    protected int $minimumTimeInMs = 500;
 
     public function register(): void
     {
         $settings = app(Settings::class);
 
         $this->enabled = $settings->send_slow_queries_to_ray ?? false;
+        $this->minimumTimeInMs = $settings->slow_query_threshold ?? $this->minimumTimeInMs;
 
         DB::listen(function (QueryExecuted $query) {
             if (! $this->enabled()) {
