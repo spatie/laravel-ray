@@ -10,7 +10,7 @@ use Spatie\Ray\Settings\Settings;
 
 class SlowQueryWatcher extends QueryWatcher
 {
-    protected int $minimumTimeInMs = 500;
+    protected $minimumTimeInMs = 500;
 
     public function register(): void
     {
