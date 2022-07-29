@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.30.0 - 2022-07-29
+
+### What's Changed
+
+- Add `send_deprecated_notices_to_ray` to config stub by @squatto in https://github.com/spatie/laravel-ray/pull/267
+- Feat: Slow query configuration by @fullstackfool in https://github.com/spatie/laravel-ray/pull/269
+
+### New Contributors
+
+- @fullstackfool made their first contribution in https://github.com/spatie/laravel-ray/pull/269
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.7...1.30.0
+
 ## 1.29.7 - 2022-05-27
 
 ## What's Changed
