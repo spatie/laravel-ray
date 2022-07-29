@@ -44,7 +44,7 @@ return [
      * When enabled, slow queries will automatically be sent to Ray.
      */
     'send_slow_queries_to_ray' => env('SEND_SLOW_QUERIES_TO_RAY', false),
-    
+
     /*
     * When enabled, all requests made to this app will automatically be sent to Ray.
     */
@@ -64,6 +64,11 @@ return [
      * When enabled, all exceptions will be automatically sent to Ray.
      */
     'send_exceptions_to_ray' => env('SEND_EXCEPTIONS_TO_RAY', true),
+
+    /*
+     * When enabled, all deprecation notices will be automatically sent to Ray.
+     */
+    'send_deprecated_notices_to_ray' => env('SEND_DEPRECATED_NOTICES_TO_RAY', false),
 
     /*
     * The host used to communicate with the Ray app.
