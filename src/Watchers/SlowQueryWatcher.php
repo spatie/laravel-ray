@@ -17,7 +17,7 @@ class SlowQueryWatcher extends QueryWatcher
         $settings = app(Settings::class);
 
         $this->enabled = $settings->send_slow_queries_to_ray ?? false;
-        $this->minimumTimeInMs = $settings->slow_query_threshold ?? $this->minimumTimeInMs;
+        $this->minimumTimeInMs = $settings->slow_query_threshold_in_ms ?? $this->minimumTimeInMs;
 
         DB::listen(function (QueryExecuted $query) {
             if (! $this->enabled()) {
