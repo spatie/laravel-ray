@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.31.0 - 2022-09-20
+
+### What's Changed
+
+- Added in comment to docblock for linux docker users by @jaetoole in https://github.com/spatie/laravel-ray/pull/271
+- @ray blade directive completion for Laravel Idea(PhpStorm) by @adelf in https://github.com/spatie/laravel-ray/pull/273
+
+### New Contributors
+
+- @jaetoole made their first contribution in https://github.com/spatie/laravel-ray/pull/271
+- @adelf made their first contribution in https://github.com/spatie/laravel-ray/pull/273
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.30.0...1.31.0
+
 ## 1.30.0 - 2022-07-29
 
 ### What's Changed
