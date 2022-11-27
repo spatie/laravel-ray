@@ -31,7 +31,7 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-        if (! static::$registeredHandler) {
+        if(! static::$registeredHandler || ! $multiDumpHandler->hasHandlers()) {
             static::$registeredHandler = true;
 
             $this->ensureOriginalHandlerExists();

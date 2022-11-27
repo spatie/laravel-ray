@@ -20,4 +20,9 @@ class MultiDumpHandler
 
         return $this;
     }
+
+    public function hasHandlers(): bool
+    {
+        return count($this->handlers) > 0;
+    }
 }
