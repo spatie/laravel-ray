@@ -18,9 +18,15 @@ class DumpRecorder
 
     protected static $registeredHandler = false;
 
+    protected static $runningLaravel9 = null;
+
     public function __construct(Container $app)
     {
         $this->app = $app;
+
+        if (static::$runningLaravel9 === null) {
+            static::$runningLaravel9 = version_compare(app()->version(), '9.0.0', '>=');
+        }
     }
 
     public function register(): self
@@ -31,8 +37,12 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-        if (! static::$registeredHandler) {
+
+
+        if (! static::$registeredHandler || static::$runningLaravel9) {
             static::$registeredHandler = true;
+
+            $multiDumpHandler->resetHandlers();
 
             $this->ensureOriginalHandlerExists();
 

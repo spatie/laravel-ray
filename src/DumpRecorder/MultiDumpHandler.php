@@ -20,4 +20,9 @@ class MultiDumpHandler
 
         return $this;
     }
+
+    public function resetHandlers(): void
+    {
+        $this->handlers = [];
+    }
 }
