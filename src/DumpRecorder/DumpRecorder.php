@@ -2,7 +2,9 @@
 
 namespace Spatie\LaravelRay\DumpRecorder;
 
+use Composer\InstalledVersions;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Support\Str;
 use ReflectionMethod;
 use ReflectionProperty;
 use Spatie\LaravelRay\Ray;
@@ -18,9 +20,15 @@ class DumpRecorder
 
     protected static $registeredHandler = false;
 
+    protected static $runningLaravel9 = null;
+
     public function __construct(Container $app)
     {
         $this->app = $app;
+
+        if (static::$runningLaravel9 === null) {
+            static::$runningLaravel9 = Str::startsWith(InstalledVersions::getVersion('laravel/framework'), '9.');
+        }
     }
 
     public function register(): self
@@ -31,8 +39,12 @@ class DumpRecorder
             return $multiDumpHandler;
         });
 
-        if(! static::$registeredHandler || ! $multiDumpHandler->hasHandlers()) {
+
+
+        if(! static::$registeredHandler || static::$runningLaravel9) {
             static::$registeredHandler = true;
+
+            $multiDumpHandler->resetHandlers();
 
             $this->ensureOriginalHandlerExists();
 
