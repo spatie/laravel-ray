@@ -2,9 +2,7 @@
 
 namespace Spatie\LaravelRay\DumpRecorder;
 
-use Composer\InstalledVersions;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\Str;
 use ReflectionMethod;
 use ReflectionProperty;
 use Spatie\LaravelRay\Ray;
