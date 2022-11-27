@@ -27,7 +27,7 @@ class DumpRecorder
         $this->app = $app;
 
         if (static::$runningLaravel9 === null) {
-            static::$runningLaravel9 = Str::startsWith(InstalledVersions::getVersion('laravel/framework'), '9.');
+            static::$runningLaravel9 = version_compare(app()->version(), '9.0.0') >= 0;
         }
     }
 
