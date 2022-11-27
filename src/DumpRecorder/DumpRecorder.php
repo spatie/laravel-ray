@@ -41,7 +41,7 @@ class DumpRecorder
 
 
 
-        if(! static::$registeredHandler || static::$runningLaravel9) {
+        if (! static::$registeredHandler || static::$runningLaravel9) {
             static::$registeredHandler = true;
 
             $multiDumpHandler->resetHandlers();
