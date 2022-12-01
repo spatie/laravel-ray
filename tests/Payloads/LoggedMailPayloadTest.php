@@ -1,16 +1,9 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Payloads;
-
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
-use Spatie\LaravelRay\Tests\TestCase;
 
-class LoggedMailPayloadTest extends TestCase
-{
-    /** @test */
-    public function it_can_parse_a_logged_mail()
-    {
-        $loggedMail = <<<EOD
+it('can parse a logged mail', function () {
+    $loggedMail = <<<EOD
 Message-ID: <780b20b2a80adefb6ebb6c9fb7d15d8a@swift.generated>
 Date: Fri, 15 Jan 2021 08:54:24 +0000
 Subject: Test Mailable
@@ -24,51 +17,48 @@ Content-Type: multipart/alternative;
 # fake mail
 EOD;
 
-        $payload = LoggedMailPayload::forLoggedMail($loggedMail);
+    $payload = LoggedMailPayload::forLoggedMail($loggedMail);
 
-        $this->assertEquals([
-            'html' => '# fake mail',
-            'subject' => 'Test Mailable',
-            'from' => [
-                [
-                    'name' => 'Example',
-                    'email' => 'hello@example.com',
-                ],
+    expect([
+        'html' => '# fake mail',
+        'subject' => 'Test Mailable',
+        'from' => [
+            [
+                'name' => 'Example',
+                'email' => 'hello@example.com',
             ],
-            'to' => [
-                [
-                    'name' => 'Freek',
-                    'email' => 'freek@spatie.be',
-                ],
-                [
-                    'name' => '',
-                    'email' => 'ruben@spatie.be',
-                ],
+        ],
+        'to' => [
+            [
+                'name' => 'Freek',
+                'email' => 'freek@spatie.be',
             ],
-            'cc' => [
-                [
-                    'name' => '',
-                    'email' => 'adriaan@spatie.be',
-                ],
-                [
-                    'name' => 'Seb',
-                    'email' => 'seb@spatie.be',
-                ],
+            [
+                'name' => '',
+                'email' => 'ruben@spatie.be',
             ],
-            'bcc' => [
-                [
-                    'name' => '',
-                    'email' => 'willem@spatie.be',
-                ],
+        ],
+        'cc' => [
+            [
+                'name' => '',
+                'email' => 'adriaan@spatie.be',
+            ],
+            [
+                'name' => 'Seb',
+                'email' => 'seb@spatie.be',
+            ],
+        ],
+        'bcc' => [
+            [
+                'name' => '',
+                'email' => 'willem@spatie.be',
+            ],
+        ],
+    ])->toEqual($payload->getContent());
+});
 
-            ],
-        ], $payload->getContent());
-    }
-
-    /** @test */
-    public function it_can_omit_some_headers_in_a_parsed_mail()
-    {
-        $loggedMail = <<<EOD
+it('can omit some headers in a parsed mail', function () {
+    $loggedMail = <<<EOD
 From: Example <hello@example.com>
 To: Freek <freek@spatie.be>
 Content-Type: multipart/alternative;
@@ -76,25 +66,24 @@ Content-Type: multipart/alternative;
 # fake mail
 EOD;
 
-        $payload = LoggedMailPayload::forLoggedMail($loggedMail);
+    $payload = LoggedMailPayload::forLoggedMail($loggedMail);
 
-        $this->assertEquals([
-            'html' => '# fake mail',
-            'subject' => null,
-            'from' => [
-                [
-                    'name' => 'Example',
-                    'email' => 'hello@example.com',
-                ],
+    expect([
+        'html' => '# fake mail',
+        'subject' => null,
+        'from' => [
+            [
+                'name' => 'Example',
+                'email' => 'hello@example.com',
             ],
-            'to' => [
-                [
-                    'name' => 'Freek',
-                    'email' => 'freek@spatie.be',
-                ],
+        ],
+        'to' => [
+            [
+                'name' => 'Freek',
+                'email' => 'freek@spatie.be',
             ],
-            'cc' => [],
-            'bcc' => [],
-        ], $payload->getContent());
-    }
-}
+        ],
+        'cc' => [],
+        'bcc' => [],
+    ])->toEqual($payload->getContent());
+});

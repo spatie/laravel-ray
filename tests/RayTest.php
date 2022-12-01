@@ -1,196 +1,153 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests;
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
-use Spatie\LaravelRay\Tests\Concerns\MatchesOsSafeSnapshots;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
 
-class RayTest extends TestCase
-{
-    use MatchesOsSafeSnapshots;
+it('when disabled nothing will be sent to ray', function () {
+    app(Settings::class)->enable = false;
 
-    /** @test */
-    public function when_disabled_nothing_will_be_sent_to_ray()
-    {
-        app(Settings::class)->enable = false;
+    ray('test');
 
-        ray('test');
+    // re-enable for next tests
+    ray()->enable();
 
-        // re-enable for next tests
-        ray()->enable();
+    expect($this->client->sentRequests())->toHaveCount(0);
+});
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
+it('will send logs to ray by default', function () {
+    Log::info('hey');
 
-    /** @test */
-    public function it_will_send_logs_to_ray_by_default()
-    {
-        Log::info('hey');
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+it('can disable deprecated notices', function () {
+    Log::warning('Deprecated');
+    Log::warning('deprecated');
 
-    /** @test */
-    public function it_can_disable_deprecated_notices()
-    {
-        Log::warning('Deprecated');
-        Log::warning('deprecated');
+    expect($this->client->sentRequests())->toHaveCount(0);
+});
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
+it('can enable deprecated notices', function () {
+    app(Settings::class)->send_deprecated_notices_to_ray = true;
 
-    /** @test */
-    public function it_can_enable_deprecated_notices()
-    {
-        app(Settings::class)->send_deprecated_notices_to_ray = true;
+    Log::warning('Deprecated');
+    Log::warning('deprecated');
 
-        Log::warning('Deprecated');
-        Log::warning('deprecated');
+    expect($this->client->sentRequests())->toHaveCount(4);
+});
 
-        $this->assertCount(4, $this->client->sentRequests());
-    }
+it('will not send dumps to ray when disabled', function () {
+    app(Settings::class)->send_dumps_to_ray = false;
 
-    /** @test */
-    public function it_will_not_send_dumps_to_ray_when_disabled()
-    {
-        app(Settings::class)->send_dumps_to_ray = false;
+    dump('');
 
-        dump('');
+    expect($this->client->sentRequests())->toHaveCount(0);
+});
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
+it('will send dumps to ray by default', function () {
+    dump('spatie');
 
-    /** @test */
-    public function it_will_send_dumps_to_ray_by_default()
-    {
-        dump('spatie');
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+it('will not send logs to ray when disabled', function () {
+    app(Settings::class)->send_log_calls_to_ray = false;
 
-    /** @test */
-    public function it_will_not_send_logs_to_ray_when_disabled()
-    {
-        app(Settings::class)->send_log_calls_to_ray = false;
+    Log::info('hey');
 
-        Log::info('hey');
+    expect($this->client->sentRequests())->toHaveCount(0);
+});
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
+it('will not blow up when not passing anything', function () {
+    ray();
 
-    /** @test */
-    public function it_will_not_blow_up_when_not_passing_anything()
-    {
-        ray();
+    expect($this->client->sentRequests())->toHaveCount(0);
+});
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
+it('can be disabled', function () {
+    ray()->disable();
+    ray('test');
+    expect($this->client->sentRequests())->toHaveCount(0);
 
-    /** @test */
-    public function it_can_be_disabled()
-    {
-        ray()->disable();
-        ray('test');
-        $this->assertCount(0, $this->client->sentRequests());
+    ray()->enable();
+    ray('not test');
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-        ray()->enable();
-        ray('not test');
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+it('can check enabled status', function () {
+    ray()->disable();
+    expect(ray()->enabled())->toEqual(false);
 
-    /** @test */
-    public function it_can_check_enabled_status()
-    {
-        ray()->disable();
-        $this->assertEquals(false, ray()->enabled());
+    ray()->enable();
+    expect(ray()->enabled())->toEqual(true);
+});
 
-        ray()->enable();
-        $this->assertEquals(true, ray()->enabled());
-    }
+it('can check disabled status', function () {
+    ray()->disable();
+    expect(ray()->disabled())->toEqual(true);
 
-    /** @test */
-    public function it_can_check_disabled_status()
-    {
-        ray()->disable();
-        $this->assertEquals(true, ray()->disabled());
+    ray()->enable();
+    expect(ray()->disabled())->toEqual(false);
+});
 
-        ray()->enable();
-        $this->assertEquals(false, ray()->disabled());
-    }
+it('can replace the remote path with the local one', function () {
+    $settings = app(Settings::class);
 
-    /** @test */
-    public function it_can_replace_the_remote_path_with_the_local_one()
-    {
-        $settings = app(Settings::class);
+    $settings->remote_path = __DIR__;
+    $settings->local_path = 'local_tests';
 
-        $settings->remote_path = __DIR__;
-        $settings->local_path = 'local_tests';
+    ray('test');
 
-        ray('test');
+    expect(Arr::get($this->client->sentRequests(), '0.payloads.0.origin.file'))->toContain('local_tests');
+});
 
-        $this->assertStringContainsString(
-            'local_tests',
-            Arr::get($this->client->sentRequests(), '0.payloads.0.origin.file')
-        );
-    }
+it('will automatically use specialized payloads', function () {
+    ray(new TestMailable(), new User());
 
-    /** @test */
-    public function it_will_automatically_use_specialized_payloads()
-    {
-        ray(new TestMailable(), new User());
+    $payloads = $this->client->sentRequests();
 
-        $payloads = $this->client->sentRequests();
+    expect($payloads[0]['payloads'][0]['type'])->toEqual('mailable');
+    expect($payloads[0]['payloads'][1]['type'])->toEqual('eloquent_model');
+});
 
-        $this->assertEquals('mailable', $payloads[0]['payloads'][0]['type']);
-        $this->assertEquals('eloquent_model', $payloads[0]['payloads'][1]['type']);
-    }
+it('sends an environment payload', function () {
+    ray()->env([], __DIR__ . '/stubs/dotenv.env');
 
-    /** @test */
-    public function it_sends_an_environment_payload()
-    {
-        ray()->env([], __DIR__ . '/stubs/dotenv.env');
+    $payloads = $this->client->sentRequests();
 
-        $payloads = $this->client->sentRequests();
+    expect($payloads[0]['payloads'][0]['type'])->toEqual('table');
+    expect($payloads[0]['payloads'][0]['content']['label'])->toEqual('.env');
+    expect($payloads[0]['payloads'][0]['content']['values']['APP_ENV'])->toEqual('local');
+    expect($payloads[0]['payloads'][0]['content']['values']['DB_DATABASE'])->toEqual('ray_test');
+    expect($payloads[0]['payloads'][0]['content']['values']['SESSION_LIFETIME'])->toEqual('120');
+    expect(count($payloads[0]['payloads'][0]['content']['values']))->toBeGreaterThanOrEqual(17);
+});
 
-        $this->assertEquals('table', $payloads[0]['payloads'][0]['type']);
-        $this->assertEquals('.env', $payloads[0]['payloads'][0]['content']['label']);
-        $this->assertEquals('local', $payloads[0]['payloads'][0]['content']['values']['APP_ENV']);
-        $this->assertEquals('ray_test', $payloads[0]['payloads'][0]['content']['values']['DB_DATABASE']);
-        $this->assertEquals('120', $payloads[0]['payloads'][0]['content']['values']['SESSION_LIFETIME']);
-        $this->assertGreaterThanOrEqual(17, count($payloads[0]['payloads'][0]['content']['values']));
-    }
+it('sends a filtered environment payload', function () {
+    ray()->env(['APP_ENV', 'DB_DATABASE'], __DIR__ . '/stubs/dotenv.env');
 
-    /** @test */
-    public function it_sends_a_filtered_environment_payload()
-    {
-        ray()->env(['APP_ENV', 'DB_DATABASE'], __DIR__ . '/stubs/dotenv.env');
+    $payloads = $this->client->sentRequests();
 
-        $payloads = $this->client->sentRequests();
+    expect($payloads[0]['payloads'][0]['type'])->toEqual('table');
+    expect($payloads[0]['payloads'][0]['content']['label'])->toEqual('.env');
+    expect($payloads[0]['payloads'][0]['content']['values']['APP_ENV'])->toEqual('local');
+    expect($payloads[0]['payloads'][0]['content']['values']['DB_DATABASE'])->toEqual('ray_test');
+    expect($payloads[0]['payloads'][0]['content']['values'])->toHaveCount(2);
+});
 
-        $this->assertEquals('table', $payloads[0]['payloads'][0]['type']);
-        $this->assertEquals('.env', $payloads[0]['payloads'][0]['content']['label']);
-        $this->assertEquals('local', $payloads[0]['payloads'][0]['content']['values']['APP_ENV']);
-        $this->assertEquals('ray_test', $payloads[0]['payloads'][0]['content']['values']['DB_DATABASE']);
-        $this->assertCount(2, $payloads[0]['payloads'][0]['content']['values']);
-    }
+it('the project name will automatically be set if it something other than laravel', function () {
+    (new RayServiceProvider($this->app))->setProjectName();
 
-    /** @test */
-    public function the_project_name_will_automatically_be_set_if_it_something_other_than_laravel()
-    {
-        (new RayServiceProvider($this->app))->setProjectName();
+    expect(Ray::$projectName)->toEqual('');
 
-        $this->assertEquals('', Ray::$projectName);
+    config()->set('app.name', 'my-project');
 
-        config()->set('app.name', 'my-project');
+    (new RayServiceProvider($this->app))->setProjectName();
 
-        (new RayServiceProvider($this->app))->setProjectName();
-
-        $this->assertEquals('my-project', Ray::$projectName);
-    }
-}
+    expect(Ray::$projectName)->toEqual('my-project');
+});

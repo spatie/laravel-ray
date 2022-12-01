@@ -10,7 +10,7 @@
                 },
                 "origin": {
                     "file": "\/tests\/Unit\/MarkdownTest.php",
-                    "line_number": 12,
+                    "line_number": 4,
                     "hostname": "fake-hostname"
                 }
             }
