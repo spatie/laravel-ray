@@ -34,8 +34,7 @@
         "pestphp/pest": "^1.22",
         "phpstan/phpstan": "^0.12.93",
         "phpunit/phpunit": "^9.3",
-        "spatie/pest-plugin-snapshots": "^1.1",
-        "spatie/phpunit-snapshot-assertions": "^4.2"
+        "spatie/pest-plugin-snapshots": "^1.1"
     },
     "autoload": {
         "psr-4": {
