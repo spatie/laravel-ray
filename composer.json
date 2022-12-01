@@ -17,7 +17,7 @@
     ],
     "require": {
         "ext-json": "*",
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "illuminate/contracts": "^7.20|^8.19|^9.0",
         "illuminate/database": "^7.20|^8.19|^9.0",
         "illuminate/queue": "^7.20|^8.19|^9.0",
