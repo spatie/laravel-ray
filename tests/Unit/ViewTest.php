@@ -1,36 +1,25 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
+it('can send the view payload', function () {
+    ray()->showViews();
 
-use Spatie\LaravelRay\Tests\TestCase;
+    view('test')->render();
 
-class ViewTest extends TestCase
-{
-    /** @test */
-    public function it_can_send_the_view_payload()
-    {
-        ray()->showViews();
+    $payloads = $this->client->sentRequests();
+    expect($payloads)->toHaveCount(1);
+    expect($payloads[0]['payloads'][0]['type'])->toEqual('view');
+});
 
-        view('test')->render();
+it('show views can be colorized', function () {
+    $this->useRealUuid();
 
-        $payloads = $this->client->sentRequests();
-        $this->assertCount(1, $payloads);
-        $this->assertEquals('view', $payloads[0]['payloads'][0]['type']);
-    }
+    ray()->showViews()->green();
 
-    /** @test */
-    public function show_views_can_be_colorized()
-    {
-        $this->useRealUuid();
+    view('test')->render();
 
-        ray()->showViews()->green();
+    $sentPayloads = $this->client->sentRequests();
 
-        view('test')->render();
-
-        $sentPayloads = $this->client->sentRequests();
-
-        $this->assertCount(2, $sentPayloads);
-        $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
-        $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
-    }
-}
+    expect($sentPayloads)->toHaveCount(2);
+    expect($sentPayloads[1]['uuid'])->toEqual($sentPayloads[0]['uuid']);
+    expect($sentPayloads[0]['uuid'])->not->toEqual('fakeUuid');
+});

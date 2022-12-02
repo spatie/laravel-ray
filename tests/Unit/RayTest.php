@@ -1,89 +1,66 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
-
 use Illuminate\Support\Arr;
-use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\Ray\Settings\Settings;
 
-class RayTest extends TestCase
-{
-    /** @test */
-    public function when_disabled_nothing_will_be_sent_to_ray()
-    {
-        app(Settings::class)->enable = false;
+it('when disabled nothing will be sent to ray', function () {
+    app(Settings::class)->enable = false;
 
-        ray('test');
+    ray('test');
 
-        ray()->enable();
+    ray()->enable();
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(0);
+});
 
-    /** @test */
-    public function it_can_be_disabled()
-    {
-        ray()->disable();
-        ray('test');
-        $this->assertCount(0, $this->client->sentRequests());
+it('can be disabled', function () {
+    ray()->disable();
+    ray('test');
+    expect($this->client->sentRequests())->toHaveCount(0);
 
-        ray()->enable();
-        ray('not test');
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+    ray()->enable();
+    ray('not test');
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-    /** @test */
-    public function it_will_not_blow_up_when_not_passing_anything()
-    {
-        ray();
+it('will not blow up when not passing anything', function () {
+    ray();
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(0);
+});
 
-    /** @test */
-    public function it_can_check_enabled_status()
-    {
-        ray()->disable();
-        $this->assertEquals(false, ray()->enabled());
+it('can check enabled status', function () {
+    ray()->disable();
+    expect(ray()->enabled())->toEqual(false);
 
-        ray()->enable();
-        $this->assertEquals(true, ray()->enabled());
-    }
+    ray()->enable();
+    expect(ray()->enabled())->toEqual(true);
+});
 
-    /** @test */
-    public function it_can_check_disabled_status()
-    {
-        ray()->disable();
-        $this->assertEquals(true, ray()->disabled());
+it('can check disabled status', function () {
+    ray()->disable();
+    expect(ray()->disabled())->toEqual(true);
 
-        ray()->enable();
-        $this->assertEquals(false, ray()->disabled());
-    }
+    ray()->enable();
+    expect(ray()->disabled())->toEqual(false);
+});
 
-    /** @test */
-    public function it_can_replace_the_remote_path_with_the_local_one()
-    {
-        app(Settings::class)->remote_path = __DIR__;
-        app(Settings::class)->local_path = 'local_tests';
+it('can replace the remote path with the local one', function () {
+    app(Settings::class)->remote_path = __DIR__;
+    app(Settings::class)->local_path = 'local_tests';
 
-        ray('test');
+    ray('test');
 
-        $this->assertStringContainsString(
-            'local_tests',
-            Arr::get($this->client->sentRequests(), '0.payloads.0.origin.file')
-        );
-    }
+    expect(Arr::get($this->client->sentRequests(), '0.payloads.0.origin.file'))->toContain('local_tests');
+});
 
-    /** @test */
-    public function it_will_automatically_use_specialized_payloads()
-    {
-        ray(new TestMailable(), new User());
+it('will automatically use specialized payloads', function () {
+    ray(new TestMailable(), new User());
 
-        $payloads = $this->client->sentRequests();
+    $payloads = $this->client->sentRequests();
 
-        $this->assertEquals('mailable', $payloads[0]['payloads'][0]['type']);
-        $this->assertEquals('eloquent_model', $payloads[0]['payloads'][1]['type']);
-    }
-}
+    expect($payloads[0]['payloads'][0]['type'])->toEqual('mailable');
+    expect($payloads[0]['payloads'][1]['type'])->toEqual('eloquent_model');
+});

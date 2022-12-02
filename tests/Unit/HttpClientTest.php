@@ -1,84 +1,65 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 
-class HttpClientTest extends TestCase
-{
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if (! HttpClientWatcher::supportedByLaravelVersion()) {
-            $this->markTestSkipped('Tests require Laravel 8.45.0 or greater.');
-        }
-
-        Http::fake(
-            [
-                '*/ok*' => Http::response(['hello' => 'world'], 200, ['Content-Type' => 'application/json']),
-                '*/not-found*' => Http::response(null, 404),
-                '*/json*' => Http::response(['foo' => 'bar']),
-            ]
-        );
+beforeEach(function () {
+    if (! HttpClientWatcher::supportedByLaravelVersion()) {
+        $this->markTestSkipped('Tests require Laravel 8.45.0 or greater.');
     }
 
-    /** @test */
-    public function it_can_listen_to_http_client_requests()
-    {
-        ray()->showHttpClientRequests();
+    Http::fake(
+        [
+        '*/ok*' => Http::response(['hello' => 'world'], 200, ['Content-Type' => 'application/json']),
+        '*/not-found*' => Http::response(null, 404),
+        '*/json*' => Http::response(['foo' => 'bar']),
+        ]
+    );
+});
 
-        Http::get('test.com/ok', ['hello' => 'world']);
+it('can listen to http client requests', function () {
+    ray()->showHttpClientRequests();
 
-        $this->assertEquals('test.com/ok?hello=world', Arr::get($this->client->sentRequests(), '0.payloads.0.content.values')['URL']);
-        $this->assertEquals('Http', Arr::get($this->client->sentRequests(), '0.payloads.0.content.label'));
-    }
+    Http::get('test.com/ok', ['hello' => 'world']);
 
-    /** @test */
-    public function it_can_listen_to_http_client_responses()
-    {
-        ray()->showHttpClientRequests();
+    expect(Arr::get($this->client->sentRequests(), '0.payloads.0.content.values')['URL'])->toEqual('test.com/ok?hello=world');
+    expect(Arr::get($this->client->sentRequests(), '0.payloads.0.content.label'))->toEqual('Http');
+});
 
-        Http::get('test.com/json');
+it('can listen to http client responses', function () {
+    ray()->showHttpClientRequests();
 
-        $this->assertEquals('test.com/json', Arr::get($this->client->sentRequests(), '1.payloads.0.content.values')['URL']);
-        $this->assertEquals('Http', Arr::get($this->client->sentRequests(), '1.payloads.0.content.label'));
-    }
+    Http::get('test.com/json');
 
-    /** @test */
-    public function it_can_listen_for_non_successful_requests()
-    {
-        ray()->showHttpClientRequests();
+    expect(Arr::get($this->client->sentRequests(), '1.payloads.0.content.values')['URL'])->toEqual('test.com/json');
+    expect(Arr::get($this->client->sentRequests(), '1.payloads.0.content.label'))->toEqual('Http');
+});
 
-        Http::get('test.com/not-found');
+it('can listen for non successful requests', function () {
+    ray()->showHttpClientRequests();
 
-        $this->assertEquals('404', Arr::get($this->client->sentRequests(), '1.payloads.0.content.values')['Status']);
-    }
+    Http::get('test.com/not-found');
 
-    /** @test */
-    public function it_doesnt_send_a_payload_when_disabled()
-    {
-        Http::get('test.com/not-found');
+    expect(Arr::get($this->client->sentRequests(), '1.payloads.0.content.values')['Status'])->toEqual('404');
+});
 
-        $this->assertEmpty($this->client->sentRequests());
-    }
+it('doesnt send a payload when disabled', function () {
+    Http::get('test.com/not-found');
 
-    /** @test */
-    public function show_http_client_can_be_colorized()
-    {
-        $this->useRealUuid();
+    expect($this->client->sentRequests())->toBeEmpty();
+});
 
-        ray()->showHttpClientRequests()->green();
+it('show http client can be colorized', function () {
+    $this->useRealUuid();
 
-        Http::get('test.com/ok');
+    ray()->showHttpClientRequests()->green();
 
-        $sentPayloads = $this->client->sentRequests();
+    Http::get('test.com/ok');
 
-        $this->assertCount(4, $sentPayloads); // 2 for the request and 2 for the response.
-        $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
-        $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
-    }
-}
+    $sentPayloads = $this->client->sentRequests();
+
+    expect($sentPayloads)->toHaveCount(4); // 2 for the request and 2 for the response.
+    expect($sentPayloads[1]['uuid'])->toEqual($sentPayloads[0]['uuid']);
+    expect($sentPayloads[0]['uuid'])->not->toEqual('fakeUuid');
+});

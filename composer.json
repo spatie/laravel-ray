@@ -17,7 +17,7 @@
     ],
     "require": {
         "ext-json": "*",
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "illuminate/contracts": "^7.20|^8.19|^9.0",
         "illuminate/database": "^7.20|^8.19|^9.0",
         "illuminate/queue": "^7.20|^8.19|^9.0",
@@ -31,9 +31,10 @@
         "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^7.20|^8.19|^9.0",
         "orchestra/testbench-core": "^5.0|^6.0|^7.0",
+        "pestphp/pest": "^1.22",
         "phpstan/phpstan": "^0.12.93",
         "phpunit/phpunit": "^9.3",
-        "spatie/phpunit-snapshot-assertions": "^4.2"
+        "spatie/pest-plugin-snapshots": "^1.1"
     },
     "autoload": {
         "psr-4": {
@@ -47,12 +48,15 @@
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan",
-        "test": "vendor/bin/phpunit --colors=always",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "extra": {
         "branch-alias": {

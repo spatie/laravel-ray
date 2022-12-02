@@ -1,118 +1,96 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 
-class QueryTest extends TestCase
-{
-    /** @test */
-    public function it_can_start_logging_queries()
-    {
-        ray()->showQueries();
+it('can start logging queries', function () {
+    ray()->showQueries();
 
-        DB::table('users')->get('id');
+    DB::table('users')->get('id');
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-    /** @test */
-    public function it_can_start_logging_queries_using_alias()
-    {
-        ray()->queries();
+it('can start logging queries using alias', function () {
+    ray()->queries();
 
-        DB::table('users')->get('id');
+    DB::table('users')->get('id');
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-    /** @test */
-    public function it_can_stop_logging_queries()
-    {
-        ray()->showQueries();
+it('can stop logging queries', function () {
+    ray()->showQueries();
 
-        DB::table('users')->get('id');
-        DB::table('users')->get('id');
-        $this->assertCount(2, $this->client->sentRequests());
+    DB::table('users')->get('id');
+    DB::table('users')->get('id');
+    expect($this->client->sentRequests())->toHaveCount(2);
 
-        ray()->stopShowingQueries();
-        DB::table('users')->get('id');
-        $this->assertCount(2, $this->client->sentRequests());
-    }
+    ray()->stopShowingQueries();
+    DB::table('users')->get('id');
+    expect($this->client->sentRequests())->toHaveCount(2);
+});
 
-    /** @test */
-    public function calling_log_queries_twice_will_not_log_all_queries_twice()
-    {
-        ray()->showQueries();
-        ray()->showQueries();
+it('calling log queries twice will not log all queries twice', function () {
+    ray()->showQueries();
+    ray()->showQueries();
 
-        DB::table('users')->get('id');
+    DB::table('users')->get('id');
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-    /** @test */
-    public function it_can_log_all_queries_in_a_callable()
-    {
-        ray()->showQueries(function () {
-            // will be logged
-            DB::table('users')->where('id', 1)->get();
-        });
-        $this->assertCount(1, $this->client->sentRequests());
-
-        // will not be logged
-        DB::table('users')->get('id');
-        $this->assertCount(1, $this->client->sentRequests());
-    }
-
-    /** @test */
-    public function show_queries_can_be_colorized()
-    {
-        $this->useRealUuid();
-
-        ray()->showQueries()->green();
-
+it('can log all queries in a callable', function () {
+    ray()->showQueries(function () {
+        // will be logged
         DB::table('users')->where('id', 1)->get();
+    });
+    expect($this->client->sentRequests())->toHaveCount(1);
 
-        $sentPayloads = $this->client->sentRequests();
+    // will not be logged
+    DB::table('users')->get('id');
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-        $this->assertCount(2, $sentPayloads);
-        $this->assertEquals($sentPayloads[0]['uuid'], $sentPayloads[1]['uuid']);
-        $this->assertNotEquals('fakeUuid', $sentPayloads[0]['uuid']);
-    }
+it('show queries can be colorized', function () {
+    $this->useRealUuid();
 
-    /** @test */
-    public function it_can_count_the_amount_of_executed_queries()
-    {
-        ray()->countQueries(function () {
-            DB::table('users')->get('id');
-            DB::table('users')->get('id');
-            DB::table('users')->get('id');
-        });
+    ray()->showQueries()->green();
 
-        $this->assertCount(1, $this->client->sentRequests());
+    DB::table('users')->where('id', 1)->get();
 
-        $payload = $this->client->sentRequests()[0];
+    $sentPayloads = $this->client->sentRequests();
 
-        $this->assertEquals(3, Arr::get($payload, 'payloads.0.content.values.Count'));
-    }
+    expect($sentPayloads)->toHaveCount(2);
+    expect($sentPayloads[1]['uuid'])->toEqual($sentPayloads[0]['uuid']);
+    expect($sentPayloads[0]['uuid'])->not->toEqual('fakeUuid');
+});
 
-    /** @test */
-    public function an_eloquent_query_can_be_sent_to_ray()
-    {
-        User::create(['email' => 'john@example.com']);
+it('can count the amount of executed queries', function () {
+    ray()->countQueries(function () {
+        DB::table('users')->get('id');
+        DB::table('users')->get('id');
+        DB::table('users')->get('id');
+    });
 
-        $user = User::query()->where('email', 'john@example.com')->ray()->first();
+    expect($this->client->sentRequests())->toHaveCount(1);
 
-        $this->assertCount(1, $this->client->sentPayloads());
+    $payload = $this->client->sentRequests()[0];
 
-        $payload = $this->client->sentPayloads()[0];
+    expect(Arr::get($payload, 'payloads.0.content.values.Count'))->toEqual(3);
+});
 
-        $this->assertEquals('executed_query', Arr::get($payload, 'type'));
+it('an eloquent query can be sent to ray', function () {
+    User::create(['email' => 'john@example.com']);
 
-        $this->assertInstanceOf(User::class, $user);
-    }
-}
+    $user = User::query()->where('email', 'john@example.com')->ray()->first();
+
+    expect($this->client->sentPayloads())->toHaveCount(1);
+
+    $payload = $this->client->sentPayloads()[0];
+
+    expect(Arr::get($payload, 'type'))->toEqual('executed_query');
+
+    expect($user)->toBeInstanceOf(User::class);
+});

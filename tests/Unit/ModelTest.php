@@ -1,50 +1,36 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
-
-use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 
-class ModelTest extends TestCase
-{
-    /** @test */
-    public function it_can_send_one_model_to_ray()
-    {
-        $user = User::make(['email' => 'john@example.com']);
+it('can send one model to ray', function () {
+    $user = User::make(['email' => 'john@example.com']);
 
-        ray()->model($user);
+    ray()->model($user);
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-    /** @test */
-    public function it_can_send_multiple_models_to_ray()
-    {
-        $user1 = User::make(['email' => 'john@example.com']);
-        $user2 = User::make(['email' => 'paul@example.com']);
+it('can send multiple models to ray', function () {
+    $user1 = User::make(['email' => 'john@example.com']);
+    $user2 = User::make(['email' => 'paul@example.com']);
 
-        ray()->model($user1, $user2);
-        $this->assertCount(2, $this->client->sentRequests());
-    }
+    ray()->model($user1, $user2);
+    expect($this->client->sentRequests())->toHaveCount(2);
+});
 
-    /** @test */
-    public function it_can_send_a_single_models_to_ray_using_models()
-    {
-        $user = User::make(['email' => 'john@example.com']);
+it('can send a single models to ray using models', function () {
+    $user = User::make(['email' => 'john@example.com']);
 
-        ray()->models($user);
+    ray()->models($user);
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-    /** @test */
-    public function it_can_send_a_collection_of_models_to_ray_using_models()
-    {
-        $user1 = User::make(['email' => 'john@example.com']);
-        $user2 = User::make(['email' => 'paul@example.com']);
+it('can send a collection of models to ray using models', function () {
+    $user1 = User::make(['email' => 'john@example.com']);
+    $user2 = User::make(['email' => 'paul@example.com']);
 
-        ray()->models(collect([$user1, $user2]));
+    ray()->models(collect([$user1, $user2]));
 
-        $this->assertCount(2, $this->client->sentRequests());
-    }
-}
+    expect($this->client->sentRequests())->toHaveCount(2);
+});

@@ -1,0 +1,25 @@
+[
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "table",
+                "content": {
+                    "values": {
+                        "Event": "<code>Key written<\/code>",
+                        "Key": "cached-key",
+                        "Value": "cached-value",
+                        "Expiration in seconds": "10"
+                    },
+                    "label": "Cache"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 52,
+                    "hostname": "fake-hostname"
+                }
+            }
+        ],
+        "meta": []
+    }
+]
