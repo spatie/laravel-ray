@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.32.0 - 2023-01-11
+
+- add support for Laravel 10
+
 ## 1.31.0 - 2022-09-20
 
 ### What's Changed
