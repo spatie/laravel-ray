@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.32.1 - 2023-01-26
+
+### What's Changed
+
+- Make DB connection optional by @lentex in https://github.com/spatie/laravel-ray/pull/290
+
+### New Contributors
+
+- @lentex made their first contribution in https://github.com/spatie/laravel-ray/pull/290
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.0...1.32.1
+
 ## 1.32.0 - 2023-01-11
 
 - add support for Laravel 10
