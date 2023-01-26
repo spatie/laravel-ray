@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Log;
 use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
@@ -150,4 +151,15 @@ it('the project name will automatically be set if it something other than larave
     (new RayServiceProvider($this->app))->setProjectName();
 
     expect(Ray::$projectName)->toEqual('my-project');
+});
+
+it('still boots and works although the DB facade has not been bound', function () {
+    unset($this->app['db']);
+    Facade::clearResolvedInstance('db');
+
+    (new RayServiceProvider($this->app))->boot();
+
+    ray('foo');
+
+    expect($this->client->sentRequests())->toHaveCount(1);
 });

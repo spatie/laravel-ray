@@ -25,6 +25,10 @@ class QueryWatcher extends Watcher
 
         $this->enabled = $settings->send_queries_to_ray;
 
+        if (! app()->bound('db')) {
+            return;
+        }
+
         DB::listen(function (QueryExecuted $query) {
             if (! $this->enabled()) {
                 return;
