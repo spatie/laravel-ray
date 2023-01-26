@@ -19,21 +19,23 @@ class SlowQueryWatcher extends QueryWatcher
         $this->enabled = $settings->send_slow_queries_to_ray ?? false;
         $this->minimumTimeInMs = $settings->slow_query_threshold_in_ms ?? $this->minimumTimeInMs;
 
-        DB::listen(function (QueryExecuted $query) {
-            if (! $this->enabled()) {
-                return;
-            }
+        if (app()->bound('db')) {
+            DB::listen(function (QueryExecuted $query) {
+                if (!$this->enabled()) {
+                    return;
+                }
 
-            $ray = app(Ray::class);
+                $ray = app(Ray::class);
 
-            if ($query->time >= $this->minimumTimeInMs) {
-                $payload = new ExecutedQueryPayload($query);
+                if ($query->time >= $this->minimumTimeInMs) {
+                    $payload = new ExecutedQueryPayload($query);
 
-                $ray->sendRequest($payload);
-            }
+                    $ray->sendRequest($payload);
+                }
 
-            optional($this->rayProxy)->applyCalledMethods($ray);
-        });
+                optional($this->rayProxy)->applyCalledMethods($ray);
+            });
+        }
     }
 
     public function setMinimumTimeInMilliseconds(float $milliseconds): self

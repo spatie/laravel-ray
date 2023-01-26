@@ -20,27 +20,29 @@ class DuplicateQueryWatcher extends Watcher
 
         $this->enabled = $settings->send_duplicate_queries_to_ray;
 
-        DB::listen(function (QueryExecuted $query) {
-            if (! $this->enabled()) {
-                return;
-            }
+        if (app()->bound('db')) {
+            DB::listen(function (QueryExecuted $query) {
+                if (!$this->enabled()) {
+                    return;
+                }
 
-            $sql = Str::replaceArray('?', $this->cleanupBindings($query->bindings), $query->sql);
+                $sql = Str::replaceArray('?', $this->cleanupBindings($query->bindings), $query->sql);
 
-            $duplicated = in_array($sql, $this->executedQueries);
+                $duplicated = in_array($sql, $this->executedQueries);
 
-            $this->executedQueries[] = $sql;
+                $this->executedQueries[] = $sql;
 
-            if (! $duplicated) {
-                return;
-            }
+                if (!$duplicated) {
+                    return;
+                }
 
-            $payload = new ExecutedQueryPayload($query);
+                $payload = new ExecutedQueryPayload($query);
 
-            $ray = app(Ray::class)->sendRequest($payload);
+                $ray = app(Ray::class)->sendRequest($payload);
 
-            optional($this->rayProxy)->applyCalledMethods($ray);
-        });
+                optional($this->rayProxy)->applyCalledMethods($ray);
+            });
+        }
     }
 
     private function cleanupBindings(array $bindings): array

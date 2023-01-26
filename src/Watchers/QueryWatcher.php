@@ -25,25 +25,27 @@ class QueryWatcher extends Watcher
 
         $this->enabled = $settings->send_queries_to_ray;
 
-        DB::listen(function (QueryExecuted $query) {
-            if (! $this->enabled()) {
-                return;
-            }
+        if (app()->bound('db')) {
+            DB::listen(function (QueryExecuted $query) {
+                if (!$this->enabled()) {
+                    return;
+                }
 
-            if ($this->keepExecutedQueries) {
-                $this->executedQueries[] = $query;
-            }
+                if ($this->keepExecutedQueries) {
+                    $this->executedQueries[] = $query;
+                }
 
-            if (! $this->sendIndividualQueries) {
-                return;
-            }
+                if (!$this->sendIndividualQueries) {
+                    return;
+                }
 
-            $payload = new ExecutedQueryPayload($query);
+                $payload = new ExecutedQueryPayload($query);
 
-            $ray = app(Ray::class)->sendRequest($payload);
+                $ray = app(Ray::class)->sendRequest($payload);
 
-            optional($this->rayProxy)->applyCalledMethods($ray);
-        });
+                optional($this->rayProxy)->applyCalledMethods($ray);
+            });
+        }
     }
 
     public function enable(): Watcher
