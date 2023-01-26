@@ -19,7 +19,7 @@ class SlowQueryWatcher extends QueryWatcher
         $this->enabled = $settings->send_slow_queries_to_ray ?? false;
         $this->minimumTimeInMs = $settings->slow_query_threshold_in_ms ?? $this->minimumTimeInMs;
 
-        if (app()->bound('db')) {
+        if (! app()->bound('db')) {
             return;
         }
 
