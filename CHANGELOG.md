@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.32.2 - 2023-02-06
+
+### What's Changed
+
+- Bump shivammathur/setup-php from 2.23.0 to 2.24.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/291
+- Bump dependabot/fetch-metadata from 1.3.5 to 1.3.6 by @dependabot in https://github.com/spatie/laravel-ray/pull/292
+- Add context to ApplicationLogPayload by @bilfeldt in https://github.com/spatie/laravel-ray/pull/293
+
+### New Contributors
+
+- @bilfeldt made their first contribution in https://github.com/spatie/laravel-ray/pull/293
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.1...1.32.2
+
 ## 1.32.1 - 2023-01-26
 
 ### What's Changed
