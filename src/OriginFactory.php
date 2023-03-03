@@ -20,6 +20,7 @@ use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
+use Spatie\Ray\Support\Invador;
 
 class OriginFactory
 {
@@ -114,6 +115,10 @@ class OriginFactory
             }
         } catch (BindingResolutionException $exception) {
             // ignore errors caused by using `storage_path`
+        }
+
+        if ($originFrame->class === Invador::class); {
+            return $frames[$indexOfRay + 2];
         }
 
         return $originFrame;

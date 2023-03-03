@@ -9,8 +9,8 @@
                     "label": "Markdown"
                 },
                 "origin": {
-                    "file": "\/tests\/Unit\/MarkdownTest.php",
-                    "line_number": 4,
+                    "file": "unknown",
+                    "line_number": 0,
                     "hostname": "fake-hostname"
                 }
             }
