@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.32.3 - 2023-03-03
+
+- display correct origin when using `invade`
+
 ## 1.32.2 - 2023-02-06
 
 ### What's Changed
