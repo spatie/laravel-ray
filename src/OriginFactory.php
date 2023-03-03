@@ -117,7 +117,8 @@ class OriginFactory
             // ignore errors caused by using `storage_path`
         }
 
-        if ($originFrame->class === Invador::class); {
+        if ($originFrame->class === Invador::class);
+        {
             return $frames[$indexOfRay + 2];
         }
 
