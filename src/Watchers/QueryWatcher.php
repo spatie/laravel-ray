@@ -4,6 +4,7 @@ namespace Spatie\LaravelRay\Watchers;
 
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
 use Spatie\LaravelRay\Ray;
 use Spatie\Ray\Settings\Settings;
@@ -25,11 +26,7 @@ class QueryWatcher extends Watcher
 
         $this->enabled = $settings->send_queries_to_ray;
 
-        if (! app()->bound('db')) {
-            return;
-        }
-
-        DB::listen(function (QueryExecuted $query) {
+        Event::listen(QueryExecuted::class, function (QueryExecuted $query) {
             if (! $this->enabled()) {
                 return;
             }
@@ -52,7 +49,11 @@ class QueryWatcher extends Watcher
 
     public function enable(): Watcher
     {
-        DB::enableQueryLog();
+        if (app()->bound('db')) {
+            collect(DB::getConnections())->each(function ($connection) {
+                $connection->enableQueryLog();
+            });
+        }
 
         parent::enable();
 
