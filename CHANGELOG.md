@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.32.4 - 2023-03-23
+
+### What's Changed
+
+- Avoid making DB connection unless necessary by @crynobone in https://github.com/spatie/laravel-ray/pull/295
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.3...1.32.4
+
 ## 1.32.3 - 2023-03-03
 
 - display correct origin when using `invade`
