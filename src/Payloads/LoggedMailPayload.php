@@ -70,13 +70,24 @@ class LoggedMailPayload extends Payload
     public function getContent(): array
     {
         return [
-            'html' => $this->html,
+            'html' => $this->sanitizeHtml($this->html),
             'subject' => $this->subject,
             'from' => $this->from,
             'to' => $this->to,
             'cc' => $this->cc,
             'bcc' => $this->bcc,
         ];
+    }
+
+    protected function sanitizeHtml(string $html): string
+    {
+        $needle = 'Content-Type: text/html; charset=utf-8 Content-Transfer-Encoding: quoted-printable';
+
+        if (strpos($html, $needle) !== false) {
+            $html = substr($html, strpos($html, $needle));
+        }
+
+        return $html;
     }
 
     protected static function convertHeaderToPersons(?AddressHeader $header): array
