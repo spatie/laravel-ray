@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.32.5 - 2023-06-23
+
+- fix displaying Mailables
+
 ## 1.32.4 - 2023-03-23
 
 ### What's Changed
