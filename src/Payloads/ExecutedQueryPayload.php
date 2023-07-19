@@ -22,7 +22,14 @@ class ExecutedQueryPayload extends Payload
 
     public function getContent(): array
     {
-        $properties = [
+        $grammar = $this->query->connection->getQueryGrammar();
+
+        $properties = method_exists($grammar, 'substituteBindingsIntoRawSql') ? [
+            'sql' => $grammar->substituteBindingsIntoRawSql(
+                $this->query->sql,
+                $this->query->connection->prepareBindings($this->query->bindings)
+            ),
+        ] : [
             'sql' => $this->query->sql,
             'bindings' => $this->query->bindings,
         ];
