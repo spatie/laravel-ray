@@ -453,7 +453,7 @@ class Ray extends BaseRay
                 $watcher->disable();
             }
 
-            if ($output && (new ReflectionFunction($callable))->hasReturnType()) {
+            if ((new ReflectionFunction($callable))->hasReturnType()) {
                 return $output;
             }
         }
