@@ -53,6 +53,16 @@ it('can log all queries in a callable', function () {
     expect($this->client->sentRequests())->toHaveCount(1);
 });
 
+it('can log all queries in a callable and gets results', function () {
+    $results = ray()->showQueries(function (): \Illuminate\Support\Collection {
+        // will be logged
+        return DB::table('users')->where('id', 1)->get();
+    });
+    expect($this->client->sentRequests())->toHaveCount(1);
+    expect($results)->toBeInstanceOf(\Illuminate\Support\Collection::class);
+    expect($results->count())->toEqual(0);
+});
+
 it('show queries can be colorized', function () {
     $this->useRealUuid();
 
