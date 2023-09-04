@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.33.0 - 2023-09-04
+
+### What's Changed
+
+- Bump shivammathur/setup-php from 2.25.4 to 2.25.5 by @dependabot in https://github.com/spatie/laravel-ray/pull/309
+- Add ability to return the results of callable by @grantholle in https://github.com/spatie/laravel-ray/pull/314
+
+### New Contributors
+
+- @grantholle made their first contribution in https://github.com/spatie/laravel-ray/pull/314
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.6...1.33.0
+
 ## 1.32.6 - 2023-07-19
 
 ### What's Changed
