@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Testing\Fakes\MailFake;
 use Illuminate\Testing\TestResponse;
 use Illuminate\View\View;
+use ReflectionFunction;
 use Spatie\LaravelRay\Payloads\EnvironmentPayload;
 use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
@@ -304,7 +305,7 @@ class Ray extends BaseRay
             $watcher->doNotSendIndividualQueries();
         }
 
-        $this->handleWatcherCallable($watcher, $callable);
+        $output = $this->handleWatcherCallable($watcher, $callable);
 
         $executedQueryStatistics = collect($watcher->getExecutedQueries())
 
@@ -324,6 +325,8 @@ class Ray extends BaseRay
             ->sendIndividualQueries();
 
         $this->table($executedQueryStatistics, 'Queries');
+
+        return $output;
     }
 
     public function queries($callable = null)
@@ -431,7 +434,7 @@ class Ray extends BaseRay
         return $this;
     }
 
-    protected function handleWatcherCallable(Watcher $watcher, Closure $callable = null): RayProxy
+    protected function handleWatcherCallable(Watcher $watcher, Closure $callable = null)
     {
         $rayProxy = new RayProxy();
 
@@ -444,10 +447,14 @@ class Ray extends BaseRay
         }
 
         if ($callable) {
-            $callable();
+            $output = $callable();
 
             if (! $wasEnabled) {
                 $watcher->disable();
+            }
+
+            if ((new ReflectionFunction($callable))->hasReturnType()) {
+                return $output;
             }
         }
 
