@@ -126,7 +126,7 @@ it('sends an environment payload', function () {
     expect($payloads[0]['payloads'][0]['content']['values']['APP_ENV'])->toEqual('local');
     expect($payloads[0]['payloads'][0]['content']['values']['DB_DATABASE'])->toEqual('ray_test');
     expect($payloads[0]['payloads'][0]['content']['values']['SESSION_LIFETIME'])->toEqual('120');
-    expect(count($payloads[0]['payloads'][0]['content']['values']))->toBeGreaterThanOrEqual(17);
+    expect(is_countable($payloads[0]['payloads'][0]['content']['values']) ? count($payloads[0]['payloads'][0]['content']['values']) : 0)->toBeGreaterThanOrEqual(17);
 });
 
 it('sends a filtered environment payload', function () {

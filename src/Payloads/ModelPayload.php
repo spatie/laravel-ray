@@ -34,7 +34,7 @@ class ModelPayload extends Payload
 
         $relations = $this->model->relationsToArray();
 
-        if (count($relations)) {
+        if (is_countable($relations) ? count($relations) : 0) {
             $content['relations'] = ArgumentConverter::convertToPrimitive($relations);
         }
 
