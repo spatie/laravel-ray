@@ -152,7 +152,7 @@ class Ray extends BaseRay
      */
     public function env(?array $onlyShowNames = null, ?string $filename = null): self
     {
-        $filename = $filename ?? app()->environmentFilePath();
+        $filename ??= app()->environmentFilePath();
 
         $payload = new EnvironmentPayload($onlyShowNames, $filename);
 
