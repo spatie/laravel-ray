@@ -475,6 +475,7 @@ class Ray extends BaseRay
 
     public function exception(Throwable $exception, array $meta = [])
     {
+        $payloads = [];
         $payloads[] = new ExceptionPayload($exception, $meta);
 
         if ($exception instanceof QueryException) {
