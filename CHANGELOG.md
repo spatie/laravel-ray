@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.33.1 - 2024-01-04
+
+- Allow symphony stopwatch 7
+
 ## 1.33.0 - 2023-09-04
 
 ### What's Changed
