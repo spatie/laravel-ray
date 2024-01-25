@@ -3,7 +3,6 @@
 namespace Spatie\LaravelRay\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Process;
 
 class CleanRayCommand extends Command
@@ -27,8 +26,9 @@ class CleanRayCommand extends Command
         $this->withProgressBar($directories, function ($directory) {
             $result = Process::run('./vendor/bin/remove-ray.sh ' . $directory);
 
-            if (!$result->successful()) {
+            if (! $result->successful()) {
                 $this->error($result->errorOutput());
+
                 return;
             }
         });
