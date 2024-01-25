@@ -11,6 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Stringable;
 use Illuminate\Testing\TestResponse;
 use Illuminate\View\Compilers\BladeCompiler;
+use Spatie\LaravelRay\Commands\CleanRayCommand;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
@@ -59,6 +60,7 @@ class RayServiceProvider extends ServiceProvider
     protected function registerCommands(): self
     {
         $this->commands(PublishConfigCommand::class);
+        $this->commands(CleanRayCommand::class);
 
         return $this;
     }
