@@ -14,7 +14,7 @@
                 },
                 "origin": {
                     "file": "\/tests\/Unit\/CacheTest.php",
-                    "line_number": 12,
+                    "line_number": 8,
                     "hostname": "fake-hostname"
                 }
             }
