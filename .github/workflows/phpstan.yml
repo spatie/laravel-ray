@@ -12,7 +12,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@2.29.0
         with:
-          php-version: '8.0'
+          php-version: 8.3
 
       - name: Install composer dependencies
         uses: ramsey/composer-install@v2
