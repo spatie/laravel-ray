@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.34.0 - 2024-01-25
+
+### What's Changed
+
+* Adds an artisan command to remove ray calls from your codebase.
+* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/spatie/laravel-ray/pull/321
+* Bump shivammathur/setup-php from 2.28.0 to 2.29.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/330
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.33.1...1.34.0
+
 ## 1.33.1 - 2024-01-04
 
 - Allow symphony stopwatch 7
