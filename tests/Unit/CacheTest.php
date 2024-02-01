@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Cache;
 
-beforeEach(function () {
-    config('cache.default', 'array');
-});
-
 it('can detect when something gets cached', function () {
     ray()->showCache();
 
