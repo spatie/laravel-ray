@@ -6,9 +6,8 @@
                 "type": "table",
                 "content": {
                     "values": {
-                        "Event": "<code>Hit<\/code>",
-                        "Key": "cached-key",
-                        "Value": "cached-value"
+                        "Event": "<code>Missed<\/code>",
+                        "Key": "cached-key"
                     },
                     "label": "Cache"
                 },

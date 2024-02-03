@@ -25,5 +25,7 @@
     </logging>
     <php>
         <env name="APP_DEBUG" value="true" />
+        <env name="CACHE_DRIVER" value="array" />
+        <env name="CACHE_STORE" value="array" />
     </php>
 </phpunit>

@@ -9,10 +9,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.2, 8.1, 8.0, 7.4]
-        laravel: [10.*, 9.*, 8.*, 7.*]
+        php: [8.3, 8.2, 8.1, 8.0, 7.4]
+        laravel: [11.*, 10.*, 9.*, 8.*, 7.*]
         dependency-version: [prefer-stable]
         include:
+          - laravel: 11.*
+            testbench: 9.*
           - laravel: 10.*
             testbench: 8.*
           - laravel: 9.*
@@ -22,20 +24,28 @@ jobs:
           - laravel: 7.*
             testbench: 5.*
         exclude:
-          - laravel: 7.*
-            php: 8.2
-          - laravel: 7.*
+          - laravel: 11.*
             php: 8.1
-          - laravel: 9.*
+          - laravel: 11.*
+            php: 8.0
+          - laravel: 11.*
             php: 7.4
-          - laravel: 9.*
-            php: 7.3
           - laravel: 10.*
             php: 8.0
           - laravel: 10.*
             php: 7.4
-          - laravel: 10.*
-            php: 7.3
+          - laravel: 9.*
+            php: 8.3
+          - laravel: 9.*
+            php: 7.4
+          - laravel: 8.*
+            php: 8.3
+          - laravel: 7.*
+            php: 8.3
+          - laravel: 7.*
+            php: 8.2
+          - laravel: 7.*
+            php: 8.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
@@ -57,8 +67,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench-core:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+          composer update --${{ matrix.dependency-version }} --with=laravel/framework:${{ matrix.laravel }} --with=orchestra/testbench-core:${{ matrix.testbench }} --prefer-dist --no-interaction
 
       - name: Execute tests
         run: vendor/bin/pest
