@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.35.0 - 2024-02-03
+
+### What's Changed
+
+* Supports Laravel 11 by @crynobone in https://github.com/spatie/laravel-ray/pull/329
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.34.0...1.35.0
+
 ## 1.34.0 - 2024-01-25
 
 ### What's Changed
