@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay\Commands;
 
+use Composer\InstalledVersions;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Process;
 
@@ -13,6 +14,22 @@ class CleanRayCommand extends Command
 
     public function handle()
     {
+        if (
+            ! InstalledVersions::isInstalled("rector/rector") ||
+            version_compare(
+                InstalledVersions::getPrettyVersion("rector/rector"),
+                "1.0.0",
+                "<"
+            )
+        ) {
+            $this->error(
+                'Rector is not installed or the version is not compatible with this package.'
+                .' Please install rector version 1.0.0 or higher.'
+            );
+
+            return;
+        }
+
         $directories = [
             'app',
             'config',
