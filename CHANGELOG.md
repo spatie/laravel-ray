@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.35.1 - 2024-02-13
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.35.0...1.35.1
+
 ## 1.35.0 - 2024-02-03
 
 ### What's Changed
