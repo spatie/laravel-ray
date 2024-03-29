@@ -6,6 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
+use Illuminate\Support\Facades\Context;
 use Spatie\LaravelRay\Tests\TestCase;
 
 uses(TestCase::class)->in('.');
@@ -31,4 +32,9 @@ function assertMatchesOsSafeSnapshot($data): void
 
 
     test()->expect($json)->toMatchJsonSnapshot();
+}
+
+function contextSupported(): bool
+{
+    return class_exists(Context::class);
 }
