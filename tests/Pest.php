@@ -34,10 +34,7 @@ function assertMatchesOsSafeSnapshot($data): void
     test()->expect($json)->toMatchJsonSnapshot();
 }
 
-function onlyIfContextSupported()
+function contextSupported(): bool
 {
-
-    if (!class_exists(Context::class)) {
-        test()->skip('Context is not supported for this Laravel version');
-    }
+    return class_exists(Context::class);
 }
