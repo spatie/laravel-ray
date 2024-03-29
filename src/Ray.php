@@ -38,7 +38,6 @@ use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\ExceptionPayload;
-use Spatie\Ray\Payloads\LogPayload;
 use Spatie\Ray\Ray as BaseRay;
 use Spatie\Ray\Settings\Settings;
 use Throwable;

@@ -37,7 +37,7 @@ function assertMatchesOsSafeSnapshot($data): void
 function onlyIfContextSupported()
 {
 
-    if (!class_exists(Context::class)) {
+    if (! class_exists(Context::class)) {
         test()->skip('Context is not supported for this Laravel version');
     }
 }
