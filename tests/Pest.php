@@ -6,6 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
+use Illuminate\Support\Facades\Context;
 use Spatie\LaravelRay\Tests\TestCase;
 
 uses(TestCase::class)->in('.');
@@ -31,4 +32,12 @@ function assertMatchesOsSafeSnapshot($data): void
 
 
     test()->expect($json)->toMatchJsonSnapshot();
+}
+
+function onlyIfContextSupported()
+{
+
+    if (!class_exists(Context::class)) {
+        test()->skip('Context is not supported for this Laravel version');
+    }
 }

@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\MailManager;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Testing\Fakes\MailFake;
@@ -37,6 +38,7 @@ use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\ExceptionPayload;
+use Spatie\Ray\Payloads\LogPayload;
 use Spatie\Ray\Ray as BaseRay;
 use Spatie\Ray\Settings\Settings;
 use Throwable;
@@ -81,6 +83,58 @@ class Ray extends BaseRay
         }, $mailables);
 
         $this->sendRequest($payloads);
+
+        return $this;
+    }
+
+    /**
+     * @param array|string ...$keys
+     *
+     * @return $this
+     */
+    public function context(...$keys): self
+    {
+        if (! class_exists(Context::class)) {
+            return $this;
+        }
+
+        if (isset($keys[0]) && is_array($keys[0])) {
+            $keys = $keys[0];
+        }
+
+        $context = count($keys)
+            ? Context::only($keys)
+            : Context::all();
+
+        $this
+            ->send($context)
+            ->label('Context');
+
+        return $this;
+    }
+
+    /**
+     * @param array|string ...$keys
+     *
+     * @return $this
+     */
+    public function hiddenContext(...$keys): self
+    {
+        if (! class_exists(Context::class)) {
+            return $this;
+        }
+
+        if (isset($keys[0]) && is_array($keys[0])) {
+            $keys = $keys[0];
+        }
+
+        $hiddenContext = count($keys)
+            ? Context::onlyHidden($keys)
+            : Context::allHidden();
+
+        $this
+            ->send($hiddenContext)
+            ->label('Hidden Context');
 
         return $this;
     }
