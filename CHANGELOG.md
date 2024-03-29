@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.36.0 - 2024-03-29
+
+### What's Changed
+
+* Bump shivammathur/setup-php from 2.29.0 to 2.30.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/334
+* Bump shivammathur/setup-php from 2.30.0 to 2.30.1 by @dependabot in https://github.com/spatie/laravel-ray/pull/335
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.0.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/336
+* Bump ramsey/composer-install from 2 to 3 by @dependabot in https://github.com/spatie/laravel-ray/pull/333
+* Support context by @freekmurze in https://github.com/spatie/laravel-ray/pull/337
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.35.1...1.36.0
+
 ## 1.35.1 - 2024-02-13
 
 **Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.35.0...1.35.1
