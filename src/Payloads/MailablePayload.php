@@ -19,7 +19,7 @@ class MailablePayload extends Payload
         return new self(self::renderMailable($mailable), $mailable);
     }
 
-    public function __construct(string $html, Mailable $mailable = null)
+    public function __construct(string $html, ?Mailable $mailable = null)
     {
         $this->html = $html;
 
