@@ -44,7 +44,7 @@ use Throwable;
 
 class Ray extends BaseRay
 {
-    public function __construct(Settings $settings, Client $client = null, string $uuid = null)
+    public function __construct(Settings $settings, ?Client $client = null, ?string $uuid = null)
     {
         // persist the enabled setting across multiple instantiations
         $enabled = static::$enabled;
@@ -487,7 +487,7 @@ class Ray extends BaseRay
         return $this;
     }
 
-    protected function handleWatcherCallable(Watcher $watcher, Closure $callable = null)
+    protected function handleWatcherCallable(Watcher $watcher, ?Closure $callable = null)
     {
         $rayProxy = new RayProxy();
 
