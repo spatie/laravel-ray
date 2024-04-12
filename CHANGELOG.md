@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.36.1 - 2024-04-12
+
+### What's Changed
+
+* Bump shivammathur/setup-php from 2.30.1 to 2.30.2 by @dependabot in https://github.com/spatie/laravel-ray/pull/338
+* Make implicit nullable param to explicit (PHP 8.4 compatibility) by @GromNaN in https://github.com/spatie/laravel-ray/pull/340
+* Update branch alias for version 1.x by @GromNaN in https://github.com/spatie/laravel-ray/pull/341
+
+### New Contributors
+
+* @GromNaN made their first contribution in https://github.com/spatie/laravel-ray/pull/340
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.0...1.36.1
+
 ## 1.36.0 - 2024-03-29
 
 ### What's Changed
