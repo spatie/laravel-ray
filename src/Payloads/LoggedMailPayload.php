@@ -2,7 +2,6 @@
 
 namespace Spatie\LaravelRay\Payloads;
 
-use Psy\Util\Str;
 use Spatie\Ray\Payloads\Payload;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Header\HeaderConsts;
@@ -71,7 +70,7 @@ class LoggedMailPayload extends Payload
         $startOfHtml = strpos($loggedMail, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0', true);
 
         if (! $startOfHtml) {
-                return $message->getContent() ?? $message->getHtmlContent() ?? '';
+            return $message->getContent() ?? $message->getHtmlContent() ?? '';
         }
 
         return substr($loggedMail, $startOfHtml) ?? '';
