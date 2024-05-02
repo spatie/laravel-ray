@@ -2,10 +2,12 @@
 
 namespace Spatie\LaravelRay\Payloads;
 
+use Psy\Util\Str;
 use Spatie\Ray\Payloads\Payload;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Header\HeaderConsts;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
+use ZBateson\MailMimeParser\IMessage;
 use ZBateson\MailMimeParser\MailMimeParser;
 
 class LoggedMailPayload extends Payload
@@ -34,7 +36,9 @@ class LoggedMailPayload extends Payload
 
         $message = $parser->parse($loggedMail, true);
 
-        $content = $message->getContent() ?? $message->getHtmlContent() ?? '';
+        // get the part in $loggedMail that starts with <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+
+        $content = self::getMailContent($loggedMail, $message);
 
         return new self(
             $content,
@@ -60,6 +64,17 @@ class LoggedMailPayload extends Payload
         $this->to = $to;
         $this->cc = $cc;
         $this->bcc = $bcc;
+    }
+
+    protected static function getMailContent(string $loggedMail, IMessage $message): string
+    {
+        $startOfHtml = strpos($loggedMail, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0', true);
+
+        if (! $startOfHtml) {
+                return $message->getContent() ?? $message->getHtmlContent() ?? '';
+        }
+
+        return substr($loggedMail, $startOfHtml) ?? '';
     }
 
     public function getType(): string
