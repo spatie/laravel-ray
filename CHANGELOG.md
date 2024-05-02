@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.36.2 - 2024-05-02
+
+### What's Changed
+
+- fix signed URLs in logged mailables
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.1...1.36.2
+
 ## 1.36.1 - 2024-04-12
 
 ### What's Changed
