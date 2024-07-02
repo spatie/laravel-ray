@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.36.3 - 2024-07-02
+
+### What's Changed
+
+* Bump shivammathur/setup-php from 2.30.4 to 2.30.5 by @dependabot in https://github.com/spatie/laravel-ray/pull/350
+* Bump shivammathur/setup-php from 2.30.5 to 2.31.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/353
+* Allow zbateson/mail-mime-parser ^3.0 by @JamesFreeman in https://github.com/spatie/laravel-ray/pull/354
+
+### New Contributors
+
+* @JamesFreeman made their first contribution in https://github.com/spatie/laravel-ray/pull/354
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.2...1.36.3
+
 ## 1.36.2 - 2024-05-02
 
 ### What's Changed
