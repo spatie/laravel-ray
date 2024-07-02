@@ -234,6 +234,9 @@ class RayServiceProvider extends ServiceProvider
             Blade::directive('ray', function ($expression) {
                 return "<?php ray($expression); ?>";
             });
+            Blade::directive('measure', function () {
+                return '<?php ray()->measure() ?>';
+            });
         });
 
         return $this;
