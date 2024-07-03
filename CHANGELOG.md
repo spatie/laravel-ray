@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.37.0 - 2024-07-03
+
+### What's Changed
+
+* Add 'measure' directive to RayServiceProvider by @iurigustavo in https://github.com/spatie/laravel-ray/pull/355
+
+### New Contributors
+
+* @iurigustavo made their first contribution in https://github.com/spatie/laravel-ray/pull/355
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.3...1.37.0
+
 ## 1.36.3 - 2024-07-02
 
 ### What's Changed
