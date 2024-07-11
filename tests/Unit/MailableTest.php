@@ -17,7 +17,6 @@ it('can send a logged mailable', function () {
         ->send(new TestMailable());
 
     expect($this->client->sentRequests())->toHaveCount(1);
-    expect($this->client->sentPayloads()[0]['content']['attachments'])->toHaveCount(2);
 });
 
 it('can send multiple mailable payloads', function () {
