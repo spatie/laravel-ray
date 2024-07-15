@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.37.1 - 2024-07-15
+
+### What's Changed
+
+* Add the xray directive to show all available variables in a Blade view.
+* Bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/356
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.37.0...1.37.1
+
 ## 1.37.0 - 2024-07-03
 
 ### What's Changed
