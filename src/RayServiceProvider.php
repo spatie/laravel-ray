@@ -15,6 +15,7 @@ use Spatie\LaravelRay\Commands\CleanRayCommand;
 use Spatie\LaravelRay\Commands\PublishConfigCommand;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
+use Spatie\LaravelRay\Payloads\MySqlVisualExplainPayload;
 use Spatie\LaravelRay\Payloads\QueryPayload;
 use Spatie\LaravelRay\Watchers\ApplicationLogWatcher;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
@@ -219,6 +220,12 @@ class RayServiceProvider extends ServiceProvider
             ray()->sendRequest($payload);
 
             return $this;
+        });
+
+        Builder::macro('rayVisualExplain', function () {
+            $payload = new MySqlVisualExplainPayload($this->visualExplain());
+
+            ray()->sendRequest($payload);
         });
 
         return $this;
