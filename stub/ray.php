@@ -51,6 +51,26 @@ return [
     'slow_query_threshold_in_ms' => env('RAY_SLOW_QUERY_THRESHOLD_IN_MS', 500),
 
     /*
+     * When enabled, all update queries will automatically be sent to Ray.
+     */
+    'send_update_queries_to_ray' => env('SEND_UPDATE_QUERIES_TO_RAY', false),
+
+    /*
+     * When enabled, all update queries will automatically be sent to Ray.
+     */
+    'send_insert_queries_to_ray' => env('SEND_INSERT_QUERIES_TO_RAY', false),
+
+    /*
+     * When enabled, all update queries will automatically be sent to Ray.
+     */
+    'send_delete_queries_to_ray' => env('SEND_DELETE_QUERIES_TO_RAY', false),
+
+    /*
+     * When enabled, all update queries will automatically be sent to Ray.
+     */
+    'send_select_queries_to_ray' => env('SEND_SELECT_QUERIES_TO_RAY', false),
+
+    /*
     * When enabled, all requests made to this app will automatically be sent to Ray.
     */
     'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
