@@ -159,3 +159,18 @@ it('can show only delete queries', function () {
 
     $this->assertStringStartsWith('delete', Arr::get($payload, '0.content.sql'));
 });
+
+it('can show only insert queries', function () {
+    ray()->showInsertQueries();
+
+    $user = User::query()->create(['email' => 'john@example.com']);
+    $user->update(['email' => 'joan@example.com']);
+    $user = User::query()->find($user->id);
+    $user->delete();
+
+    expect($this->client->sentPayloads())->toHaveCount(1);
+
+    $payload = $this->client->sentPayloads();
+
+    $this->assertStringStartsWith('insert', Arr::get($payload, '0.content.sql'));
+});
