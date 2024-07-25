@@ -15,12 +15,10 @@ class ConditionalQueryWatcher extends QueryWatcher
     {
         $this->conditionalCallback = $conditionalCallback;
 
-        $this->register();
-
-        $this->enable();
+        $this->listen();
     }
 
-    public function register(): void
+    public function listen(): void
     {
         Event::listen(QueryExecuted::class, function (QueryExecuted $query) {
             if (! $this->enabled()) {
