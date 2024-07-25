@@ -475,7 +475,9 @@ class Ray extends BaseRay
 
     public function stopShowingDeleteQueries(): self
     {
-        return app(DeleteQueryWatcher::class)->disable();
+        app(DeleteQueryWatcher::class)->disable();
+
+        return $this;
     }
 
     public function showInsertQueries($callable = null)
@@ -487,7 +489,9 @@ class Ray extends BaseRay
 
     public function stopShowingInsertQueries(): self
     {
-        return app(InsertQueryWatcher::class)->disable();
+        app(InsertQueryWatcher::class)->disable();
+
+        return $this;
     }
 
     public function showSelectQueries($callable = null)
@@ -499,7 +503,9 @@ class Ray extends BaseRay
 
     public function stopShowingSelectQueries(): self
     {
-        return app(SelectQueryWatcher::class)->disable();
+        app(SelectQueryWatcher::class)->disable();
+
+        return $this;
     }
 
     /**

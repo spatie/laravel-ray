@@ -17,23 +17,11 @@ it('can show only update queries and return the results', function () {
     $this->assertSame('joan@example.com', $user->email);
 });
 
-it('can stop showing update queries', function () {
-    $user = User::query()->create(['email' => 'john@example.com']);
-
-    ray()->showUpdateQueries();
-    $user->update(['email' => 'joan@example.com']);
-    ray()->stopShowingUpdateQueries();
-    $user->update(['email' => 'joe@example.com']);
-
-    expect($this->client->sentRequests())->toHaveCount(1);
-});
-
-it('can show only type queries', function (Closure $rayShowMethod, string $sqlCommand) {
+it('can show only type queries', function (Closure $rayShowMethod, Closure $rayStopMethod, string $sqlCommand) {
     $rayShowMethod();
 
-    $user = User::query()->create(['email' => 'john@example.com']);
+    $user = User::query()->firstOrCreate(['email' => 'john@example.com']);
     $user->update(['email' => 'joan@example.com']);
-    $user = User::query()->find($user->id);
     $user->delete();
 
     expect($this->client->sentPayloads())->toHaveCount(1);
@@ -41,9 +29,17 @@ it('can show only type queries', function (Closure $rayShowMethod, string $sqlCo
     $payload = $this->client->sentPayloads();
 
     $this->assertStringStartsWith($sqlCommand, Arr::get($payload, '0.content.sql'));
+
+    $rayStopMethod();
+
+    $user = User::query()->firstOrCreate(['email' => 'sam@example.com']);
+    $user->update(['email' => 'sarah@example.com']);
+    $user->delete();
+
+    expect($this->client->sentPayloads())->toHaveCount(1);
 })->with([
-    'update' => [function () {ray()->showUpdateQueries();}, 'update'],
-    'delete' => [function () {ray()->showDeleteQueries();}, 'delete'],
-    'insert' => [function () {ray()->showInsertQueries();}, 'insert'],
-    'select' => [function () {ray()->showSelectQueries();}, 'select'],
+    'update' => [function () {ray()->showUpdateQueries();}, function () {ray()->stopShowingUpdateQueries();}, 'update'],
+    'delete' => [function () {ray()->showDeleteQueries();}, function () {ray()->stopShowingDeleteQueries();}, 'delete'],
+    'insert' => [function () {ray()->showInsertQueries();}, function () {ray()->stopShowingInsertQueries();}, 'insert'],
+    'select' => [function () {ray()->showSelectQueries();}, function () {ray()->stopShowingSelectQueries();}, 'select'],
 ]);
