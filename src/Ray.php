@@ -482,6 +482,23 @@ class Ray extends BaseRay
         return $this->stopShowingConditionalQueries('send_delete_queries_to_ray');
     }
 
+    public function showInsertQueries($callable = null)
+    {
+        return $this
+            ->showConditionalQueries(
+                function (string $query) {
+                    return str_starts_with(strtolower($query), 'insert');
+                },
+                $callable,
+                'send_insert_queries_to_ray',
+            );
+    }
+
+    public function stopShowingInsertQueries(): self
+    {
+        return $this->stopShowingConditionalQueries('send_insert_queries_to_ray');
+    }
+
     /**
      * @param null $callable
      *
