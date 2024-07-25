@@ -25,6 +25,7 @@ use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
+use Spatie\LaravelRay\Watchers\InsertQueryWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\LoggedMailWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
@@ -150,6 +151,7 @@ class RayServiceProvider extends ServiceProvider
             SlowQueryWatcher::class,
             UpdateQueryWatcher::class,
             DeleteQueryWatcher::class,
+            InsertQueryWatcher::class,
             ViewWatcher::class,
             CacheWatcher::class,
             RequestWatcher::class,

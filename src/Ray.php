@@ -32,6 +32,7 @@ use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
+use Spatie\LaravelRay\Watchers\InsertQueryWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
@@ -478,19 +479,14 @@ class Ray extends BaseRay
 
     public function showInsertQueries($callable = null)
     {
-        return $this
-            ->showConditionalQueries(
-                function (string $query) {
-                    return str_starts_with(strtolower($query), 'insert');
-                },
-                $callable,
-                'send_insert_queries_to_ray',
-            );
+        $watcher = app(InsertQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function stopShowingInsertQueries(): self
     {
-        return $this->stopShowingConditionalQueries('send_insert_queries_to_ray');
+        return app(InsertQueryWatcher::class)->disable();
     }
 
     public function showSelectQueries($callable = null)
