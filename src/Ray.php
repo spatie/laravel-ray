@@ -27,6 +27,7 @@ use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
 use Spatie\LaravelRay\Watchers\ConditionalQueryWatcher;
+use Spatie\LaravelRay\Watchers\DeleteQueryWatcher;
 use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
@@ -465,19 +466,14 @@ class Ray extends BaseRay
 
     public function showDeleteQueries($callable = null)
     {
-        return $this
-            ->showConditionalQueries(
-                function (string $query) {
-                    return str_starts_with(strtolower($query), 'delete');
-                },
-                $callable,
-                'send_delete_queries_to_ray',
-            );
+        $watcher = app(DeleteQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function stopShowingDeleteQueries(): self
     {
-        return $this->stopShowingConditionalQueries('send_delete_queries_to_ray');
+        return app(DeleteQueryWatcher::class)->disable();
     }
 
     public function showInsertQueries($callable = null)
