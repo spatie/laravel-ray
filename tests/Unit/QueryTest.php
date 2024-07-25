@@ -174,3 +174,18 @@ it('can show only insert queries', function () {
 
     $this->assertStringStartsWith('insert', Arr::get($payload, '0.content.sql'));
 });
+
+it('can show only select queries', function () {
+    ray()->showSelectQueries();
+
+    $user = User::query()->create(['email' => 'john@example.com']);
+    $user->update(['email' => 'joan@example.com']);
+    $user = User::query()->find($user->id);
+    $user->delete();
+
+    expect($this->client->sentPayloads())->toHaveCount(1);
+
+    $payload = $this->client->sentPayloads();
+
+    $this->assertStringStartsWith('select', Arr::get($payload, '0.content.sql'));
+});
