@@ -18,6 +18,7 @@ use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\QueryPayload;
 use Spatie\LaravelRay\Watchers\ApplicationLogWatcher;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
+use Spatie\LaravelRay\Watchers\DeleteQueryWatcher;
 use Spatie\LaravelRay\Watchers\DeprecatedNoticeWatcher;
 use Spatie\LaravelRay\Watchers\DumpWatcher;
 use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
@@ -148,6 +149,7 @@ class RayServiceProvider extends ServiceProvider
             DuplicateQueryWatcher::class,
             SlowQueryWatcher::class,
             UpdateQueryWatcher::class,
+            DeleteQueryWatcher::class,
             ViewWatcher::class,
             CacheWatcher::class,
             RequestWatcher::class,
