@@ -135,8 +135,7 @@ it('can show only update queries and return the results', function () {
 });
 
 it('can stop showing update queries', function () {
-    $user = User::query()
-        ->create(['email' => 'john@example.com']);
+    $user = User::query()->create(['email' => 'john@example.com']);
 
     ray()->showUpdateQueries();
     $user->update(['email' => 'joan@example.com']);
@@ -146,3 +145,17 @@ it('can stop showing update queries', function () {
     expect($this->client->sentRequests())->toHaveCount(1);
 });
 
+it('can show only delete queries', function () {
+    ray()->showDeleteQueries();
+
+    $user = User::query()->create(['email' => 'john@example.com']);
+    $user->update(['email' => 'joan@example.com']);
+    $user = User::query()->find($user->id);
+    $user->delete();
+
+    expect($this->client->sentPayloads())->toHaveCount(1);
+
+    $payload = $this->client->sentPayloads();
+
+    $this->assertStringStartsWith('delete', Arr::get($payload, '0.content.sql'));
+});
