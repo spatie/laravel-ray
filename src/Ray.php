@@ -36,6 +36,7 @@ use Spatie\LaravelRay\Watchers\InsertQueryWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
+use Spatie\LaravelRay\Watchers\SelectQueryWatcher;
 use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
 use Spatie\LaravelRay\Watchers\UpdateQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
@@ -491,19 +492,14 @@ class Ray extends BaseRay
 
     public function showSelectQueries($callable = null)
     {
-        return $this
-            ->showConditionalQueries(
-                function (string $query) {
-                    return str_starts_with(strtolower($query), 'select');
-                },
-                $callable,
-                'send_select_queries_to_ray',
-            );
+        $watcher = app(SelectQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function stopShowingSelectQueries(): self
     {
-        return $this->stopShowingConditionalQueries('send_select_queries_to_ray');
+        return app(SelectQueryWatcher::class)->disable();
     }
 
     /**
