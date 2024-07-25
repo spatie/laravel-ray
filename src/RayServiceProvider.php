@@ -29,6 +29,7 @@ use Spatie\LaravelRay\Watchers\LoggedMailWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
 use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
+use Spatie\LaravelRay\Watchers\UpdateQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Client;
 use Spatie\Ray\PayloadFactory;
@@ -79,6 +80,10 @@ class RayServiceProvider extends ServiceProvider
                 'send_queries_to_ray' => env('SEND_QUERIES_TO_RAY', false),
                 'send_duplicate_queries_to_ray' => env('SEND_DUPLICATE_QUERIES_TO_RAY', false),
                 'send_slow_queries_to_ray' => env('SEND_SLOW_QUERIES_TO_RAY', false),
+                'send_update_queries_to_ray' => env('SEND_UPDATE_QUERIES_TO_RAY', false),
+                'send_insert_queries_to_ray' => env('SEND_INSERT_QUERIES_TO_RAY', false),
+                'send_delete_queries_to_ray' => env('SEND_DELETE_QUERIES_TO_RAY', false),
+                'send_select_queries_to_ray' => env('SEND_SELECT_QUERIES_TO_RAY', false),
                 'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
                 'send_http_client_requests_to_ray' => env('SEND_HTTP_CLIENT_REQUESTS_TO_RAY', false),
                 'send_views_to_ray' => env('SEND_VIEWS_TO_RAY', false),
@@ -142,6 +147,7 @@ class RayServiceProvider extends ServiceProvider
             QueryWatcher::class,
             DuplicateQueryWatcher::class,
             SlowQueryWatcher::class,
+            UpdateQueryWatcher::class,
             ViewWatcher::class,
             CacheWatcher::class,
             RequestWatcher::class,

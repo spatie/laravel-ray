@@ -35,6 +35,7 @@ use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
 use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
+use Spatie\LaravelRay\Watchers\UpdateQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
@@ -450,19 +451,16 @@ class Ray extends BaseRay
 
     public function showUpdateQueries($callable = null)
     {
-        return $this
-            ->showConditionalQueries(
-                function (string $query) {
-                    return str_starts_with(strtolower($query), 'update');
-                },
-                $callable,
-                'send_update_queries_to_ray',
-            );
+        $watcher = app(UpdateQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function stopShowingUpdateQueries(): self
     {
-        return $this->stopShowingConditionalQueries('send_update_queries_to_ray');
+        app(UpdateQueryWatcher::class)->disable();
+
+        return $this;
     }
 
     public function showDeleteQueries($callable = null)
