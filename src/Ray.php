@@ -23,6 +23,7 @@ use Spatie\LaravelRay\Payloads\LoggedMailPayload;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Payloads\MarkdownPayload;
 use Spatie\LaravelRay\Payloads\ModelPayload;
+use Spatie\LaravelRay\Payloads\MySqlVisualExplainPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
@@ -41,6 +42,7 @@ use Spatie\Ray\Payloads\ExceptionPayload;
 use Spatie\Ray\Ray as BaseRay;
 use Spatie\Ray\Settings\Settings;
 use Throwable;
+use Tpetry\MysqlExplain\Facades\MysqlExplain;
 
 class Ray extends BaseRay
 {
@@ -429,6 +431,19 @@ class Ray extends BaseRay
     public function stopShowingDuplicateQueries(): self
     {
         app(DuplicateQueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function visualExplain(string $query, array $bindings = [], string $connection = 'mysql'): self
+    {
+        $url = MysqlExplain::submitQuery(
+            DB::connection($connection),
+            $query,
+            $bindings,
+        );
+
+        $this->sendRequest(new MySqlVisualExplainPayload($url));
 
         return $this;
     }
