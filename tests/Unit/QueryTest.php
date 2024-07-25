@@ -105,21 +105,6 @@ it('an eloquent query can be sent to ray', function () {
     expect($user)->toBeInstanceOf(User::class);
 });
 
-it('can show only update queries', function () {
-    ray()->showUpdateQueries();
-
-    $user = User::query()->create(['email' => 'john@example.com']);
-    $user->update(['email' => 'joan@example.com']);
-    $user = User::query()->find($user->id);
-    $user->delete();
-
-    expect($this->client->sentPayloads())->toHaveCount(1);
-
-    $payload = $this->client->sentPayloads();
-
-    $this->assertStringStartsWith('update', Arr::get($payload, '0.content.sql'));
-});
-
 it('can show only update queries and return the results', function () {
     $user = ray()->showUpdateQueries(function (): User {
         $user = User::query()->create(['email' => 'john@example.com']);
@@ -145,8 +130,8 @@ it('can stop showing update queries', function () {
     expect($this->client->sentRequests())->toHaveCount(1);
 });
 
-it('can show only delete queries', function () {
-    ray()->showDeleteQueries();
+it('can show only type queries', function (Closure $showMethod, string $sqlCommand) {
+    $showMethod();
 
     $user = User::query()->create(['email' => 'john@example.com']);
     $user->update(['email' => 'joan@example.com']);
@@ -157,35 +142,10 @@ it('can show only delete queries', function () {
 
     $payload = $this->client->sentPayloads();
 
-    $this->assertStringStartsWith('delete', Arr::get($payload, '0.content.sql'));
-});
-
-it('can show only insert queries', function () {
-    ray()->showInsertQueries();
-
-    $user = User::query()->create(['email' => 'john@example.com']);
-    $user->update(['email' => 'joan@example.com']);
-    $user = User::query()->find($user->id);
-    $user->delete();
-
-    expect($this->client->sentPayloads())->toHaveCount(1);
-
-    $payload = $this->client->sentPayloads();
-
-    $this->assertStringStartsWith('insert', Arr::get($payload, '0.content.sql'));
-});
-
-it('can show only select queries', function () {
-    ray()->showSelectQueries();
-
-    $user = User::query()->create(['email' => 'john@example.com']);
-    $user->update(['email' => 'joan@example.com']);
-    $user = User::query()->find($user->id);
-    $user->delete();
-
-    expect($this->client->sentPayloads())->toHaveCount(1);
-
-    $payload = $this->client->sentPayloads();
-
-    $this->assertStringStartsWith('select', Arr::get($payload, '0.content.sql'));
-});
+    $this->assertStringStartsWith($sqlCommand, Arr::get($payload, '0.content.sql'));
+})->with([
+    'update' => [function () {ray()->showUpdateQueries();}, 'update'],
+    'delete' => [function () {ray()->showDeleteQueries();}, 'delete'],
+    'insert' => [function () {ray()->showInsertQueries();}, 'insert'],
+    'select' => [function () {ray()->showSelectQueries();}, 'select'],
+]);
