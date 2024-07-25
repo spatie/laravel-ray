@@ -26,6 +26,7 @@ use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
+use Spatie\LaravelRay\Watchers\ConditionalQueryWatcher;
 use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
@@ -431,6 +432,37 @@ class Ray extends BaseRay
         app(DuplicateQueryWatcher::class)->disable();
 
         return $this;
+    }
+
+    public function showConditionalQueries(Closure $condition, $callable = null, $name = 'default')
+    {
+        $watcher = app()->instance(ConditionalQueryWatcher::class.':'.$name, new ConditionalQueryWatcher($condition));
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingConditionalQueries($name = 'default'): self
+    {
+        app(ConditionalQueryWatcher::class.':'.$name)->disable();
+
+        return $this;
+    }
+
+    public function showUpdateQueries($callable = null)
+    {
+        return $this
+            ->showConditionalQueries(
+                function (string $query) {
+                    return str_starts_with(strtolower($query), 'update');
+                },
+                $callable,
+                'send_update_queries_to_ray',
+            );
+    }
+
+    public function stopShowingUpdateQueries(): self
+    {
+        return $this->stopShowingConditionalQueries('send_update_queries_to_ray');
     }
 
     /**
