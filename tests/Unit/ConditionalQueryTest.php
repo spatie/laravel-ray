@@ -21,8 +21,8 @@ it('can show only update queries and return the results', function () {
     $this->assertSame('joan@example.com', $user->email);
 });
 
-it('can show only type queries', function (Closure $rayShowMethod, Closure $rayStopMethod, string $sqlCommand) {
-    $rayShowMethod();
+it('can show only type queries', function (string $rayShowMethod, string $rayStopMethod, string $sqlCommand) {
+    ray()->$rayShowMethod();
 
     // Run all query types
     $user = User::query()->firstOrCreate(['email' => 'john@example.com']);
@@ -33,9 +33,9 @@ it('can show only type queries', function (Closure $rayShowMethod, Closure $rayS
 
     // Assert the one we want is picked up.
     $payload = $this->client->sentPayloads();
-    $this->assertStringStartsWith($sqlCommand, Arr::get($payload, '0.content.sql'));
+    $this->assertSqlContains(Arr::get($payload, '0.content'), $sqlCommand);
 
-    $rayStopMethod();
+    ray()->$rayStopMethod();
 
     // Assert that watcher has stopped.
     $user = User::query()->firstOrCreate(['email' => 'sam@example.com']);
@@ -44,15 +44,15 @@ it('can show only type queries', function (Closure $rayShowMethod, Closure $rayS
 
     expect($this->client->sentPayloads())->toHaveCount(1);
 })->with([
-    'update' => [function () {ray()->showUpdateQueries();}, function () {ray()->stopShowingUpdateQueries();}, 'update'],
-    'delete' => [function () {ray()->showDeleteQueries();}, function () {ray()->stopShowingDeleteQueries();}, 'delete'],
-    'insert' => [function () {ray()->showInsertQueries();}, function () {ray()->stopShowingInsertQueries();}, 'insert'],
-    'select' => [function () {ray()->showSelectQueries();}, function () {ray()->stopShowingSelectQueries();}, 'select'],
+    'update' => ['showUpdateQueries', 'stopShowingUpdateQueries', 'update'],
+    'delete' => ['showDeleteQueries', 'stopShowingDeleteQueries', 'delete'],
+    'insert' => ['showInsertQueries', 'stopShowingInsertQueries', 'insert'],
+    'select' => ['showSelectQueries', 'stopShowingSelectQueries', 'select'],
 ]);
 
 it('can take a custom condition and only return those queries', function () {
     ray()->showConditionalQueries(function (QueryExecuted $query) {
-        return Str::contains($query->toRawSql(), 'joan');
+        return Arr::first($query->bindings, fn ($binding) => Str::contains($binding, 'joan'));
     });
 
     User::query()->create(['email' => 'joan@example.com']);
@@ -61,7 +61,7 @@ it('can take a custom condition and only return those queries', function () {
     expect($this->client->sentPayloads())->toHaveCount(1);
 
     $payload = $this->client->sentPayloads();
-    $this->assertStringContainsString('joan@example.com', Arr::get($payload, '0.content.sql'));
+    $this->assertSqlContains(Arr::get($payload, '0.content'), 'joan@example.com');
 
     ray()->stopShowingConditionalQueries();
 
@@ -73,12 +73,12 @@ it('can take a custom condition and only return those queries', function () {
 it('can handle multiple conditional query watchers', function () {
     $john = ray()->showConditionalQueries(
         function (QueryExecuted $query) {
-            return Str::contains($query->toRawSql(), 'joan');
+            return Arr::first($query->bindings, fn ($binding) => Str::contains($binding, 'joan'));
         },
         function (): User {
             ray()->showConditionalQueries(
                 function (QueryExecuted $query) {
-                    return Str::contains($query->toRawSql(), 'john');
+                    return Arr::first($query->bindings, fn ($binding) => Str::contains($binding, 'john'));
                 },
                 null,
                 'look for john'
@@ -101,11 +101,11 @@ it('can handle multiple conditional query watchers', function () {
     $payload = $this->client->sentPayloads();
 
     // Assert that ray received the correct order
-    $this->assertStringContainsString('joan@example.com', Arr::get($payload, '0.content.sql'));
-    $this->assertStringContainsString('john@example.com', Arr::get($payload, '1.content.sql'));
+    $this->assertSqlContains(Arr::get($payload, '0.content'), 'joan@example.com');
+    $this->assertSqlContains(Arr::get($payload, '1.content'), 'john@example.com');
 
     // Looking for joan has been disabled so this should not be sent
-    $joan = User::query()->where('email', 'joan@example.com')->sole();
+    $joan = User::query()->where('email', 'joan@example.com')->first();
     expect($this->client->sentPayloads())->toHaveCount(2);
 
     // Looking for john is still enabled so this should be sent
@@ -134,5 +134,5 @@ it('can start watching from config only', function () {
     expect($this->client->sentPayloads())->toHaveCount(1);
 
     $payload = $this->client->sentPayloads();
-    $this->assertStringStartsWith('select', Arr::get($payload, '0.content.sql'));
+    $this->assertSqlContains(Arr::get($payload, '0.content'), 'select');
 });

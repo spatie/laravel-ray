@@ -15,7 +15,7 @@ class DeleteQueryWatcher extends ConditionalQueryWatcher
         $this->enabled = $settings->send_delete_queries_to_ray ?? false;
 
         $this->setConditionalCallback(function (QueryExecuted $query) {
-            return Str::startsWith(strtolower($query->toRawSql()), 'delete');
+            return Str::startsWith(strtolower($query->sql), 'delete');
         });
     }
 }

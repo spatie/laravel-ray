@@ -15,7 +15,7 @@ class InsertQueryWatcher extends ConditionalQueryWatcher
         $this->enabled = $settings->send_insert_queries_to_ray ?? false;
 
         $this->setConditionalCallback(function (QueryExecuted $query) {
-            return Str::startsWith(strtolower($query->toRawSql()), 'insert');
+            return Str::startsWith(strtolower($query->sql), 'insert');
         });
     }
 }
