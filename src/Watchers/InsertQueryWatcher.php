@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay\Watchers;
 
+use Illuminate\Database\Events\QueryExecuted;
 use Spatie\Ray\Settings\Settings;
 
 class InsertQueryWatcher extends ConditionalQueryWatcher
@@ -12,8 +13,8 @@ class InsertQueryWatcher extends ConditionalQueryWatcher
 
         $this->enabled = $settings->send_insert_queries_to_ray ?? false;
 
-        $this->setConditionalCallback(function (string $query) {
-            return str_starts_with(strtolower($query), 'insert');
+        $this->setConditionalCallback(function (QueryExecuted $query) {
+            return str_starts_with(strtolower($query->toRawSql()), 'insert');
         });
     }
 }

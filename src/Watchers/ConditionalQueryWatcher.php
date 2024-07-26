@@ -51,7 +51,7 @@ class ConditionalQueryWatcher extends QueryWatcher
 
             $ray = app(Ray::class);
 
-            if (($this->conditionalCallback)($query->toRawSql())) {
+            if (($this->conditionalCallback)($query)) {
                 $payload = new ExecutedQueryPayload($query);
 
                 $ray->sendRequest($payload);
