@@ -73,7 +73,7 @@ it('can handle multiple conditional query watchers', function () {
         function (string $query) {
             return str_contains($query, 'joan');
         },
-        function(): User {
+        function (): User {
             ray()->showConditionalQueries(
                 function (string $query) {
                     return str_contains($query, 'john');
