@@ -56,17 +56,17 @@ return [
     'send_update_queries_to_ray' => env('SEND_UPDATE_QUERIES_TO_RAY', false),
 
     /*
-     * When enabled, all update queries will automatically be sent to Ray.
+     * When enabled, all insert queries will automatically be sent to Ray.
      */
     'send_insert_queries_to_ray' => env('SEND_INSERT_QUERIES_TO_RAY', false),
 
     /*
-     * When enabled, all update queries will automatically be sent to Ray.
+     * When enabled, all delete queries will automatically be sent to Ray.
      */
     'send_delete_queries_to_ray' => env('SEND_DELETE_QUERIES_TO_RAY', false),
 
     /*
-     * When enabled, all update queries will automatically be sent to Ray.
+     * When enabled, all select queries will automatically be sent to Ray.
      */
     'send_select_queries_to_ray' => env('SEND_SELECT_QUERIES_TO_RAY', false),
 
