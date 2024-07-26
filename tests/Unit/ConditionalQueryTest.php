@@ -64,3 +64,52 @@ it('can take a custom condition and only return those queries', function () {
 
     expect($this->client->sentPayloads())->toHaveCount(1);
 });
+
+it('can handle multiple conditional query watchers', function () {
+    $john = ray()->showConditionalQueries(
+        function (string $query) {
+            return str_contains($query, 'joan');
+        },
+        function(): User {
+            ray()->showConditionalQueries(
+                function (string $query) {
+                    return str_contains($query, 'john');
+                },
+                null,
+                'look for john'
+            );
+
+            User::query()->create(['email' => 'joan@example.com']);
+            User::query()->create(['email' => 'joe@example.com']);
+
+            return User::query()->create(['email' => 'john@example.com']);
+        },
+        'look for joan'
+    );
+
+    // Assert that john was handed back
+    $this->assertSame('john@example.com', $john->email);
+
+    // Assert that ray only received what we wanted
+    expect($this->client->sentPayloads())->toHaveCount(2);
+
+    $payload = $this->client->sentPayloads();
+
+    // Assert that ray received the correct order
+    $this->assertStringContainsString('joan@example.com', Arr::get($payload, '0.content.sql'));
+    $this->assertStringContainsString('john@example.com', Arr::get($payload, '1.content.sql'));
+
+    // Looking for joan has been disabled so this should not be sent
+    $joan = User::query()->where('email', 'joan@example.com')->sole();
+    expect($this->client->sentPayloads())->toHaveCount(2);
+
+    // Looking for john is still enabled so this should be sent
+    $john->update(['email' => 'john@adifferentdomain.com']);
+    expect($this->client->sentPayloads())->toHaveCount(3);
+
+    ray()->stopShowingConditionalQueries('look for john');
+
+    // Looking for john has been disabled so this should not be sent
+    $joan->update(['email' => 'iamjohnnow@example.com']);
+    expect($this->client->sentPayloads())->toHaveCount(3);
+});
