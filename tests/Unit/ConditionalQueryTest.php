@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Arr;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 use Spatie\LaravelRay\Watchers\SelectQueryWatcher;
@@ -49,8 +50,8 @@ it('can show only type queries', function (Closure $rayShowMethod, Closure $rayS
 ]);
 
 it('can take a custom condition and only return those queries', function () {
-    ray()->showConditionalQueries(function (string $query) {
-        return str_contains($query, 'joan');
+    ray()->showConditionalQueries(function (QueryExecuted $query) {
+        return str_contains($query->toRawSql(), 'joan');
     });
 
     User::query()->create(['email' => 'joan@example.com']);
@@ -70,13 +71,13 @@ it('can take a custom condition and only return those queries', function () {
 
 it('can handle multiple conditional query watchers', function () {
     $john = ray()->showConditionalQueries(
-        function (string $query) {
-            return str_contains($query, 'joan');
+        function (QueryExecuted $query) {
+            return str_contains($query->toRawSql(), 'joan');
         },
         function (): User {
             ray()->showConditionalQueries(
-                function (string $query) {
-                    return str_contains($query, 'john');
+                function (QueryExecuted $query) {
+                    return str_contains($query->toRawSql(), 'john');
                 },
                 null,
                 'look for john'
