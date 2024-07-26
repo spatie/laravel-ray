@@ -2,6 +2,7 @@
 
 namespace Spatie\LaravelRay\Watchers;
 
+use BadMethodCallException;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Event;
 use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
@@ -16,6 +17,11 @@ class ConditionalQueryWatcher extends QueryWatcher
         $this->conditionalCallback = $conditionalCallback;
 
         $this->listen();
+    }
+
+    public function register(): void
+    {
+        throw new BadMethodCallException('ConditionalQueryWatcher cannot be registered. Only its child classes.');
     }
 
     public function listen(): void
