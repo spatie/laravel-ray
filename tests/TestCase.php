@@ -2,9 +2,13 @@
 
 namespace Spatie\LaravelRay\Tests;
 
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelRay\Ray;
 use Spatie\LaravelRay\RayServiceProvider;
@@ -69,5 +73,14 @@ class TestCase extends Orchestra
 
             return Ray::create($this->client);
         });
+    }
+
+    protected function assertSqlContains($queryContent, $needle): void
+    {
+        $sql = method_exists(Builder::class, 'toRawSql')
+            ? $queryContent['sql']
+            : Str::replaceArray('?', $queryContent['bindings'], $queryContent['sql']);
+
+        $this->assertStringContainsString($needle, $sql);
     }
 }
