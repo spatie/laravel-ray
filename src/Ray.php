@@ -440,14 +440,14 @@ class Ray extends BaseRay
 
     public function showConditionalQueries(Closure $condition, $callable = null, $name = 'default')
     {
-        $watcher = app()->instance(ConditionalQueryWatcher::class.':'.$name, new ConditionalQueryWatcher($condition));
+        $watcher = ConditionalQueryWatcher::buildWatcherForName($condition, $name);
 
         return $this->handleWatcherCallable($watcher, $callable);
     }
 
     public function stopShowingConditionalQueries($name = 'default'): self
     {
-        app(ConditionalQueryWatcher::class.':'.$name)->disable();
+        app(ConditionalQueryWatcher::abstractName($name))->disable();
 
         return $this;
     }
