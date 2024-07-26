@@ -15,7 +15,7 @@ class SelectQueryWatcher extends ConditionalQueryWatcher
         $this->enabled = $settings->send_select_queries_to_ray ?? false;
 
         $this->setConditionalCallback(function (QueryExecuted $query) {
-            return Str::startsWith(strtolower($query->toRawSql()), 'select');
+            return Str::startsWith(strtolower($query->sql), 'select');
         });
     }
 }
