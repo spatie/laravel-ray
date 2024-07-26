@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay\Watchers;
 
 use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Support\Str;
 use Spatie\Ray\Settings\Settings;
 
 class UpdateQueryWatcher extends ConditionalQueryWatcher
@@ -14,7 +15,7 @@ class UpdateQueryWatcher extends ConditionalQueryWatcher
         $this->enabled = $settings->send_update_queries_to_ray ?? false;
 
         $this->setConditionalCallback(function (QueryExecuted $query) {
-            return str_starts_with(strtolower($query->toRawSql()), 'update');
+            return Str::startsWith(strtolower($query->toRawSql()), 'update');
         });
     }
 }
