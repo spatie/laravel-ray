@@ -11,7 +11,7 @@ class ConditionalQueryWatcher extends QueryWatcher
 {
     protected $conditionalCallback;
 
-    public function __construct($conditionalCallback)
+    public function setConditionalCallback($conditionalCallback)
     {
         $this->conditionalCallback = $conditionalCallback;
 
