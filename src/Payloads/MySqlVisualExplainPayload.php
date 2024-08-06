@@ -10,7 +10,7 @@ class MySqlVisualExplainPayload extends Payload
 
     public function __construct(string $url)
     {
-        $this->url = $url;
+        $this->url = str_replace('https://mysqlexplain.com/', 'https://embed.mysqlexplain.com/', $url);
 
     }
 
