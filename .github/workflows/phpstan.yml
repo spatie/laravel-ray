@@ -7,15 +7,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.12.0
+        uses: shivammathur/setup-php@2.31.1
         with:
-          php-version: '8.0'
+          php-version: 8.3
 
       - name: Install composer dependencies
-        uses: ramsey/composer-install@v1
+        uses: ramsey/composer-install@v3
 
       - name: Run PHPStan
         run: vendor/bin/phpstan --error-format=github

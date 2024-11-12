@@ -2,7 +2,7 @@
 
 return [
     /*
-    * This settings controls whether data should be sent to Ray.
+    * This setting controls whether data should be sent to Ray.
     *
     * By default, `ray()` will only transmit data in non-production environments.
     */
@@ -41,6 +41,16 @@ return [
     'send_duplicate_queries_to_ray' => env('SEND_DUPLICATE_QUERIES_TO_RAY', false),
 
     /*
+     * When enabled, slow queries will automatically be sent to Ray.
+     */
+    'send_slow_queries_to_ray' => env('SEND_SLOW_QUERIES_TO_RAY', false),
+
+    /**
+     * Queries that are longer than this number of milliseconds will be regarded as slow.
+     */
+    'slow_query_threshold_in_ms' => env('RAY_SLOW_QUERY_THRESHOLD_IN_MS', 500),
+
+    /*
     * When enabled, all requests made to this app will automatically be sent to Ray.
     */
     'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
@@ -61,8 +71,14 @@ return [
     'send_exceptions_to_ray' => env('SEND_EXCEPTIONS_TO_RAY', true),
 
     /*
+     * When enabled, all deprecation notices will be automatically sent to Ray.
+     */
+    'send_deprecated_notices_to_ray' => env('SEND_DEPRECATED_NOTICES_TO_RAY', false),
+
+    /*
     * The host used to communicate with the Ray app.
     * When using Docker on Mac or Windows, you can replace localhost with 'host.docker.internal'
+    * When using Docker on Linux, you can replace localhost with '172.17.0.1'
     * When using Homestead with the VirtualBox provider, you can replace localhost with '10.0.2.2'
     * When using Homestead with the Parallels provider, you can replace localhost with '10.211.55.2'
     */

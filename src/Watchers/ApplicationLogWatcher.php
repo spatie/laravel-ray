@@ -21,7 +21,11 @@ class ApplicationLogWatcher extends Watcher
                 return;
             }
 
-            $payload = new ApplicationLogPayload($message->message);
+            if (! class_exists('Spatie\Ray\Payloads\ApplicationLogPayload')) {
+                return;
+            }
+
+            $payload = new ApplicationLogPayload($message->message, $message->context);
 
             /** @var Ray $ray */
             $ray = app(Ray::class);
@@ -44,7 +48,7 @@ class ApplicationLogWatcher extends Watcher
         });
     }
 
-    protected function shouldLogMessage(MessageLogged  $message): bool
+    protected function shouldLogMessage(MessageLogged $message): bool
     {
         if (! $this->enabled()) {
             return false;
@@ -66,6 +70,10 @@ class ApplicationLogWatcher extends Watcher
         }
 
         if ((new LoggedMailWatcher())->concernsLoggedMail($message)) {
+            return false;
+        }
+
+        if ((new DeprecatedNoticeWatcher())->concernsDeprecatedNotice($message)) {
             return false;
         }
 

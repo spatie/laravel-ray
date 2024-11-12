@@ -1,36 +1,18 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
-
 use Illuminate\Support\Facades\Log;
-use Spatie\LaravelRay\Tests\TestCase;
 use Spatie\Ray\Settings\Settings;
 
-class LogTest extends TestCase
-{
-    /** @test */
-    public function it_will_send_logs_to_ray_by_default()
-    {
-        Log::info('hey');
+it('will send logs to ray by default', function () {
+    Log::info('hey');
 
-        $this->assertCount(1, $this->client->sentRequests());
-    }
+    expect($this->client->sentRequests())->toHaveCount(1);
+});
 
-    /** @test */
-    public function it_will_not_send_logs_to_ray_when_disabled()
-    {
-        app(Settings::class)->send_log_calls_to_ray = false;
+it('will not send logs to ray when disabled', function () {
+    app(Settings::class)->send_log_calls_to_ray = false;
 
-        Log::info('hey');
+    Log::info('hey');
 
-        $this->assertCount(0, $this->client->sentRequests());
-    }
-
-    /** @test */
-    public function it_will_not_send_logs_to_ray_when_log_is_null()
-    {
-        Log::info(null);
-
-        $this->assertCount(0, $this->client->sentRequests());
-    }
-}
+    expect($this->client->sentRequests())->toHaveCount(0);
+});

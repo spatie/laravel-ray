@@ -10,11 +10,13 @@ use Illuminate\Database\QueryException;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\MailManager;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Testing\Fakes\MailFake;
 use Illuminate\Testing\TestResponse;
 use Illuminate\View\View;
+use ReflectionFunction;
 use Spatie\LaravelRay\Payloads\EnvironmentPayload;
 use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
@@ -31,6 +33,7 @@ use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
+use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
@@ -41,7 +44,7 @@ use Throwable;
 
 class Ray extends BaseRay
 {
-    public function __construct(Settings $settings, Client $client = null, string $uuid = null)
+    public function __construct(Settings $settings, ?Client $client = null, ?string $uuid = null)
     {
         // persist the enabled setting across multiple instantiations
         $enabled = static::$enabled;
@@ -79,6 +82,58 @@ class Ray extends BaseRay
         }, $mailables);
 
         $this->sendRequest($payloads);
+
+        return $this;
+    }
+
+    /**
+     * @param array|string ...$keys
+     *
+     * @return $this
+     */
+    public function context(...$keys): self
+    {
+        if (! class_exists(Context::class)) {
+            return $this;
+        }
+
+        if (isset($keys[0]) && is_array($keys[0])) {
+            $keys = $keys[0];
+        }
+
+        $context = count($keys)
+            ? Context::only($keys)
+            : Context::all();
+
+        $this
+            ->send($context)
+            ->label('Context');
+
+        return $this;
+    }
+
+    /**
+     * @param array|string ...$keys
+     *
+     * @return $this
+     */
+    public function hiddenContext(...$keys): self
+    {
+        if (! class_exists(Context::class)) {
+            return $this;
+        }
+
+        if (isset($keys[0]) && is_array($keys[0])) {
+            $keys = $keys[0];
+        }
+
+        $hiddenContext = count($keys)
+            ? Context::onlyHidden($keys)
+            : Context::allHidden();
+
+        $this
+            ->send($hiddenContext)
+            ->label('Hidden Context');
 
         return $this;
     }
@@ -150,7 +205,7 @@ class Ray extends BaseRay
      */
     public function env(?array $onlyShowNames = null, ?string $filename = null): self
     {
-        $filename = $filename ?? app()->environmentFilePath();
+        $filename ??= app()->environmentFilePath();
 
         $payload = new EnvironmentPayload($onlyShowNames, $filename);
 
@@ -303,7 +358,7 @@ class Ray extends BaseRay
             $watcher->doNotSendIndividualQueries();
         }
 
-        $this->handleWatcherCallable($watcher, $callable);
+        $output = $this->handleWatcherCallable($watcher, $callable);
 
         $executedQueryStatistics = collect($watcher->getExecutedQueries())
 
@@ -323,6 +378,8 @@ class Ray extends BaseRay
             ->sendIndividualQueries();
 
         $this->table($executedQueryStatistics, 'Queries');
+
+        return $output;
     }
 
     public function queries($callable = null)
@@ -333,6 +390,26 @@ class Ray extends BaseRay
     public function stopShowingQueries(): self
     {
         app(QueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function slowQueries($milliseconds = 500, $callable = null)
+    {
+        return $this->showSlowQueries($milliseconds, $callable);
+    }
+
+    public function showSlowQueries($milliseconds = 500, $callable = null)
+    {
+        $watcher = app(SlowQueryWatcher::class)
+            ->setMinimumTimeInMilliseconds($milliseconds);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingSlowQueries(): self
+    {
+        app(SlowQueryWatcher::class)->disable();
 
         return $this;
     }
@@ -410,7 +487,7 @@ class Ray extends BaseRay
         return $this;
     }
 
-    protected function handleWatcherCallable(Watcher $watcher, Closure $callable = null): RayProxy
+    protected function handleWatcherCallable(Watcher $watcher, ?Closure $callable = null)
     {
         $rayProxy = new RayProxy();
 
@@ -423,10 +500,14 @@ class Ray extends BaseRay
         }
 
         if ($callable) {
-            $callable();
+            $output = $callable();
 
             if (! $wasEnabled) {
                 $watcher->disable();
+            }
+
+            if ((new ReflectionFunction($callable))->hasReturnType()) {
+                return $output;
             }
         }
 

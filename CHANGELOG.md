@@ -2,6 +2,344 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.37.1 - 2024-07-15
+
+### What's Changed
+
+* Add the xray directive to show all available variables in a Blade view.
+* Bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/356
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.37.0...1.37.1
+
+## 1.37.0 - 2024-07-03
+
+### What's Changed
+
+* Add 'measure' directive to RayServiceProvider by @iurigustavo in https://github.com/spatie/laravel-ray/pull/355
+
+### New Contributors
+
+* @iurigustavo made their first contribution in https://github.com/spatie/laravel-ray/pull/355
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.3...1.37.0
+
+## 1.36.3 - 2024-07-02
+
+### What's Changed
+
+* Bump shivammathur/setup-php from 2.30.4 to 2.30.5 by @dependabot in https://github.com/spatie/laravel-ray/pull/350
+* Bump shivammathur/setup-php from 2.30.5 to 2.31.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/353
+* Allow zbateson/mail-mime-parser ^3.0 by @JamesFreeman in https://github.com/spatie/laravel-ray/pull/354
+
+### New Contributors
+
+* @JamesFreeman made their first contribution in https://github.com/spatie/laravel-ray/pull/354
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.2...1.36.3
+
+## 1.36.2 - 2024-05-02
+
+### What's Changed
+
+- fix signed URLs in logged mailables
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.1...1.36.2
+
+## 1.36.1 - 2024-04-12
+
+### What's Changed
+
+* Bump shivammathur/setup-php from 2.30.1 to 2.30.2 by @dependabot in https://github.com/spatie/laravel-ray/pull/338
+* Make implicit nullable param to explicit (PHP 8.4 compatibility) by @GromNaN in https://github.com/spatie/laravel-ray/pull/340
+* Update branch alias for version 1.x by @GromNaN in https://github.com/spatie/laravel-ray/pull/341
+
+### New Contributors
+
+* @GromNaN made their first contribution in https://github.com/spatie/laravel-ray/pull/340
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.36.0...1.36.1
+
+## 1.36.0 - 2024-03-29
+
+### What's Changed
+
+* Bump shivammathur/setup-php from 2.29.0 to 2.30.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/334
+* Bump shivammathur/setup-php from 2.30.0 to 2.30.1 by @dependabot in https://github.com/spatie/laravel-ray/pull/335
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.0.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/336
+* Bump ramsey/composer-install from 2 to 3 by @dependabot in https://github.com/spatie/laravel-ray/pull/333
+* Support context by @freekmurze in https://github.com/spatie/laravel-ray/pull/337
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.35.1...1.36.0
+
+## 1.35.1 - 2024-02-13
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.35.0...1.35.1
+
+## 1.35.0 - 2024-02-03
+
+### What's Changed
+
+* Supports Laravel 11 by @crynobone in https://github.com/spatie/laravel-ray/pull/329
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.34.0...1.35.0
+
+## 1.34.0 - 2024-01-25
+
+### What's Changed
+
+* Adds an artisan command to remove ray calls from your codebase.
+* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/spatie/laravel-ray/pull/321
+* Bump shivammathur/setup-php from 2.28.0 to 2.29.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/330
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.33.1...1.34.0
+
+## 1.33.1 - 2024-01-04
+
+- Allow symphony stopwatch 7
+
+## 1.33.0 - 2023-09-04
+
+### What's Changed
+
+- Bump shivammathur/setup-php from 2.25.4 to 2.25.5 by @dependabot in https://github.com/spatie/laravel-ray/pull/309
+- Add ability to return the results of callable by @grantholle in https://github.com/spatie/laravel-ray/pull/314
+
+### New Contributors
+
+- @grantholle made their first contribution in https://github.com/spatie/laravel-ray/pull/314
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.6...1.33.0
+
+## 1.32.6 - 2023-07-19
+
+### What's Changed
+
+- Bump dependabot/fetch-metadata from 1.5.1 to 1.6.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/305
+- feat: support raw sql by @innocenzi in https://github.com/spatie/laravel-ray/pull/306
+
+### New Contributors
+
+- @innocenzi made their first contribution in https://github.com/spatie/laravel-ray/pull/306
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.5...1.32.6
+
+## 1.32.5 - 2023-06-23
+
+- fix displaying Mailables
+
+## 1.32.4 - 2023-03-23
+
+### What's Changed
+
+- Avoid making DB connection unless necessary by @crynobone in https://github.com/spatie/laravel-ray/pull/295
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.3...1.32.4
+
+## 1.32.3 - 2023-03-03
+
+- display correct origin when using `invade`
+
+## 1.32.2 - 2023-02-06
+
+### What's Changed
+
+- Bump shivammathur/setup-php from 2.23.0 to 2.24.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/291
+- Bump dependabot/fetch-metadata from 1.3.5 to 1.3.6 by @dependabot in https://github.com/spatie/laravel-ray/pull/292
+- Add context to ApplicationLogPayload by @bilfeldt in https://github.com/spatie/laravel-ray/pull/293
+
+### New Contributors
+
+- @bilfeldt made their first contribution in https://github.com/spatie/laravel-ray/pull/293
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.1...1.32.2
+
+## 1.32.1 - 2023-01-26
+
+### What's Changed
+
+- Make DB connection optional by @lentex in https://github.com/spatie/laravel-ray/pull/290
+
+### New Contributors
+
+- @lentex made their first contribution in https://github.com/spatie/laravel-ray/pull/290
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.32.0...1.32.1
+
+## 1.32.0 - 2023-01-11
+
+- add support for Laravel 10
+
+## 1.31.0 - 2022-09-20
+
+### What's Changed
+
+- Added in comment to docblock for linux docker users by @jaetoole in https://github.com/spatie/laravel-ray/pull/271
+- @ray blade directive completion for Laravel Idea(PhpStorm) by @adelf in https://github.com/spatie/laravel-ray/pull/273
+
+### New Contributors
+
+- @jaetoole made their first contribution in https://github.com/spatie/laravel-ray/pull/271
+- @adelf made their first contribution in https://github.com/spatie/laravel-ray/pull/273
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.30.0...1.31.0
+
+## 1.30.0 - 2022-07-29
+
+### What's Changed
+
+- Add `send_deprecated_notices_to_ray` to config stub by @squatto in https://github.com/spatie/laravel-ray/pull/267
+- Feat: Slow query configuration by @fullstackfool in https://github.com/spatie/laravel-ray/pull/269
+
+### New Contributors
+
+- @fullstackfool made their first contribution in https://github.com/spatie/laravel-ray/pull/269
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.7...1.30.0
+
+## 1.29.7 - 2022-05-27
+
+## What's Changed
+
+- Fixes https://github.com/spatie/laravel-ray/issues/250 by @dfox288 in https://github.com/spatie/laravel-ray/pull/251
+
+## New Contributors
+
+- @dfox288 made their first contribution in https://github.com/spatie/laravel-ray/pull/251
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.6...1.29.7
+
+## 1.29.6 - 2022-04-15
+
+## What's Changed
+
+- ignore php 8.1 deprecation notices by @Nielsvanpach in https://github.com/spatie/laravel-ray/pull/247
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.5...1.29.6
+
+## 1.29.5 - 2022-04-05
+
+## What's Changed
+
+- Fix undefined payload when using queue driver other than sync by @stein-j in https://github.com/spatie/laravel-ray/pull/245
+
+## New Contributors
+
+- @stein-j made their first contribution in https://github.com/spatie/laravel-ray/pull/245
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.4...1.29.5
+
+## 1.29.4 - 2022-02-22
+
+## What's Changed
+
+- check if ApplicationLogPayload can be loaded by @ThomasEnssner in https://github.com/spatie/laravel-ray/pull/242
+
+## New Contributors
+
+- @ThomasEnssner made their first contribution in https://github.com/spatie/laravel-ray/pull/242
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.3...1.29.4
+
+## 1.29.3 - 2022-02-15
+
+- correctly display mailables that are written to the log in Laravel 9
+
+## 1.29.2 - 2022-02-13
+
+## What's Changed
+
+- Fix deprecated by @TiiFuchs in https://github.com/spatie/laravel-ray/pull/240
+
+## New Contributors
+
+- @TiiFuchs made their first contribution in https://github.com/spatie/laravel-ray/pull/240
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.29.1...1.29.2
+
+## 1.29.1 - 2022-02-09
+
+- moved dependency
+
+## 1.29.0 - 2022-01-13
+
+- automatically set project name
+
+## 1.28.0 - 2022-01-11
+
+1.28.0
+
+- allow Laravel 9
+
+## 1.28.0 - 2022-01-11
+
+- allow Laravel 9
+
+## 1.27.2 - 2021-12-27
+
+- Fix: make sure there is always a `VarDumper` handler registered to output to HTML or CLI
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.27.1...1.27.2
+
+## 1.27.1 - 2021-12-27
+
+## What's Changed
+
+- Register `DumpRecorder` only once and keep original handler connected by @AlexVanderbist in https://github.com/spatie/laravel-ray/pull/233
+
+## New Contributors
+
+- @AlexVanderbist made their first contribution in https://github.com/spatie/laravel-ray/pull/233
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.27.0...1.27.1
+
+## 1.27.0 - 2021-12-26
+
+## What's Changed
+
+- Slow Query Logging by @patinthehat in https://github.com/spatie/laravel-ray/pull/232
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.5...1.27.0
+
+## 1.26.5 - 2021-12-21
+
+## What's Changed
+
+- add support for Symfony 6 by @Nielsvanpach in https://github.com/spatie/laravel-ray/pull/231
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.4...1.26.5
+
+## 1.26.4 - 2021-12-10
+
+## What's Changed
+
+- Added DeprecatedNoticeWatcher that piggy backs off of the Application… by @JuanRangel in https://github.com/spatie/laravel-ray/pull/229
+
+## New Contributors
+
+- @JuanRangel made their first contribution in https://github.com/spatie/laravel-ray/pull/229
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.3...1.26.4
+
+## 1.26.3 - 2021-11-22
+
+## What's Changed
+
+- Fix typo in ray.php docblock by @iDiegoNL in https://github.com/spatie/laravel-ray/pull/227
+
+## New Contributors
+
+- @iDiegoNL made their first contribution in https://github.com/spatie/laravel-ray/pull/227
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.2...1.26.3
+
+## 1.26.2 - 2021-11-15
+
+## What's Changed
+
+- Check if Laravel has been bound with `Facade\FlareClient\Flare` by @crynobone in https://github.com/spatie/laravel-ray/pull/224
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.26.1...1.26.2
+
 ## 1.26.1 - 2021-10-01
 
 - fix #217 error with duplicate queries log (#220)
@@ -48,7 +386,7 @@ All notable changes to `laravel-ray` will be documented in this file
 
 ## 1.20.2 - 2021-06-21
 
-- fix `mailable` when using `Mail::fake` 
+- fix `mailable` when using `Mail::fake`
 
 ## 1.20.1 - 2021-06-15
 
@@ -81,7 +419,7 @@ All notable changes to `laravel-ray` will be documented in this file
 ## 1.17.2 - 2021-04-06
 
 - Laravel Octane Compatibility (#178)
- 
+
 ## 1.17.1 - 2021-03-14
 
 - send exceptions by default

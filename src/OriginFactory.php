@@ -20,6 +20,7 @@ use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Origin\Origin;
 use Spatie\Ray\Ray;
+use Spatie\Ray\Support\Invador;
 
 class OriginFactory
 {
@@ -116,6 +117,11 @@ class OriginFactory
             // ignore errors caused by using `storage_path`
         }
 
+        if ($originFrame->class === Invador::class);
+        {
+            return $frames[$indexOfRay + 2];
+        }
+
         return $originFrame;
     }
 
@@ -132,6 +138,9 @@ class OriginFactory
     protected function findFrameForQuery(Collection $frames): ?Frame
     {
         $indexOfLastDatabaseCall = $frames
+            ->filter(function (Frame $frame) {
+                return ! is_null($frame->class);
+            })
             ->search(function (Frame $frame) {
                 return Str::startsWith($frame->class, 'Illuminate\Database');
             });
@@ -142,6 +151,9 @@ class OriginFactory
     protected function findFrameForQueryBuilder(Collection $frames): ?Frame
     {
         $indexOfLastDatabaseCall = $frames
+            ->filter(function (Frame $frame) {
+                return ! is_null($frame->class);
+            })
             ->search(function (Frame $frame) {
                 return Str::startsWith($frame->class, 'Illuminate\Database');
             });

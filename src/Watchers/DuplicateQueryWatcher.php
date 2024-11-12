@@ -4,6 +4,7 @@ namespace Spatie\LaravelRay\Watchers;
 
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Spatie\LaravelRay\Payloads\ExecutedQueryPayload;
 use Spatie\LaravelRay\Ray;
@@ -20,7 +21,7 @@ class DuplicateQueryWatcher extends Watcher
 
         $this->enabled = $settings->send_duplicate_queries_to_ray;
 
-        DB::listen(function (QueryExecuted $query) {
+        Event::listen(QueryExecuted::class, function (QueryExecuted $query) {
             if (! $this->enabled()) {
                 return;
             }
@@ -56,7 +57,11 @@ class DuplicateQueryWatcher extends Watcher
 
     public function enable(): Watcher
     {
-        DB::enableQueryLog();
+        if (app()->bound('db')) {
+            collect(DB::getConnections())->each(function ($connection) {
+                $connection->enableQueryLog();
+            });
+        }
 
         parent::enable();
 

@@ -3,10 +3,12 @@
 namespace Spatie\LaravelRay\Watchers;
 
 use Exception;
-use Facade\FlareClient\Flare;
-use Facade\FlareClient\Truncation\ReportTrimmer;
+use Facade\FlareClient\Flare as FacadeFlare;
+use Facade\FlareClient\Truncation\ReportTrimmer as FacadeReportTrimmer;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
+use Spatie\FlareClient\Flare;
+use Spatie\FlareClient\Truncation\ReportTrimmer;
 use Spatie\LaravelRay\Ray;
 use Spatie\Ray\Settings\Settings;
 use Throwable;
@@ -58,15 +60,23 @@ class ExceptionWatcher extends Watcher
 
     public function getFlareReport(Throwable $exception): ?array
     {
-        if (! class_exists(Flare::class)) {
-            return null;
+        if (app()->bound(Flare::class)) {
+            $flare = app(Flare::class);
+
+            $report = $flare->createReport($exception);
+
+            return (new ReportTrimmer())->trim($report->toArray());
         }
 
-        /** @var \Facade\FlareClient\Flare $flare */
-        $flare = app(Flare::class);
+        if (app()->bound(FacadeFlare::class)) {
+            /** @var \Facade\FlareClient\Flare $flare */
+            $flare = app(FacadeFlare::class);
 
-        $report = $flare->createReport($exception);
+            $report = $flare->createReport($exception);
 
-        return (new ReportTrimmer())->trim($report->toArray());
+            return (new FacadeReportTrimmer())->trim($report->toArray());
+        }
+
+        return null;
     }
 }

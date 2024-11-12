@@ -1,26 +1,17 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
-
-use Exception;
 use Illuminate\Log\Events\MessageLogged;
-use Spatie\LaravelRay\Tests\TestCase;
 
-class ExceptionTest extends TestCase
-{
-    /** @test */
-    public function it_will_not_send_exceptions_to_ray_if_disabled()
-    {
-        ray()->stopShowingExceptions();
+it('will not send exceptions to ray if disabled', function () {
+    ray()->stopShowingExceptions();
 
-        $hasError = false;
+    $hasError = false;
 
-        try {
-            event(new MessageLogged('warning', 'test', ['exception' => new Exception('test')]));
-        } catch (Exception $e) {
-            $hasError = true;
-        }
-
-        $this->assertFalse($hasError);
+    try {
+        event(new MessageLogged('warning', 'test', ['exception' => new Exception('test')]));
+    } catch (Exception $e) {
+        $hasError = true;
     }
-}
+
+    expect($hasError)->toBeFalse();
+});

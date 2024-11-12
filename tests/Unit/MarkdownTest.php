@@ -1,16 +1,16 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
+use function Pest\version;
 
-use Spatie\LaravelRay\Tests\TestCase;
+it('can render and send markdown', function () {
+    ray()->markdown('## Hello World!');
 
-class MarkdownTest extends TestCase
-{
-    /** @test */
-    public function it_can_render_and_send_markdown()
-    {
-        ray()->markdown('## Hello World!');
+    assertMatchesOsSafeSnapshot($this->client->sentRequests());
+})->skip(version_compare(version(), '2.0.0', '>='));
 
-        $this->assertMatchesOsSafeSnapshot($this->client->sentRequests());
-    }
-}
+
+it('can render and send markdown for Pest 2', function () {
+    ray()->markdown('## Hello World!');
+
+    assertMatchesOsSafeSnapshot($this->client->sentRequests());
+})->skip(version_compare(version(), '2.0.0', '<'));

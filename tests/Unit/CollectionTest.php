@@ -1,20 +1,11 @@
 <?php
 
-namespace Spatie\LaravelRay\Tests\Unit;
+it('has a chainable collection macro to send things to ray', function () {
+    $array = ['a', 'b', 'c'];
 
-use Spatie\LaravelRay\Tests\TestCase;
+    $newArray = collect($array)->ray()->toArray();
 
-class CollectionTest extends TestCase
-{
-    /** @test */
-    public function it_has_a_chainable_collection_macro_to_send_things_to_ray()
-    {
-        $array = ['a', 'b', 'c'];
+    expect($array)->toEqual($newArray);
 
-        $newArray = collect($array)->ray()->toArray();
-
-        $this->assertEquals($newArray, $array);
-
-        $this->assertCount(1, $this->client->sentRequests());
-    }
-}
+    expect($this->client->sentRequests())->toHaveCount(1);
+});

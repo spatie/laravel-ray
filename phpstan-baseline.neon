@@ -11,26 +11,42 @@ parameters:
 			path: src/OriginFactory.php
 
 		-
-			message: "#^Call to static method info\\(\\) on an unknown class Log\\.$#"
-			count: 2
-			path: tests/RayTest.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\View\\:\\:addLocation\\(\\)\\.$#"
+			message: "#^Call to method createReport\\(\\) on an unknown class Facade\\\\FlareClient\\\\Flare\\.$#"
 			count: 1
-			path: tests/TestCase.php
+			path: src/Watchers/ExceptionWatcher.php
 
 		-
-			message: "#^Call to an undefined static method Spatie\\\\LaravelRay\\\\Tests\\\\TestClasses\\\\User\\:\\:make\\(\\)\\.$#"
-			count: 6
-			path: tests/Unit/ModelTest.php
-
-		-
-			message: "#^Call to an undefined static method Spatie\\\\LaravelRay\\\\Tests\\\\TestClasses\\\\User\\:\\:create\\(\\)\\.$#"
+			message: "#^Call to method trim\\(\\) on an unknown class Facade\\\\FlareClient\\\\Truncation\\\\ReportTrimmer\\.$#"
 			count: 1
-			path: tests/Unit/QueryTest.php
+			path: src/Watchers/ExceptionWatcher.php
 
 		-
-			message: "#^Call to an undefined static method Spatie\\\\LaravelRay\\\\Tests\\\\TestClasses\\\\User\\:\\:create\\(\\)\\.$#"
+			message: "#^Call to method trim\\(\\) on an unknown class Spatie\\\\FlareClient\\\\Truncation\\\\ReportTrimmer\\.$#"
+			count: 1
+			path: src/Watchers/ExceptionWatcher.php
+
+		-
+			message: "#^Class Facade\\\\FlareClient\\\\Flare not found\\.$#"
 			count: 2
-			path: tests/Unit/DuplicateQueryTest.php
+			path: src/Watchers/ExceptionWatcher.php
+
+		-
+			message: "#^Class Spatie\\\\FlareClient\\\\Flare not found\\.$#"
+			count: 2
+			path: src/Watchers/ExceptionWatcher.php
+
+		-
+			message: "#^Instantiated class Facade\\\\FlareClient\\\\Truncation\\\\ReportTrimmer not found\\.$#"
+			count: 1
+			path: src/Watchers/ExceptionWatcher.php
+
+		-
+			message: "#^Instantiated class Spatie\\\\FlareClient\\\\Truncation\\\\ReportTrimmer not found\\.$#"
+			count: 1
+			path: src/Watchers/ExceptionWatcher.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$flare contains unknown class Facade\\\\FlareClient\\\\Flare\\.$#"
+			count: 1
+			path: src/Watchers/ExceptionWatcher.php
+

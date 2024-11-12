@@ -1,0 +1,68 @@
+[
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "table",
+                "content": {
+                    "values": {
+                        "Event": "<code>Key written<\/code>",
+                        "Key": "cached-key",
+                        "Value": "cached-value",
+                        "Expiration in seconds": "10"
+                    },
+                    "label": "Cache"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 60,
+                    "hostname": "fake-hostname"
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "table",
+                "content": {
+                    "values": {
+                        "Event": "<code>Hit<\/code>",
+                        "Key": "cached-key",
+                        "Value": "cached-value"
+                    },
+                    "label": "Cache"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 62,
+                    "hostname": "fake-hostname"
+                }
+            }
+        ],
+        "meta": []
+    },
+    {
+        "uuid": "fakeUuid",
+        "payloads": [
+            {
+                "type": "table",
+                "content": {
+                    "values": {
+                        "Event": "<code>Key forgotten<\/code>",
+                        "Key": "cached-key"
+                    },
+                    "label": "Cache"
+                },
+                "origin": {
+                    "file": "\/tests\/Unit\/CacheTest.php",
+                    "line_number": 62,
+                    "hostname": "fake-hostname"
+                }
+            }
+        ],
+        "meta": []
+    }
+]

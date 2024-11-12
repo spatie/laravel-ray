@@ -22,6 +22,12 @@ class QueryPayload extends Payload
 
     public function getContent(): array
     {
+        if (method_exists($this->query, 'toRawSql')) {
+            return [
+                'sql' => $this->query->toRawSql(),
+            ];
+        }
+
         return [
             'sql' => $this->query->toSql(),
             'bindings' => $this->query->getBindings(),
