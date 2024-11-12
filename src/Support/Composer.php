@@ -10,6 +10,8 @@ class Composer extends \Illuminate\Support\Composer
     /**
      * Install the given Composer packages into the application.
      *
+     * Override this method for `illuminate/support` 10 and below.
+     *
      * @param  array<int, string>  $packages
      * @param  bool  $dev
      * @param  \Closure|\Symfony\Component\Console\Output\OutputInterface|null  $output
