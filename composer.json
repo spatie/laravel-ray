@@ -18,11 +18,11 @@
     "require": {
         "ext-json": "*",
         "php": "^7.4|^8.0",
+        "composer-runtime-api": "^2.2",
         "illuminate/contracts": "^7.20|^8.19|^9.0|^10.0|^11.0",
         "illuminate/database": "^7.20|^8.19|^9.0|^10.0|^11.0",
         "illuminate/queue": "^7.20|^8.19|^9.0|^10.0|^11.0",
         "illuminate/support": "^7.20|^8.19|^9.0|^10.0|^11.0",
-        "rector/rector": "^0.19.2|^1.0",
         "spatie/backtrace": "^1.0",
         "spatie/ray": "^1.41.1",
         "symfony/stopwatch": "4.2|^5.1|^6.0|^7.0",
@@ -35,6 +35,7 @@
         "pestphp/pest": "^1.22|^2.0",
         "phpstan/phpstan": "^1.10.57",
         "phpunit/phpunit": "^9.3|^10.1",
+        "rector/rector": "^0.19.2|^1.0",
         "spatie/pest-plugin-snapshots": "^1.1|^2.0",
         "symfony/var-dumper": "^4.2|^5.1|^6.0|^7.0.3"
     },
