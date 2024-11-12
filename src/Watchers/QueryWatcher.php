@@ -43,6 +43,7 @@ class QueryWatcher extends Watcher
 
             $ray = app(Ray::class)->sendRequest($payload);
 
+            /** @phpstan-ignore method.notFound */
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
     }

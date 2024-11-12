@@ -191,8 +191,8 @@ class RayServiceProvider extends ServiceProvider
     {
         Collection::macro('ray', function (string $description = '') {
             $description === ''
-                ? ray($this->items)
-                : ray($description, $this->items);
+                ? ray($this->items) // @phpstan-ignore property.protected
+                : ray($description, $this->items); // @phpstan-ignore property.protected
 
             return $this;
         });
@@ -206,8 +206,8 @@ class RayServiceProvider extends ServiceProvider
 
         Stringable::macro('ray', function (string $description = '') {
             $description === ''
-                ? ray($this->value)
-                : ray($description, $this->value);
+                ? ray($this->value) // @phpstan-ignore property.protected
+                : ray($description, $this->value); // @phpstan-ignore property.protected
 
             return $this;
         });

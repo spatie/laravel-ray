@@ -30,6 +30,7 @@ class HttpClientWatcher extends Watcher
 
             $ray = $this->handleRequest($event->request);
 
+            /** @phpstan-ignore method.notFound */
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
 
@@ -40,6 +41,7 @@ class HttpClientWatcher extends Watcher
 
             $ray = $this->handleResponse($event->request, $event->response);
 
+            /** @phpstan-ignore method.notFound */
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
     }

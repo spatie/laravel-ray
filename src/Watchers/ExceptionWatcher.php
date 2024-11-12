@@ -63,6 +63,7 @@ class ExceptionWatcher extends Watcher
         if (app()->bound(Flare::class)) {
             $flare = app(Flare::class);
 
+            /** @phpstan-ignore class.notFound */
             $report = $flare->createReport($exception);
 
             return (new ReportTrimmer())->trim($report->toArray());

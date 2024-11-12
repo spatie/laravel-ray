@@ -32,6 +32,7 @@ class SlowQueryWatcher extends QueryWatcher
                 $ray->sendRequest($payload);
             }
 
+            /** @phpstan-ignore method.notFound */
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
     }

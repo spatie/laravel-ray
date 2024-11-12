@@ -30,6 +30,7 @@ class RequestWatcher extends Watcher
 
             $ray = $this->handleRequest($event->request, $event->response);
 
+            /** @phpstan-ignore method.notFound */
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
     }
@@ -54,8 +55,8 @@ class RequestWatcher extends Watcher
             'IP Address' => $request->ip(),
             'URI' => str_replace($request->root(), '', $request->fullUrl()) ?: '/',
             'Method' => $request->method(),
-            'Controller action' => optional($request->route())->getActionName(),
-            'Middleware' => array_values(optional($request->route())->gatherMiddleware() ?? []),
+            'Controller action' => optional($request->route())->getActionName(), // @phpstan-ignore method.notFound
+            'Middleware' => array_values(optional($request->route())->gatherMiddleware() ?? []), // @phpstan-ignore method.notFound
             'Headers' => $headers,
             'Payload' => $this->payload($request),
             'Session' => $session,

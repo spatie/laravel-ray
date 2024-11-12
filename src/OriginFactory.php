@@ -29,8 +29,8 @@ class OriginFactory
         $frame = $this->getFrame();
 
         return new Origin(
-            optional($frame)->file,
-            optional($frame)->lineNumber,
+            optional($frame)->file, // @phpstan-ignore property.notFound
+            optional($frame)->lineNumber, // @phpstan-ignore property.notFound
         );
     }
 

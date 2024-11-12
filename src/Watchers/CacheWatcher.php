@@ -27,6 +27,7 @@ class CacheWatcher extends Watcher
 
             $ray = $this->ray()->sendRequest($payload);
 
+            /** @phpstan-ignore method.notFound */
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
 
