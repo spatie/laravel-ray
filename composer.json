@@ -77,7 +77,7 @@
         }
     },
     "scripts": {
-        "analyse": "vendor/bin/phpstan --memory-limit=512M -vvv",
+        "analyse": "vendor/bin/phpstan",
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage"
