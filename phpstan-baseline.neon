@@ -16,6 +16,11 @@ parameters:
 			path: src/Watchers/ExceptionWatcher.php
 
 		-
+			message: "#^Call to method createReport\\(\\) on an unknown class Spatie\\\\FlareClient\\\\Flare\\.$#"
+			count: 1
+			path: src/Watchers/ExceptionWatcher.php
+
+		-
 			message: "#^Call to method trim\\(\\) on an unknown class Facade\\\\FlareClient\\\\Truncation\\\\ReportTrimmer\\.$#"
 			count: 1
 			path: src/Watchers/ExceptionWatcher.php
@@ -50,3 +55,37 @@ parameters:
 			count: 1
 			path: src/Watchers/ExceptionWatcher.php
 
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Support\\\\Optional::\\$file.$#"
+			count: 1
+			path: src/OriginFactory.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Support\\\\Optional::\\$lineNumber.$#"
+			count: 1
+			path: src/OriginFactory.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Optional::applyCalledMethods\\(\\).$#"
+			count: 10
+			path: src/
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Optional::getActionName\\(\\).$#"
+			count: 1
+			path: src/Watchers/RequestWatcher.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Optional::gatherMiddleware\\(\\).$#"
+			count: 1
+			path: src/Watchers/RequestWatcher.php
+
+		-
+			message: "#^Access to protected property Illuminate\\\\Support\\\\Collection::\\$items.$#"
+			count: 2
+			path: src/RayServiceProvider.php
+
+		-
+			message: "#^Access to protected property Illuminate\\\\Support\\\\Stringable::\\$value.$#"
+			count: 2
+			path: src/RayServiceProvider.php
