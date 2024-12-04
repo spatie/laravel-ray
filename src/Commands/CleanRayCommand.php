@@ -2,8 +2,11 @@
 
 namespace Spatie\LaravelRay\Commands;
 
+use Composer\InstalledVersions;
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Process;
+use Spatie\LaravelRay\Support\Composer;
 
 class CleanRayCommand extends Command
 {
@@ -11,7 +14,7 @@ class CleanRayCommand extends Command
 
     protected $description = 'Remove all Ray calls from your codebase.';
 
-    public function handle()
+    public function handle(Filesystem $files)
     {
         $directories = [
             'app',
@@ -22,6 +25,11 @@ class CleanRayCommand extends Command
             'routes',
             'tests',
         ];
+
+        if (! InstalledVersions::isInstalled('rector/rector')) {
+            (new Composer($files, defined('TESTBENCH_WORKING_PATH') ? TESTBENCH_WORKING_PATH : base_path()))
+                ->requirePackages(['rector/rector'], true, $this->output);
+        }
 
         $this->withProgressBar($directories, function ($directory) {
             $result = Process::run('./vendor/bin/remove-ray.sh ' . $directory);
