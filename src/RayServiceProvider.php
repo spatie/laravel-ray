@@ -18,17 +18,21 @@ use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\QueryPayload;
 use Spatie\LaravelRay\Watchers\ApplicationLogWatcher;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
+use Spatie\LaravelRay\Watchers\DeleteQueryWatcher;
 use Spatie\LaravelRay\Watchers\DeprecatedNoticeWatcher;
 use Spatie\LaravelRay\Watchers\DumpWatcher;
 use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
+use Spatie\LaravelRay\Watchers\InsertQueryWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\LoggedMailWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
+use Spatie\LaravelRay\Watchers\SelectQueryWatcher;
 use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
+use Spatie\LaravelRay\Watchers\UpdateQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\Ray\Client;
 use Spatie\Ray\PayloadFactory;
@@ -79,6 +83,10 @@ class RayServiceProvider extends ServiceProvider
                 'send_queries_to_ray' => env('SEND_QUERIES_TO_RAY', false),
                 'send_duplicate_queries_to_ray' => env('SEND_DUPLICATE_QUERIES_TO_RAY', false),
                 'send_slow_queries_to_ray' => env('SEND_SLOW_QUERIES_TO_RAY', false),
+                'send_update_queries_to_ray' => env('SEND_UPDATE_QUERIES_TO_RAY', false),
+                'send_insert_queries_to_ray' => env('SEND_INSERT_QUERIES_TO_RAY', false),
+                'send_delete_queries_to_ray' => env('SEND_DELETE_QUERIES_TO_RAY', false),
+                'send_select_queries_to_ray' => env('SEND_SELECT_QUERIES_TO_RAY', false),
                 'send_requests_to_ray' => env('SEND_REQUESTS_TO_RAY', false),
                 'send_http_client_requests_to_ray' => env('SEND_HTTP_CLIENT_REQUESTS_TO_RAY', false),
                 'send_views_to_ray' => env('SEND_VIEWS_TO_RAY', false),
@@ -142,6 +150,10 @@ class RayServiceProvider extends ServiceProvider
             QueryWatcher::class,
             DuplicateQueryWatcher::class,
             SlowQueryWatcher::class,
+            InsertQueryWatcher::class,
+            SelectQueryWatcher::class,
+            UpdateQueryWatcher::class,
+            DeleteQueryWatcher::class,
             ViewWatcher::class,
             CacheWatcher::class,
             RequestWatcher::class,
@@ -169,6 +181,10 @@ class RayServiceProvider extends ServiceProvider
             QueryWatcher::class,
             DuplicateQueryWatcher::class,
             SlowQueryWatcher::class,
+            InsertQueryWatcher::class,
+            SelectQueryWatcher::class,
+            UpdateQueryWatcher::class,
+            DeleteQueryWatcher::class,
             ViewWatcher::class,
             CacheWatcher::class,
             RequestWatcher::class,
