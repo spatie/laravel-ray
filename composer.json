@@ -32,7 +32,7 @@
         "illuminate/database": "^7.20 || ^8.19 || ^9.0 || ^10.0 || ^11.0",
         "illuminate/queue": "^7.20 || ^8.19 || ^9.0 || ^10.0 || ^11.0",
         "illuminate/support": "^7.20 || ^8.19 || ^9.0 || ^10.0 || ^11.0",
-        "rector/rector": "dev-main",
+        "rector/rector": "^2.0.0-rc2",
         "spatie/backtrace": "^1.0",
         "spatie/ray": "^1.41.3",
         "symfony/stopwatch": "4.2 || ^5.1 || ^6.0 || ^7.0",
