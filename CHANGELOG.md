@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.39.0 - 2024-12-11
+
+### What's Changed
+
+* Update the Rector dependency to version ^2.0.0-rc2 by @martio in https://github.com/spatie/laravel-ray/pull/368
+* Install `rector/rector` during first run of `php artisan ray:clean` instead of requiring `rector/rector` by @crynobone in https://github.com/spatie/laravel-ray/pull/363
+* Add conditional query watcher and convenience methods for update, delete, insert and select queries by @patrickomeara in https://github.com/spatie/laravel-ray/pull/359
+
+### New Contributors
+
+* @martio made their first contribution in https://github.com/spatie/laravel-ray/pull/368
+* @patrickomeara made their first contribution in https://github.com/spatie/laravel-ray/pull/359
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.38.0...1.39.0
+
 ## 1.37.1 - 2024-07-15
 
 ### What's Changed
