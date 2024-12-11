@@ -26,14 +26,19 @@ use Spatie\LaravelRay\Payloads\ModelPayload;
 use Spatie\LaravelRay\Payloads\ResponsePayload;
 use Spatie\LaravelRay\Payloads\ViewPayload;
 use Spatie\LaravelRay\Watchers\CacheWatcher;
+use Spatie\LaravelRay\Watchers\ConditionalQueryWatcher;
+use Spatie\LaravelRay\Watchers\DeleteQueryWatcher;
 use Spatie\LaravelRay\Watchers\DuplicateQueryWatcher;
 use Spatie\LaravelRay\Watchers\EventWatcher;
 use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
+use Spatie\LaravelRay\Watchers\InsertQueryWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
+use Spatie\LaravelRay\Watchers\SelectQueryWatcher;
 use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
+use Spatie\LaravelRay\Watchers\UpdateQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
@@ -429,6 +434,76 @@ class Ray extends BaseRay
     public function stopShowingDuplicateQueries(): self
     {
         app(DuplicateQueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function showConditionalQueries(Closure $condition, $callable = null, $name = 'default')
+    {
+        $watcher = ConditionalQueryWatcher::buildWatcherForName($condition, $name);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingConditionalQueries($name = 'default'): self
+    {
+        app(ConditionalQueryWatcher::abstractName($name))->disable();
+
+        return $this;
+    }
+
+    public function showUpdateQueries($callable = null)
+    {
+        $watcher = app(UpdateQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingUpdateQueries(): self
+    {
+        app(UpdateQueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function showDeleteQueries($callable = null)
+    {
+        $watcher = app(DeleteQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingDeleteQueries(): self
+    {
+        app(DeleteQueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function showInsertQueries($callable = null)
+    {
+        $watcher = app(InsertQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingInsertQueries(): self
+    {
+        app(InsertQueryWatcher::class)->disable();
+
+        return $this;
+    }
+
+    public function showSelectQueries($callable = null)
+    {
+        $watcher = app(SelectQueryWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingSelectQueries(): self
+    {
+        app(SelectQueryWatcher::class)->disable();
 
         return $this;
     }
