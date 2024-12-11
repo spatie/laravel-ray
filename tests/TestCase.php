@@ -2,10 +2,8 @@
 
 namespace Spatie\LaravelRay\Tests;
 
-use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
