@@ -11,3 +11,6 @@ parameters:
         - '#^Call to method \w+\(\) on an unknown class Spatie\\WordPressRay\\Ray\.$#'
         - '#^Call to method \w+\(\) on an unknown class Spatie\\RayBundle\\Ray\.$#'
         - '#^Access to an undefined property Spatie\\Ray\\Settings\\Settings\:\:\$\w+\.$#'
+        -
+            message: '#Unsafe usage of new static\(\).#'
+            reportUnmatched: false
