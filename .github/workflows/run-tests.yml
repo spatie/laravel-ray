@@ -15,14 +15,19 @@ jobs:
         include:
           - laravel: 11.*
             testbench: 9.*
+            rector: 2.*
           - laravel: 10.*
             testbench: 8.*
+            rector: 1.*
           - laravel: 9.*
             testbench: 7.*
+            rector: 1.*
           - laravel: 8.*
             testbench: 6.*
+            rector: 1.*
           - laravel: 7.*
             testbench: 5.*
+            rector: 0.19.*
         exclude:
           - laravel: 11.*
             php: 8.1
@@ -73,7 +78,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer update --${{ matrix.dependency-version }} --with=laravel/framework:${{ matrix.laravel }} --with=orchestra/testbench-core:${{ matrix.testbench }} --prefer-dist --no-interaction
+          composer update --${{ matrix.dependency-version }} --with=laravel/framework:${{ matrix.laravel }} --with=orchestra/testbench-core:${{ matrix.testbench }} --with=rector/rector:${{ matrix.rector }} --prefer-dist --no-interaction
 
       - name: Execute tests
         run: vendor/bin/pest
