@@ -54,6 +54,7 @@ EOD;
                 'email' => 'willem@spatie.be',
             ],
         ],
+        'attachments' => [],
     ])->toEqual($payload->getContent());
 });
 
@@ -85,5 +86,6 @@ EOD;
         ],
         'cc' => [],
         'bcc' => [],
+        'attachments' => [],
     ])->toEqual($payload->getContent());
 });
