@@ -2,6 +2,17 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.39.1 - 2025-02-05
+
+### What's Changed
+
+* Update Dependencies by @sweptsquash in https://github.com/spatie/laravel-ray/pull/369
+* Bump shivammathur/setup-php from 2.31.1 to 2.32.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/370
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/spatie/laravel-ray/pull/371
+* Supports Laravel 12 by @crynobone in https://github.com/spatie/laravel-ray/pull/372
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.39.0...1.39.1
+
 ## 1.39.0 - 2024-12-11
 
 ### What's Changed
