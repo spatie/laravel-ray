@@ -25,3 +25,21 @@ it('can send multiple mailable payloads', function () {
     expect($this->client->sentPayloads())->toHaveCount(2);
     expect($this->client->sentRequests())->toHaveCount(1);
 });
+
+it('can automatically send mail to ray', function () {
+    ray()->showMails();
+
+    Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
+        ->bcc(['willem@spatie.be', 'jef@spatie.be'])
+        ->to(['freek@spatie.be', 'ruben@spatie.be'])
+        ->sendNow(new TestMailable());
+
+    ray()->stopShowingMails();
+
+    Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
+        ->bcc(['willem@spatie.be', 'jef@spatie.be'])
+        ->to(['freek@spatie.be', 'ruben@spatie.be'])
+        ->sendNow(new TestMailable());
+
+    expect($this->client->sentRequests())->toHaveCount(3);
+});
