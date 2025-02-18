@@ -25,6 +25,11 @@ return [
     'send_jobs_to_ray' => env('SEND_JOBS_TO_RAY', false),
 
     /*
+    * When enabled all mails will automatically be sent to Ray.
+    */
+    'send_mails_to_ray' => env('SEND_MAILS_TO_RAY', false),
+
+    /*
     * When enabled, all things logged to the application log
     * will be sent to Ray as well.
     */

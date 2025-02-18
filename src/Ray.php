@@ -34,6 +34,7 @@ use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 use Spatie\LaravelRay\Watchers\InsertQueryWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
+use Spatie\LaravelRay\Watchers\MailWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
 use Spatie\LaravelRay\Watchers\SelectQueryWatcher;
@@ -87,6 +88,25 @@ class Ray extends BaseRay
         }, $mailables);
 
         $this->sendRequest($payloads);
+
+        return $this;
+    }
+
+    /**
+     * @param null $callable
+     *
+     * @return \Spatie\LaravelRay\Ray
+     */
+    public function showMails($callable = null)
+    {
+        $watcher = app(MailWatcher::class);
+
+        return $this->handleWatcherCallable($watcher, $callable);
+    }
+
+    public function stopShowingMails(): self
+    {
+        app(MailWatcher::class)->disable();
 
         return $this;
     }
