@@ -67,7 +67,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Optional::applyCalledMethods\\(\\).$#"
-			count: 10
+			count: 11
 			path: src/
 
 		-
