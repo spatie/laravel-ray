@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Mail;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
+use Spatie\LaravelRay\Watchers\MailWatcher;
 
 it('can send the mailable payload', function () {
     ray()->mailable(new TestMailable());
@@ -27,6 +28,10 @@ it('can send multiple mailable payloads', function () {
 });
 
 it('can automatically send mail to ray', function () {
+    if (! MailWatcher::supportedByLaravelVersion()) {
+        $this->markTestSkipped('Tests require Laravel 11.0.0 or greater.');
+    }
+
     ray()->showMails();
 
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])

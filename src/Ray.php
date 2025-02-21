@@ -99,6 +99,12 @@ class Ray extends BaseRay
      */
     public function showMails($callable = null)
     {
+        if (! MailWatcher::supportedByLaravelVersion()) {
+            $this->send("Email logging is not available in your Laravel version")->red();
+
+            return $this;
+        }
+
         $watcher = app(MailWatcher::class);
 
         return $this->handleWatcherCallable($watcher, $callable);
