@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Mail;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Watchers\MailWatcher;
+use Illuminate\Support\Arr;
 
 it('can send the mailable payload', function () {
     ray()->mailable(new TestMailable());
@@ -46,5 +47,9 @@ it('can automatically send mail to ray', function () {
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
         ->sendNow(new TestMailable());
 
-    expect($this->client->sentRequests())->toHaveCount(3);
+    $requests = $this->client->sentRequests();
+
+    expect($requests)->toHaveCount(2);
+    expect(Arr::get($requests, '0.payloads.0.origin.file'))->toContain('Mailer.php');
+    expect(Arr::get($requests, '1.payloads.0.origin.file'))->toContain('LogTransport.php');
 });
