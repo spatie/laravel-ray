@@ -30,7 +30,7 @@ class MailWatcher extends Watcher
         Event::listen([
             MessageSending::class,
         ], function (MessageSending $event) {
-            if (!$this->enabled()) {
+            if (! $this->enabled()) {
                 return;
             }
 
