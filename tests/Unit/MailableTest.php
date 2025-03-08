@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Mail;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
+use Spatie\LaravelRay\Watchers\MailWatcher;
+use Illuminate\Support\Arr;
 
 it('can send the mailable payload', function () {
     ray()->mailable(new TestMailable());
@@ -24,4 +26,30 @@ it('can send multiple mailable payloads', function () {
 
     expect($this->client->sentPayloads())->toHaveCount(2);
     expect($this->client->sentRequests())->toHaveCount(1);
+});
+
+it('can automatically send mail to ray', function () {
+    if (! MailWatcher::supportedByLaravelVersion()) {
+        $this->markTestSkipped('Tests require Laravel 11.0.0 or greater.');
+    }
+
+    ray()->showMails();
+
+    Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
+        ->bcc(['willem@spatie.be', 'jef@spatie.be'])
+        ->to(['freek@spatie.be', 'ruben@spatie.be'])
+        ->sendNow(new TestMailable());
+
+    ray()->stopShowingMails();
+
+    Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
+        ->bcc(['willem@spatie.be', 'jef@spatie.be'])
+        ->to(['freek@spatie.be', 'ruben@spatie.be'])
+        ->sendNow(new TestMailable());
+
+    $requests = $this->client->sentRequests();
+
+    expect($requests)->toHaveCount(2);
+    expect(Arr::get($requests, '0.payloads.0.origin.file'))->toContain('Mailer.php');
+    expect(Arr::get($requests, '1.payloads.0.origin.file'))->toContain('LogTransport.php');
 });
