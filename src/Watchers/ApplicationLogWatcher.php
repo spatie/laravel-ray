@@ -69,7 +69,7 @@ class ApplicationLogWatcher extends Watcher
             return false;
         }
 
-        if ((new LoggedMailWatcher())->concernsLoggedMail($message)) {
+        if ((new MailWatcher())->concernsLoggedMail($message)) {
             return false;
         }
 

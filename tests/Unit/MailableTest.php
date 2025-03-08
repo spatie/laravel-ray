@@ -18,7 +18,7 @@ it('can send a logged mailable', function () {
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
         ->send(new TestMailable());
 
-    expect($this->client->sentRequests())->toHaveCount(1);
+    expect($this->client->sentRequests())->toHaveCount(2);
 });
 
 it('can send multiple mailable payloads', function () {
@@ -28,13 +28,8 @@ it('can send multiple mailable payloads', function () {
     expect($this->client->sentRequests())->toHaveCount(1);
 });
 
-it('can automatically send mail to ray', function () {
-    if (! MailWatcher::supportedByLaravelVersion()) {
-        $this->markTestSkipped('Tests require Laravel 11.0.0 or greater.');
-    }
-
-    ray()->showMails();
-
+it('will automatically send mails to ray', function () {
+    // to addresses in to --> 2 mails will be sent
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
@@ -42,6 +37,7 @@ it('can automatically send mail to ray', function () {
 
     ray()->stopShowingMails();
 
+    // these should not be logged in Ray
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
@@ -51,5 +47,4 @@ it('can automatically send mail to ray', function () {
 
     expect($requests)->toHaveCount(2);
     expect(Arr::get($requests, '0.payloads.0.origin.file'))->toContain('Mailer.php');
-    expect(Arr::get($requests, '1.payloads.0.origin.file'))->toContain('LogTransport.php');
 });

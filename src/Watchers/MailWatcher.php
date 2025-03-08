@@ -2,8 +2,10 @@
 
 namespace Spatie\LaravelRay\Watchers;
 
+use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
 use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Ray;
 use Spatie\Ray\Settings\Settings;
@@ -14,12 +16,21 @@ class MailWatcher extends Watcher
     {
         $settings = app(Settings::class);
 
-        $this->enabled = $settings->send_mails_to_ray;
+        if ($settings->send_mails_to_ray ?? true) {
+            $this->enable();
+        }
 
+        $this->supportsMessageSendingEvent()
+            ? $this->registerMessageSendingEventListener()
+            : $this->listenForLoggedMails();
+    }
+
+    protected function registerMessageSendingEventListener(): void
+    {
         Event::listen([
             MessageSending::class,
         ], function (MessageSending $event) {
-            if (! $this->enabled()) {
+            if (!$this->enabled()) {
                 return;
             }
 
@@ -31,7 +42,38 @@ class MailWatcher extends Watcher
         });
     }
 
-    public static function supportedByLaravelVersion()
+    public function listenForLoggedMails(): void
+    {
+        Event::listen(MessageLogged::class, function (MessageLogged $messageLogged) {
+            if (! $this->enabled()) {
+                return;
+            }
+
+            if (! $this->concernsLoggedMail($messageLogged)) {
+                return;
+            }
+
+            /** @var Ray $ray */
+            $ray = app(Ray::class);
+
+            $ray->loggedMail($messageLogged->message);
+        });
+    }
+
+    public function concernsLoggedMail(MessageLogged $messageLogged): bool
+    {
+        if (! Str::contains($messageLogged->message, 'Message-ID')) {
+            return false;
+        }
+
+        if (! Str::contains($messageLogged->message, 'To:')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function supportsMessageSendingEvent(): bool
     {
         return version_compare(app()->version(), '11.0.0',  '>=');
     }

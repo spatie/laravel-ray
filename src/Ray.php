@@ -100,15 +100,9 @@ class Ray extends BaseRay
      */
     public function showMails($callable = null)
     {
-        if (! MailWatcher::supportedByLaravelVersion()) {
-            $this->send("Email logging is not available in your Laravel version")->red();
-
-            return $this;
-        }
-
-        app(LoggedMailWatcher::class)->disable();
-
         $watcher = app(MailWatcher::class);
+
+        $watcher->enable();
 
         return $this->handleWatcherCallable($watcher, $callable);
     }
@@ -116,8 +110,6 @@ class Ray extends BaseRay
     public function stopShowingMails(): self
     {
         app(MailWatcher::class)->disable();
-
-        app(LoggedMailWatcher::class)->enable();
 
         return $this;
     }

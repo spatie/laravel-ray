@@ -27,7 +27,7 @@ return [
     /*
     * When enabled all mails will automatically be sent to Ray.
     */
-    'send_mails_to_ray' => env('SEND_MAILS_TO_RAY', false),
+    'send_mails_to_ray' => env('SEND_MAILS_TO_RAY', true),
 
     /*
     * When enabled, all things logged to the application log
