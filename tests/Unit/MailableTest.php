@@ -29,7 +29,7 @@ it('can send multiple mailable payloads', function () {
 });
 
 it('will automatically send mails to ray', function () {
-    if ((new MailWatcher())->supportsMessageSendingEvent()) {
+    if (! (new MailWatcher())->supportsMessageSendingEvent()) {
         $this->markTestSkipped('This test works for Laravel versions that can automatically log all non-log mails');
     }
 
