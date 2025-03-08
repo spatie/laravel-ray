@@ -3,7 +3,6 @@
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
-use Spatie\LaravelRay\Watchers\MailWatcher;
 
 it('can send the mailable payload', function () {
     ray()->mailable(new TestMailable());

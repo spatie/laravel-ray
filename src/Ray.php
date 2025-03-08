@@ -34,7 +34,6 @@ use Spatie\LaravelRay\Watchers\ExceptionWatcher;
 use Spatie\LaravelRay\Watchers\HttpClientWatcher;
 use Spatie\LaravelRay\Watchers\InsertQueryWatcher;
 use Spatie\LaravelRay\Watchers\JobWatcher;
-use Spatie\LaravelRay\Watchers\LoggedMailWatcher;
 use Spatie\LaravelRay\Watchers\MailWatcher;
 use Spatie\LaravelRay\Watchers\QueryWatcher;
 use Spatie\LaravelRay\Watchers\RequestWatcher;
