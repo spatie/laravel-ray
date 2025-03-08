@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.40.0 - 2025-03-08
+
+### What's Changed
+
+* Allow to show emails (not just when log driver) by @glorand in https://github.com/spatie/laravel-ray/pull/373
+
+### New Contributors
+
+* @glorand made their first contribution in https://github.com/spatie/laravel-ray/pull/373
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.39.1...1.40.0
+
 ## 1.39.1 - 2025-02-05
 
 ### What's Changed
