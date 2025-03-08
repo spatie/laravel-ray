@@ -30,6 +30,7 @@ class MailWatcher extends Watcher
             optional($this->rayProxy)->applyCalledMethods($ray);
         });
     }
+
     public static function supportedByLaravelVersion()
     {
         return version_compare(app()->version(), '11.0.0',  '>=');
