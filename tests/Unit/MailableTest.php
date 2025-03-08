@@ -3,6 +3,7 @@
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
+use Spatie\LaravelRay\Watchers\MailWatcher;
 
 it('can send the mailable payload', function () {
     ray()->mailable(new TestMailable());
@@ -10,7 +11,7 @@ it('can send the mailable payload', function () {
     expect($this->client->sentRequests())->toHaveCount(1);
 });
 
-it('can send a logged mailable', function () {
+it('can send a logged mailable automatically', function () {
     Mail::mailer('log')
         ->cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
@@ -28,6 +29,10 @@ it('can send multiple mailable payloads', function () {
 });
 
 it('will automatically send mails to ray', function () {
+    if ((new MailWatcher())->supportsMessageSendingEvent()) {
+        $this->markTestSkipped('This test works for Laravel versions that can automatically log all non-log mails');
+    }
+
     // to addresses in to --> 2 mails will be sent
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])

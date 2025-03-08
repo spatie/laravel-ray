@@ -73,7 +73,7 @@ class MailWatcher extends Watcher
         return true;
     }
 
-    protected function supportsMessageSendingEvent(): bool
+    public function supportsMessageSendingEvent(): bool
     {
         return version_compare(app()->version(), '11.0.0',  '>=');
     }
