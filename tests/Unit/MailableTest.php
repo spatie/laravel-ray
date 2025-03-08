@@ -33,7 +33,7 @@ it('will automatically send mails to ray', function () {
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
-        ->sendNow(new TestMailable());
+        ->send(new TestMailable());
 
     ray()->stopShowingMails();
 
@@ -41,7 +41,7 @@ it('will automatically send mails to ray', function () {
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
-        ->sendNow(new TestMailable());
+        ->send(new TestMailable());
 
     $requests = $this->client->sentRequests();
 
