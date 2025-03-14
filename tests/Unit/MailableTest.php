@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Mail\Message;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
@@ -51,4 +52,18 @@ it('will automatically send mails to ray', function () {
 
     expect($requests)->toHaveCount(2);
     expect(Arr::get($requests, '0.payloads.0.origin.file'))->toContain('Mailer.php');
+});
+
+it('works with Mail::raw()', function () {
+    if (! (new MailWatcher())->supportsMessageSendingEvent()) {
+        $this->markTestSkipped('This test works for Laravel versions that can automatically log all non-log mails');
+    }
+
+    Mail::raw('Hello world', function (Message $message) {
+        $message->to('tim@spatie.be')->from('info@spatie.be');
+    });
+
+    $requests = $this->client->sentRequests();
+
+    expect($requests)->toHaveCount(2);
 });
