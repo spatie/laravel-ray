@@ -34,7 +34,7 @@ class MailWatcher extends Watcher
                 return;
             }
 
-            $payload = new MailablePayload($event->message->getHtmlBody());
+            $payload = new MailablePayload($event->message->getHtmlBody() ?? $event->message->getTextBody());
 
             $ray = app(Ray::class)->sendRequest($payload);
 
