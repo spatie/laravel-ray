@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.40.1 - 2025-03-14
+
+### What's Changed
+
+* Fix issue #374 recent changes to mailwatcher has broken mailraw by @timvandijck in https://github.com/spatie/laravel-ray/pull/375
+
+### New Contributors
+
+* @timvandijck made their first contribution in https://github.com/spatie/laravel-ray/pull/375
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.40.0...1.40.1
+
 ## 1.40.0 - 2025-03-08
 
 ### What's Changed
