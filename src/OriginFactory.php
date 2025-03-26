@@ -110,7 +110,7 @@ class OriginFactory
         }
 
         try {
-            if (Str::startsWith($originFrame->file, storage_path('framework/views'))) {
+            if (Str::startsWith($originFrame->file, config('view.compiled'))) {
                 return $this->replaceCompiledViewPathWithOriginalViewPath($originFrame);
             }
         } catch (BindingResolutionException $exception) {
