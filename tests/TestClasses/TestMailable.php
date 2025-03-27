@@ -8,6 +8,8 @@ class TestMailable extends Mailable
 {
     public function build()
     {
-        return $this->markdown('mails.test');
+        return $this->markdown('mails.test')
+            ->attachData('file1', 'file_1.txt')
+            ->attachData('file2', 'file_2.txt');
     }
 }
