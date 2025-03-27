@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.40.2 - 2025-03-27
+
+### What's Changed
+
+* Respect custom path for cached views by @alies-dev in https://github.com/spatie/laravel-ray/pull/376
+
+### New Contributors
+
+* @alies-dev made their first contribution in https://github.com/spatie/laravel-ray/pull/376
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.40.1...1.40.2
+
 ## 1.40.1 - 2025-03-14
 
 ### What's Changed
