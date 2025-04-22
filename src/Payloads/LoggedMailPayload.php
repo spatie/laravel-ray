@@ -8,6 +8,7 @@ use ZBateson\MailMimeParser\Header\HeaderConsts;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
 use ZBateson\MailMimeParser\IMessage;
 use ZBateson\MailMimeParser\MailMimeParser;
+use ZBateson\MailMimeParser\Message\MimePart;
 
 class LoggedMailPayload extends Payload
 {
@@ -29,6 +30,9 @@ class LoggedMailPayload extends Payload
     /** @var array */
     protected $bcc;
 
+    /** @var array */
+    protected $attachments;
+
     public static function forLoggedMail(string $loggedMail): self
     {
         $parser = new MailMimeParser();
@@ -38,6 +42,7 @@ class LoggedMailPayload extends Payload
         // get the part in $loggedMail that starts with <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
 
         $content = self::getMailContent($loggedMail, $message);
+        $attachments = self::getMailAttachments($message);
 
         return new self(
             $content,
@@ -46,6 +51,7 @@ class LoggedMailPayload extends Payload
             self::convertHeaderToPersons($message->getHeader(HeaderConsts::TO)),
             self::convertHeaderToPersons($message->getHeader(HeaderConsts::CC)),
             self::convertHeaderToPersons($message->getHeader(HeaderConsts::BCC)),
+            $attachments,
         );
     }
 
@@ -55,7 +61,8 @@ class LoggedMailPayload extends Payload
         ?string $subject = null,
         array $to = [],
         array $cc = [],
-        array $bcc = []
+        array $bcc = [],
+        array $attachments = []
     ) {
         $this->html = $html;
         $this->from = $from;
@@ -63,6 +70,7 @@ class LoggedMailPayload extends Payload
         $this->to = $to;
         $this->cc = $cc;
         $this->bcc = $bcc;
+        $this->attachments = $attachments;
     }
 
     protected static function getMailContent(string $loggedMail, IMessage $message): string
@@ -74,6 +82,19 @@ class LoggedMailPayload extends Payload
         }
 
         return substr($loggedMail, $startOfHtml) ?? '';
+    }
+
+    protected static function getMailAttachments(IMessage $message): array
+    {
+        return collect($message->getAllAttachmentParts())
+            ->map(function (MimePart $attachmentPart) {
+                return [
+                    'filename' => $attachmentPart->getFilename(),
+                    'content_id' => $attachmentPart->getContentId(),
+                    'content_type' => $attachmentPart->getContentType(),
+                    'content' => base64_encode($attachmentPart->getContent()),
+                ];
+            })->toArray();
     }
 
     public function getType(): string
@@ -90,6 +111,7 @@ class LoggedMailPayload extends Payload
             'to' => $this->to,
             'cc' => $this->cc,
             'bcc' => $this->bcc,
+            'attachments' => $this->attachments,
         ];
     }
 
