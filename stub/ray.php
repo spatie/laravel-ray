@@ -9,7 +9,7 @@ return [
     'enable' => env('RAY_ENABLED', true),
 
     /*
-    * When enabled, all cache events  will automatically be sent to Ray.
+    * When enabled, all cache events will automatically be sent to Ray.
     */
     'send_cache_to_ray' => env('SEND_CACHE_TO_RAY', false),
 
