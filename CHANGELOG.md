@@ -2,6 +2,31 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.40.3 - 2025-10-13
+
+### What's Changed
+
+* Bump shivammathur/setup-php from 2.32.0 to 2.33.0 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/378
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/379
+* Bump shivammathur/setup-php from 2.33.0 to 2.34.1 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/381
+* Bump shivammathur/setup-php from 2.34.1 to 2.35.1 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/383
+* Bump shivammathur/setup-php from 2.35.1 to 2.35.2 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/384
+* Bump shivammathur/setup-php from 2.35.2 to 2.35.3 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/386
+* Bump shivammathur/setup-php from 2.35.3 to 2.35.4 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/387
+* Fix unnecessary consecutive spaces in comment by @msng in https://github.com/spatie/laravel-ray/pull/388
+* Update issue template by @AlexVanderbist in https://github.com/spatie/laravel-ray/pull/389
+* Bump shivammathur/setup-php from 2.35.4 to 2.35.5 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/390
+* Fix no-op Invador frame check in OriginFactory::getFrame() by @webpresencekyle in https://github.com/spatie/laravel-ray/pull/391
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/385
+* Bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/382
+
+### New Contributors
+
+* @msng made their first contribution in https://github.com/spatie/laravel-ray/pull/388
+* @webpresencekyle made their first contribution in https://github.com/spatie/laravel-ray/pull/391
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.40.2...1.40.3
+
 ## 1.40.2 - 2025-03-27
 
 ### What's Changed
