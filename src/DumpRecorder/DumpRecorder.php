@@ -83,13 +83,17 @@ class DumpRecorder
     protected function ensureOriginalHandlerExists(): void
     {
         $reflectionProperty = new ReflectionProperty(VarDumper::class, 'handler');
-        $reflectionProperty->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $reflectionProperty->setAccessible(true);
+        }
         $handler = $reflectionProperty->getValue();
 
         if (! $handler) {
             // No handler registered yet, so we'll force VarDumper to create one.
             $reflectionMethod = new ReflectionMethod(VarDumper::class, 'register');
-            $reflectionMethod->setAccessible(true);
+            if (PHP_VERSION_ID < 80100) {
+                $reflectionMethod->setAccessible(true);
+            }
             $reflectionMethod->invoke(null);
         }
     }
