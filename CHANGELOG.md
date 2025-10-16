@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.41.0 - 2025-10-16
+
+### What's Changed
+
+* Fix PHP 8.5 deprecations by @IonBazan in https://github.com/spatie/laravel-ray/pull/393
+
+### New Contributors
+
+* @IonBazan made their first contribution in https://github.com/spatie/laravel-ray/pull/393
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.40.3...1.41.0
+
 ## 1.40.3 - 2025-10-13
 
 ### What's Changed
