@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.42.0 - 2025-11-20
+
+### What's Changed
+
+* Bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/392
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.41.0...1.42.0
+
 ## 1.41.0 - 2025-10-16
 
 ### What's Changed
