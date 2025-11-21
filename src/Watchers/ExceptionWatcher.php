@@ -2,9 +2,12 @@
 
 namespace Spatie\LaravelRay\Watchers;
 
+use Closure;
 use Exception;
 use Facade\FlareClient\Flare as FacadeFlare;
 use Facade\FlareClient\Truncation\ReportTrimmer as FacadeReportTrimmer;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Exceptions\Renderer\Listener;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
 use Spatie\FlareClient\Flare;
@@ -12,6 +15,7 @@ use Spatie\FlareClient\Truncation\ReportTrimmer;
 use Spatie\LaravelRay\Ray;
 use Spatie\Ray\Settings\Settings;
 use Throwable;
+use \Illuminate\Foundation\Exceptions\Renderer\Exception as LaravelExceptionRenderer;
 
 class ExceptionWatcher extends Watcher
 {
@@ -38,10 +42,17 @@ class ExceptionWatcher extends Watcher
                 $meta['flare_report'] = $flareReport;
             }
 
+            $exceptionContext = $this->getRequestAndRouteContext();
+
+            $meta = array_merge($meta, $exceptionContext);
+
             /** @var Ray $ray */
             $ray = app(Ray::class);
 
-            $ray->exception($exception, $meta);
+            $ray->exception(
+                $exception,
+                $meta,
+            );
         });
     }
 
@@ -78,5 +89,61 @@ class ExceptionWatcher extends Watcher
         }
 
         return null;
+    }
+
+    protected function getRequestAndRouteContext(): array
+    {
+        return [
+            'request_headers' => $this->getRequestHeaders(),
+            'application_route' => $this->getApplicationRouteContext(),
+            'application_route_parameters' => $this->getApplicationRouteParameters(),
+        ];
+    }
+
+    /**
+     * Get the request's headers.
+     *
+     * @return array<string, string>
+     */
+    protected function getRequestHeaders(): array
+    {
+        return array_map(function (array $header) {
+            return implode(', ', $header);
+        }, request()->headers->all());
+    }
+
+    /**
+     * Get the application's route context.
+     *
+     * @return array<string, string>
+     */
+    protected function getApplicationRouteContext(): array
+    {
+        $route = request()->route();
+
+        return $route ? array_filter([
+            'controller' => $route->getActionName(),
+            'route name' => $route->getName() ?: null,
+            'middleware' => implode(', ', array_map(function ($middleware) {
+                return $middleware instanceof Closure ? 'Closure' : $middleware;
+            }, $route->gatherMiddleware())),
+        ]) : [];
+    }
+
+    /**
+     * Get the application's route parameters context.
+     *
+     * @return array<string, mixed>|null
+     */
+    protected function getApplicationRouteParameters(): array
+    {
+        $route = request()->route();
+
+        $parameters = $route ? $route->parameters() : null;
+
+        return $parameters ? json_encode(array_map(
+            fn ($value) => $value instanceof Model ? $value->withoutRelations() : $value,
+            $parameters
+        ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : null;
     }
 }
