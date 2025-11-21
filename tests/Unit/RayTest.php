@@ -57,7 +57,7 @@ it('can replace the remote path with the local one', function () {
 });
 
 it('will automatically use specialized payloads', function () {
-    ray(new TestMailable(), new User());
+    ray(new TestMailable, new User);
 
     $payloads = $this->client->sentRequests();
 

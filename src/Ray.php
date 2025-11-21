@@ -93,8 +93,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showMails($callable = null)
@@ -114,8 +113,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param array|string ...$keys
-     *
+     * @param  array|string  ...$keys
      * @return $this
      */
     public function context(...$keys): self
@@ -140,8 +138,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param array|string ...$keys
-     *
+     * @param  array|string  ...$keys
      * @return $this
      */
     public function hiddenContext(...$keys): self
@@ -166,9 +163,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param Model|iterable ...$model
-     *
-     * @return \Spatie\LaravelRay\Ray
+     * @param  Model|iterable  ...$model
      */
     public function model(...$model): self
     {
@@ -206,9 +201,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param Model|iterable $models
-     *
-     * @return \Spatie\LaravelRay\Ray
+     * @param  Model|iterable  $models
      */
     public function models($models): self
     {
@@ -225,10 +218,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param string[]|array|null $onlyShowNames
-     * @param string|null $filename
-     *
-     * @return \Spatie\LaravelRay\Ray
+     * @param  string[]|array|null  $onlyShowNames
      */
     public function env(?array $onlyShowNames = null, ?string $filename = null): self
     {
@@ -242,8 +232,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showEvents($callable = null)
@@ -289,8 +278,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showJobs($callable = null)
@@ -301,8 +289,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showCache($callable = null)
@@ -339,8 +326,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showViews($callable = null)
@@ -363,8 +349,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showQueries($callable = null)
@@ -442,8 +427,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showDuplicateQueries($callable = null)
@@ -531,8 +515,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showRequests($callable = null)
@@ -555,14 +538,13 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param null $callable
-     *
+     * @param  null  $callable
      * @return \Spatie\LaravelRay\Ray
      */
     public function showHttpClientRequests($callable = null)
     {
         if (! HttpClientWatcher::supportedByLaravelVersion()) {
-            $this->send("Http logging is not available in your Laravel version")->red();
+            $this->send('Http logging is not available in your Laravel version')->red();
 
             return $this;
         }
@@ -586,7 +568,7 @@ class Ray extends BaseRay
 
     protected function handleWatcherCallable(Watcher $watcher, ?Closure $callable = null)
     {
-        $rayProxy = new RayProxy();
+        $rayProxy = new RayProxy;
 
         $wasEnabled = $watcher->enabled();
 
@@ -639,10 +621,8 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param \Spatie\Ray\Payloads\Payload|\Spatie\Ray\Payloads\Payload[] $payloads
-     * @param array $meta
+     * @param  \Spatie\Ray\Payloads\Payload|\Spatie\Ray\Payloads\Payload[]  $payloads
      *
-     * @return \Spatie\Ray\Ray
      * @throws \Exception
      */
     public function sendRequest($payloads, array $meta = []): BaseRay

@@ -94,6 +94,6 @@ class HttpClientWatcher extends Watcher
 
     public static function supportedByLaravelVersion()
     {
-        return version_compare(app()->version(), '8.46.0',  '>=');
+        return version_compare(app()->version(), '8.46.0', '>=');
     }
 }

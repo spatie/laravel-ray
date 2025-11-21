@@ -32,7 +32,7 @@ class CleanRayCommand extends Command
         }
 
         $this->withProgressBar($directories, function ($directory) {
-            $result = Process::run('./vendor/bin/remove-ray.sh ' . $directory);
+            $result = Process::run('./vendor/bin/remove-ray.sh '.$directory);
 
             if (! $result->successful()) {
                 $this->error($result->errorOutput());

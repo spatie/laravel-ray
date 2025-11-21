@@ -6,7 +6,7 @@ use Spatie\LaravelRay\Tests\TestClasses\TestEvent;
 it('can send a class based event to ray', function () {
     ray()->showEvents();
 
-    event(new TestEvent());
+    event(new TestEvent);
 
     ray()->stopShowingEvents();
 

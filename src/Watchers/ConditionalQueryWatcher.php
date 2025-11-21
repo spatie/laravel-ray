@@ -15,7 +15,7 @@ class ConditionalQueryWatcher extends QueryWatcher
 
     public static function buildWatcherForName(Closure $condition, $name)
     {
-        $watcher = new static();
+        $watcher = new static;
         $watcher->setConditionalCallback($condition);
 
         return app()->instance(static::abstractName($name), $watcher);

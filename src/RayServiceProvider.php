@@ -221,7 +221,6 @@ class RayServiceProvider extends ServiceProvider
             return $this;
         });
 
-
         Stringable::macro('ray', function (string $description = '') {
             $description === ''
                 ? ray($this->value)
@@ -229,7 +228,6 @@ class RayServiceProvider extends ServiceProvider
 
             return $this;
         });
-
 
         Builder::macro('ray', function () {
             $payload = new QueryPayload($this);

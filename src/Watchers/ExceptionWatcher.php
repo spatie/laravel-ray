@@ -65,7 +65,7 @@ class ExceptionWatcher extends Watcher
 
             $report = $flare->createReport($exception);
 
-            return (new ReportTrimmer())->trim($report->toArray());
+            return (new ReportTrimmer)->trim($report->toArray());
         }
 
         if (app()->bound(FacadeFlare::class)) {
@@ -74,7 +74,7 @@ class ExceptionWatcher extends Watcher
 
             $report = $flare->createReport($exception);
 
-            return (new FacadeReportTrimmer())->trim($report->toArray());
+            return (new FacadeReportTrimmer)->trim($report->toArray());
         }
 
         return null;

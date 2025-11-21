@@ -75,7 +75,7 @@ class RequestWatcher extends Watcher
         array_walk_recursive($files, function (&$file) {
             $file = [
                 'name' => $file->getClientOriginalName(),
-                'size' => $file->isFile() ? ($file->getSize() / 1000) . 'KB' : '0',
+                'size' => $file->isFile() ? ($file->getSize() / 1000).'KB' : '0',
             ];
         });
 
@@ -98,7 +98,7 @@ class RequestWatcher extends Watcher
         }
 
         if ($response instanceof RedirectResponse) {
-            return 'Redirected to ' . $response->getTargetUrl();
+            return 'Redirected to '.$response->getTargetUrl();
         }
 
         if ($response instanceof IlluminateResponse && $response->getOriginalContent() instanceof View) {

@@ -6,11 +6,11 @@ use Spatie\LaravelRay\Tests\TestClasses\TestJob;
 it('can automatically send jobs to ray', function () {
     ray()->showJobs();
 
-    dispatch(new TestJob());
+    dispatch(new TestJob);
 
     ray()->stopShowingJobs();
 
-    dispatch(new TestJob());
+    dispatch(new TestJob);
 
     expect(Arr::get($this->client->sentRequests(), '0.payloads.0.type'))->toEqual('job_event');
     expect($this->client->sentRequests())->toHaveCount(2);
@@ -21,7 +21,7 @@ it('show jobs can be colorized', function () {
 
     ray()->showJobs()->green();
 
-    dispatch(new TestJob());
+    dispatch(new TestJob);
 
     $sentPayloads = $this->client->sentRequests();
 

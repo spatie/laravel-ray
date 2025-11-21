@@ -3,7 +3,7 @@
 use Spatie\LaravelRay\Payloads\LoggedMailPayload;
 
 it('can parse a logged mail', function () {
-    $loggedMail = <<<EOD
+    $loggedMail = <<<'EOD'
 Message-ID: <780b20b2a80adefb6ebb6c9fb7d15d8a@swift.generated>
 Date: Fri, 15 Jan 2021 08:54:24 +0000
 Subject: Test Mailable
@@ -58,7 +58,7 @@ EOD;
 });
 
 it('can omit some headers in a parsed mail', function () {
-    $loggedMail = <<<EOD
+    $loggedMail = <<<'EOD'
 From: Example <hello@example.com>
 To: Freek <freek@spatie.be>
 Content-Type: multipart/alternative;

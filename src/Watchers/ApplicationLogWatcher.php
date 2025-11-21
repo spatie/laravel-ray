@@ -65,15 +65,15 @@ class ApplicationLogWatcher extends Watcher
             return false;
         }
 
-        if ((new ExceptionWatcher())->concernsException($message)) {
+        if ((new ExceptionWatcher)->concernsException($message)) {
             return false;
         }
 
-        if ((new MailWatcher())->concernsLoggedMail($message)) {
+        if ((new MailWatcher)->concernsLoggedMail($message)) {
             return false;
         }
 
-        if ((new DeprecatedNoticeWatcher())->concernsDeprecatedNotice($message)) {
+        if ((new DeprecatedNoticeWatcher)->concernsDeprecatedNotice($message)) {
             return false;
         }
 
