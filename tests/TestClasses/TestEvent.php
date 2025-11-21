@@ -2,6 +2,4 @@
 
 namespace Spatie\LaravelRay\Tests\TestClasses;
 
-class TestEvent
-{
-}
+class TestEvent {}

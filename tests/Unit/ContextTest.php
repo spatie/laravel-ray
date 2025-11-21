@@ -22,7 +22,6 @@ it('can send all context', function () {
     expect($clipboardData)->toContain('key', 'value');
 });
 
-
 it('can send specific context keys variadic', function () {
     if (! contextSupported()) {
         return;

@@ -200,7 +200,7 @@ class OriginFactory
             if (Str::endsWith($foundFrame->file, Ray::makePathOsSafe('/Illuminate/Foundation/Events/Dispatchable.php'))) {
                 $foundFrame = $frames[$indexOfEventDispatcherCall + 3];
             }
-        };
+        }
 
         return $foundFrame ?? null;
     }

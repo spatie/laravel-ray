@@ -53,6 +53,6 @@ class FakeClient extends Client
 
     protected function baseDirectory(): string
     {
-        return str_replace("/tests/TestClasses", '', __DIR__);
+        return str_replace('/tests/TestClasses', '', __DIR__);
     }
 }

@@ -31,13 +31,11 @@ class DumpRecorder
 
     public function register(): self
     {
-        $multiDumpHandler = new MultiDumpHandler();
+        $multiDumpHandler = new MultiDumpHandler;
 
         $this->app->singleton(MultiDumpHandler::class, function () use ($multiDumpHandler) {
             return $multiDumpHandler;
         });
-
-
 
         if (! static::$registeredHandler || static::$runningLaravel9) {
             static::$registeredHandler = true;

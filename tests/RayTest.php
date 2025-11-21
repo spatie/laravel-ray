@@ -108,7 +108,7 @@ it('can replace the remote path with the local one', function () {
 });
 
 it('will automatically use specialized payloads', function () {
-    ray(new TestMailable(), new User());
+    ray(new TestMailable, new User);
 
     $payloads = $this->client->sentRequests();
 
@@ -117,7 +117,7 @@ it('will automatically use specialized payloads', function () {
 });
 
 it('sends an environment payload', function () {
-    ray()->env([], __DIR__ . '/stubs/dotenv.env');
+    ray()->env([], __DIR__.'/stubs/dotenv.env');
 
     $payloads = $this->client->sentRequests();
 
@@ -130,7 +130,7 @@ it('sends an environment payload', function () {
 });
 
 it('sends a filtered environment payload', function () {
-    ray()->env(['APP_ENV', 'DB_DATABASE'], __DIR__ . '/stubs/dotenv.env');
+    ray()->env(['APP_ENV', 'DB_DATABASE'], __DIR__.'/stubs/dotenv.env');
 
     $payloads = $this->client->sentRequests();
 

@@ -31,7 +31,7 @@ class LoggedMailPayload extends Payload
 
     public static function forLoggedMail(string $loggedMail): self
     {
-        $parser = new MailMimeParser();
+        $parser = new MailMimeParser;
 
         $message = $parser->parse($loggedMail, true);
 

@@ -11,9 +11,9 @@ beforeEach(function () {
 
     Http::fake(
         [
-        '*/ok*' => Http::response(['hello' => 'world'], 200, ['Content-Type' => 'application/json']),
-        '*/not-found*' => Http::response(null, 404),
-        '*/json*' => Http::response(['foo' => 'bar']),
+            '*/ok*' => Http::response(['hello' => 'world'], 200, ['Content-Type' => 'application/json']),
+            '*/not-found*' => Http::response(null, 404),
+            '*/json*' => Http::response(['foo' => 'bar']),
         ]
     );
 });

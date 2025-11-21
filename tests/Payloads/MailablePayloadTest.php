@@ -4,7 +4,7 @@ use Spatie\LaravelRay\Payloads\MailablePayload;
 use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 
 it('can render a mailable', function () {
-    $mailable = new TestMailable();
+    $mailable = new TestMailable;
 
     $payload = MailablePayload::forMailable($mailable);
 

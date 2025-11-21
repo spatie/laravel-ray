@@ -14,13 +14,13 @@ class PublishConfigCommand extends Command
 
     public function handle()
     {
-        if ((new Filesystem())->exists('ray.php')) {
+        if ((new Filesystem)->exists('ray.php')) {
             $this->error('ray.php already exists in the project root');
 
             return;
         }
 
-        copy(__DIR__ . '/../../stub/ray.php', base_path('ray.php'));
+        copy(__DIR__.'/../../stub/ray.php', base_path('ray.php'));
 
         if ($this->option('docker')) {
             file_put_contents(

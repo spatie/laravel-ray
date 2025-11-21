@@ -23,7 +23,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->client = new FakeClient();
+        $this->client = new FakeClient;
 
         $this->app->bind(Ray::class, function () {
             $settings = app(Settings::class);
@@ -39,7 +39,7 @@ class TestCase extends Orchestra
 
         Hostname::set('fake-hostname');
 
-        View::addLocation(__DIR__ . '/resources/views');
+        View::addLocation(__DIR__.'/resources/views');
     }
 
     protected function getPackageProviders($app)

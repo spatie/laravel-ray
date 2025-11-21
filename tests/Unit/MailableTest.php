@@ -7,7 +7,7 @@ use Spatie\LaravelRay\Tests\TestClasses\TestMailable;
 use Spatie\LaravelRay\Watchers\MailWatcher;
 
 it('can send the mailable payload', function () {
-    ray()->mailable(new TestMailable());
+    ray()->mailable(new TestMailable);
 
     expect($this->client->sentRequests())->toHaveCount(1);
 });
@@ -17,20 +17,20 @@ it('can send a logged mailable automatically', function () {
         ->cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
-        ->send(new TestMailable());
+        ->send(new TestMailable);
 
     expect($this->client->sentRequests())->toHaveCount(2);
 });
 
 it('can send multiple mailable payloads', function () {
-    ray()->mailable(new TestMailable(), new TestMailable());
+    ray()->mailable(new TestMailable, new TestMailable);
 
     expect($this->client->sentPayloads())->toHaveCount(2);
     expect($this->client->sentRequests())->toHaveCount(1);
 });
 
 it('will automatically send mails to ray', function () {
-    if (! (new MailWatcher())->supportsMessageSendingEvent()) {
+    if (! (new MailWatcher)->supportsMessageSendingEvent()) {
         $this->markTestSkipped('This test works for Laravel versions that can automatically log all non-log mails');
     }
 
@@ -38,7 +38,7 @@ it('will automatically send mails to ray', function () {
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
-        ->send(new TestMailable());
+        ->send(new TestMailable);
 
     ray()->stopShowingMails();
 
@@ -46,7 +46,7 @@ it('will automatically send mails to ray', function () {
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
-        ->send(new TestMailable());
+        ->send(new TestMailable);
 
     $requests = $this->client->sentRequests();
 
@@ -55,7 +55,7 @@ it('will automatically send mails to ray', function () {
 });
 
 it('works with Mail::raw()', function () {
-    if (! (new MailWatcher())->supportsMessageSendingEvent()) {
+    if (! (new MailWatcher)->supportsMessageSendingEvent()) {
         $this->markTestSkipped('This test works for Laravel versions that can automatically log all non-log mails');
     }
 

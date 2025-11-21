@@ -19,8 +19,7 @@ class EnvironmentPayload extends Payload
     protected $filename;
 
     /**
-     * @param string[]|array|null $onlyShowNames
-     * @param string|null $filename
+     * @param  string[]|array|null  $onlyShowNames
      */
     public function __construct(?array $onlyShowNames = null, ?string $filename = null)
     {

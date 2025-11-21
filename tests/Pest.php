@@ -30,7 +30,6 @@ function assertMatchesOsSafeSnapshot($data): void
     $json = str_replace('D:\\\\a\\\\laravel-ray\\\\laravel-ray', '', $json);
     $json = str_replace('\\\\', '/', $json);
 
-
     test()->expect($json)->toMatchJsonSnapshot();
 }
 
