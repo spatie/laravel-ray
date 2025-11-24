@@ -130,8 +130,6 @@ class ExceptionWatcher extends Watcher
 
     /**
      * Get the application's route parameters context.
-     *
-     * @return string|null
      */
     protected function getApplicationRouteParameters(): ?string
     {
