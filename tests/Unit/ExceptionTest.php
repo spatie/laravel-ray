@@ -36,7 +36,7 @@ it('includes request headers in exception meta', function () {
     $sentRequests = $this->client->sentRequests();
 
     $exceptionRequest = collect($sentRequests)
-        ->first(fn($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
+        ->first(fn ($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
 
     expect($exceptionRequest)->not()->toBeNull();
 
@@ -64,7 +64,7 @@ it('includes route context in exception meta', function () {
     $sentRequests = $this->client->sentRequests();
 
     $exceptionRequest = collect($sentRequests)
-        ->first(fn($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
+        ->first(fn ($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
 
     expect($exceptionRequest)->not()->toBeNull();
 
@@ -93,7 +93,7 @@ it('includes route parameters in exception meta', function () {
     $sentRequests = $this->client->sentRequests();
 
     $exceptionRequest = collect($sentRequests)
-        ->first(fn($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
+        ->first(fn ($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
 
     expect($exceptionRequest)->not()->toBeNull();
 
@@ -112,7 +112,7 @@ it('handles exceptions without active route', function () {
     $sentRequests = $this->client->sentRequests();
 
     $exceptionRequest = collect($sentRequests)
-        ->first(fn($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
+        ->first(fn ($request) => isset($request['payloads'][0]['type']) && $request['payloads'][0]['type'] === 'exception');
 
     expect($exceptionRequest)->not()->toBeNull();
 
