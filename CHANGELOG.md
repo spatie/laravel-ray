@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.43.0 - 2025-11-24
+
+### What's Changed
+
+* Add more context to exceptions by @freekmurze in https://github.com/spatie/laravel-ray/pull/396
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.42.0...1.43.0
+
 ## 1.42.0 - 2025-11-20
 
 ### What's Changed
