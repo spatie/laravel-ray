@@ -71,8 +71,8 @@ it('includes route context in exception meta', function () {
     $meta = $exceptionRequest['payloads'][0]['content']['meta'];
 
     expect($meta)->toHaveKey('application_route');
-    expect($meta['application_route'])->toHaveKey('route name');
-    expect($meta['application_route']['route name'])->toBe('test.route');
+    expect($meta['application_route'])->toHaveKey('route_name');
+    expect($meta['application_route']['route_name'])->toBe('test.route');
     expect($meta['application_route'])->toHaveKey('controller');
     expect($meta['application_route'])->toHaveKey('middleware');
     expect($meta['application_route']['middleware'])->toContain('web');

@@ -113,7 +113,7 @@ class ExceptionWatcher extends Watcher
     /**
      * Get the application's route context.
      *
-     * @return array<string, string>
+     * @return array<int, string>
      */
     protected function getApplicationRouteContext(): array
     {
@@ -121,27 +121,31 @@ class ExceptionWatcher extends Watcher
 
         return $route ? array_filter([
             'controller' => $route->getActionName(),
-            'route name' => $route->getName() ?: null,
-            'middleware' => implode(', ', array_map(function ($middleware) {
+            'route_name' => $route->getName() ?: null,
+            'middleware' => array_map(function ($middleware) {
                 return $middleware instanceof Closure ? 'Closure' : $middleware;
-            }, $route->gatherMiddleware())),
+            }, $route->gatherMiddleware()),
         ]) : [];
     }
 
     /**
      * Get the application's route parameters context.
      *
-     * @return string|null
+     * @return array<string, string|array<string, string>
      */
-    protected function getApplicationRouteParameters(): ?string
+    protected function getApplicationRouteParameters(): array
     {
         $route = request()->route();
 
-        $parameters = $route ? $route->parameters() : null;
+        $parameters = $route ? $route->parameters() : [];
 
-        return $parameters ? json_encode(array_map(
+        if (! $parameters) {
+            return [];
+        }
+
+        return array_map(
             fn ($value) => $value instanceof Model ? $value->withoutRelations() : $value,
-            $parameters
-        ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : null;
+            $parameters,
+        );
     }
 }
