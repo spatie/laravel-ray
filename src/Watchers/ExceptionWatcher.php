@@ -7,7 +7,6 @@ use Exception;
 use Facade\FlareClient\Flare as FacadeFlare;
 use Facade\FlareClient\Truncation\ReportTrimmer as FacadeReportTrimmer;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Exceptions\Renderer\Listener;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
 use Spatie\FlareClient\Flare;
@@ -15,7 +14,6 @@ use Spatie\FlareClient\Truncation\ReportTrimmer;
 use Spatie\LaravelRay\Ray;
 use Spatie\Ray\Settings\Settings;
 use Throwable;
-use \Illuminate\Foundation\Exceptions\Renderer\Exception as LaravelExceptionRenderer;
 
 class ExceptionWatcher extends Watcher
 {
