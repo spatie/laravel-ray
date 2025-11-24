@@ -133,9 +133,9 @@ class ExceptionWatcher extends Watcher
     /**
      * Get the application's route parameters context.
      *
-     * @return array<string, mixed>|null
+     * @return string|null
      */
-    protected function getApplicationRouteParameters(): array
+    protected function getApplicationRouteParameters(): ?string
     {
         $route = request()->route();
 
