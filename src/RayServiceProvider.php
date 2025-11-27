@@ -191,7 +191,6 @@ class RayServiceProvider extends ServiceProvider
             RequestWatcher::class,
             HttpClientWatcher::class,
             DeprecatedNoticeWatcher::class,
-            MailWatcher::class,
         ];
 
         collect($watchers)
