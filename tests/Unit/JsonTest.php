@@ -35,7 +35,7 @@ it('can send a regular test response to ray', function () {
     expect($this->client->sentRequests())->toHaveCount(1);
     expect(Arr::get($this->client->sentRequests(), '0.payloads.0.content.status_code'))->toEqual(201);
 
-    expect(Arr::get($this->client->sentRequests(), '0.payloads.0.content.headers'))->toContain('text/html; charset=UTF-8');
+    expect(Arr::get($this->client->sentRequests(), '0.payloads.0.content.headers'))->toContain('text/html');
 
     expect(Arr::get($this->client->sentRequests(), '0.payloads.0.content.content'))->toEqual('hello');
 

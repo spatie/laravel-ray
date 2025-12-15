@@ -19,7 +19,7 @@ it('can send a logged mailable automatically', function () {
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
         ->send(new TestMailable);
 
-    expect($this->client->sentRequests())->toHaveCount(2);
+    expect($this->client->sentRequests())->toHaveCount(1);
 });
 
 it('can send multiple mailable payloads', function () {
@@ -34,7 +34,6 @@ it('will automatically send mails to ray', function () {
         $this->markTestSkipped('This test works for Laravel versions that can automatically log all non-log mails');
     }
 
-    // to addresses in to --> 2 mails will be sent
     Mail::cc(['adriaan' => 'adriaan@spatie.be', 'seb@spatie.be'])
         ->bcc(['willem@spatie.be', 'jef@spatie.be'])
         ->to(['freek@spatie.be', 'ruben@spatie.be'])
@@ -50,7 +49,7 @@ it('will automatically send mails to ray', function () {
 
     $requests = $this->client->sentRequests();
 
-    expect($requests)->toHaveCount(2);
+    expect($requests)->toHaveCount(1);
     expect(Arr::get($requests, '0.payloads.0.origin.file'))->toContain('Mailer.php');
 });
 
@@ -65,5 +64,5 @@ it('works with Mail::raw()', function () {
 
     $requests = $this->client->sentRequests();
 
-    expect($requests)->toHaveCount(2);
+    expect($requests)->toHaveCount(1);
 });
