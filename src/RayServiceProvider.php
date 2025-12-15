@@ -174,7 +174,6 @@ class RayServiceProvider extends ServiceProvider
     {
         $watchers = [
             ExceptionWatcher::class,
-            MailWatcher::class,
             ApplicationLogWatcher::class,
             JobWatcher::class,
             EventWatcher::class,
