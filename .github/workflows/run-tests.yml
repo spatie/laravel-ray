@@ -95,6 +95,10 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+      - name: Remove Pint for old PHP
+        if: matrix.php == '8.1' || matrix.php == '8.0' || matrix.php == '7.4'
+        run: composer remove laravel/pint --dev --no-update
+
       - name: Install dependencies
         run: |
           composer update --${{ matrix.dependency-version }} --with=laravel/framework:${{ matrix.laravel }} --with=orchestra/testbench-core:${{ matrix.testbench }} --with=rector/rector:${{ matrix.rector }} --prefer-dist --no-interaction
