@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.43.2 - 2025-12-15
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.43.1...1.43.2
+
 ## 1.43.1 - 2025-11-24
 
 **Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.43.0...1.43.1
