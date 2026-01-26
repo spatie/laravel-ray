@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.43.5 - 2026-01-26
+
+### What's Changed
+
+* Update skill description
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.43.4...1.43.5
+
 ## 1.43.4 - 2026-01-26
 
 ### What's Changed
