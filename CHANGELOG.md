@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.43.3 - 2026-01-13
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/401
+* Bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/397
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.43.1...1.43.3
+
 ## 1.43.2 - 2025-12-15
 
 **Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.43.1...1.43.2
