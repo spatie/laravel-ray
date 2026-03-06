@@ -610,7 +610,9 @@ class Ray extends BaseRay
         $payloads[] = new ExceptionPayload($exception, $meta);
 
         if ($exception instanceof QueryException) {
-            $executedQuery = new QueryExecuted($exception->getSql(), $exception->getBindings(), null, DB::connection(config('database.default')));
+            $connection = $exception->connectionName ?? config('database.default');
+
+            $executedQuery = new QueryExecuted($exception->getSql(), $exception->getBindings(), null, DB::connection($connection));
 
             $payloads[] = new ExecutedQueryPayload($executedQuery);
         }
