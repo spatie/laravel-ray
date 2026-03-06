@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.43.7 - 2026-03-06
+
+Add support for latest version `zbateson/mail-mime-parser`
+
 ## 1.43.6 - 2026-02-19
 
 ### What's Changed
