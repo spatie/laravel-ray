@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\LaravelRay\Tests\TestClasses\User;
 
@@ -54,12 +55,12 @@ it('can log all queries in a callable', function () {
 });
 
 it('can log all queries in a callable and gets results', function () {
-    $results = ray()->showQueries(function (): \Illuminate\Support\Collection {
+    $results = ray()->showQueries(function (): Collection {
         // will be logged
         return DB::table('users')->where('id', 1)->get();
     });
     expect($this->client->sentRequests())->toHaveCount(1);
-    expect($results)->toBeInstanceOf(\Illuminate\Support\Collection::class);
+    expect($results)->toBeInstanceOf(Collection::class);
     expect($results->count())->toEqual(0);
 });
 

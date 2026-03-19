@@ -7,7 +7,7 @@ use Spatie\Ray\Payloads\Payload;
 
 class ExecutedQueryPayload extends Payload
 {
-    /** @var \Illuminate\Database\Events\QueryExecuted */
+    /** @var QueryExecuted */
     protected $query;
 
     public function __construct(QueryExecuted $query)

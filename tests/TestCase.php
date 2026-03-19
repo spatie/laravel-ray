@@ -16,7 +16,7 @@ use Spatie\Ray\Settings\Settings;
 
 class TestCase extends Orchestra
 {
-    /** @var \Spatie\LaravelRay\Tests\TestClasses\FakeClient */
+    /** @var FakeClient */
     protected $client;
 
     protected function setUp(): void

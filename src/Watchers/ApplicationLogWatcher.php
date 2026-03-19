@@ -11,7 +11,7 @@ class ApplicationLogWatcher extends Watcher
 {
     public function register(): void
     {
-        /** @var \Spatie\LaravelRay\Ray $ray */
+        /** @var Ray $ray */
         $ray = app(Ray::class);
 
         $this->enabled = $ray->settings->send_log_calls_to_ray;

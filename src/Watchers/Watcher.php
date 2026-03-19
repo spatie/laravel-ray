@@ -9,7 +9,7 @@ abstract class Watcher
     /** @var bool */
     protected $enabled = false;
 
-    /** @var \Spatie\LaravelRay\RayProxy|null */
+    /** @var RayProxy|null */
     protected $rayProxy;
 
     abstract public function register(): void;

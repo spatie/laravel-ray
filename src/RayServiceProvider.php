@@ -34,6 +34,7 @@ use Spatie\LaravelRay\Watchers\SelectQueryWatcher;
 use Spatie\LaravelRay\Watchers\SlowQueryWatcher;
 use Spatie\LaravelRay\Watchers\UpdateQueryWatcher;
 use Spatie\LaravelRay\Watchers\ViewWatcher;
+use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
 use Spatie\Ray\PayloadFactory;
 use Spatie\Ray\Payloads\Payload;
@@ -195,7 +196,7 @@ class RayServiceProvider extends ServiceProvider
 
         collect($watchers)
             ->each(function (string $watcherClass) {
-                /** @var \Spatie\LaravelRay\Watchers\Watcher $watcher */
+                /** @var Watcher $watcher */
                 $watcher = app($watcherClass);
 
                 $watcher->register();

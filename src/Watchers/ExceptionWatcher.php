@@ -78,7 +78,7 @@ class ExceptionWatcher extends Watcher
         }
 
         if (app()->bound(FacadeFlare::class)) {
-            /** @var \Facade\FlareClient\Flare $flare */
+            /** @var FacadeFlare $flare */
             $flare = app(FacadeFlare::class);
 
             $report = $flare->createReport($exception);

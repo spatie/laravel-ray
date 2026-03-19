@@ -9,7 +9,7 @@ use Spatie\Ray\Payloads\Payload;
 
 class ViewPayload extends Payload
 {
-    /** @var \Illuminate\View\View */
+    /** @var View */
     protected $view;
 
     public function __construct(View $view)

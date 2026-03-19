@@ -44,6 +44,7 @@ use Spatie\LaravelRay\Watchers\ViewWatcher;
 use Spatie\LaravelRay\Watchers\Watcher;
 use Spatie\Ray\Client;
 use Spatie\Ray\Payloads\ExceptionPayload;
+use Spatie\Ray\Payloads\Payload;
 use Spatie\Ray\Ray as BaseRay;
 use Spatie\Ray\Settings\Settings;
 use Throwable;
@@ -94,7 +95,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showMails($callable = null)
     {
@@ -233,7 +234,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showEvents($callable = null)
     {
@@ -249,7 +250,7 @@ class Ray extends BaseRay
 
     public function stopShowingEvents(): self
     {
-        /** @var \Spatie\LaravelRay\Watchers\EventWatcher $eventWatcher */
+        /** @var EventWatcher $eventWatcher */
         $eventWatcher = app(EventWatcher::class);
 
         $eventWatcher->disable();
@@ -259,7 +260,7 @@ class Ray extends BaseRay
 
     public function showExceptions(): self
     {
-        /** @var \Spatie\LaravelRay\Watchers\ExceptionWatcher $exceptionWatcher */
+        /** @var ExceptionWatcher $exceptionWatcher */
         $exceptionWatcher = app(ExceptionWatcher::class);
 
         $exceptionWatcher->enable();
@@ -269,7 +270,7 @@ class Ray extends BaseRay
 
     public function stopShowingExceptions(): self
     {
-        /** @var \Spatie\LaravelRay\Watchers\ExceptionWatcher $exceptionWatcher */
+        /** @var ExceptionWatcher $exceptionWatcher */
         $exceptionWatcher = app(ExceptionWatcher::class);
 
         $exceptionWatcher->disable();
@@ -279,7 +280,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showJobs($callable = null)
     {
@@ -290,7 +291,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showCache($callable = null)
     {
@@ -327,7 +328,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showViews($callable = null)
     {
@@ -350,7 +351,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showQueries($callable = null)
     {
@@ -428,7 +429,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showDuplicateQueries($callable = null)
     {
@@ -516,7 +517,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showRequests($callable = null)
     {
@@ -539,7 +540,7 @@ class Ray extends BaseRay
 
     /**
      * @param  null  $callable
-     * @return \Spatie\LaravelRay\Ray
+     * @return Ray
      */
     public function showHttpClientRequests($callable = null)
     {
@@ -621,7 +622,7 @@ class Ray extends BaseRay
     }
 
     /**
-     * @param  \Spatie\Ray\Payloads\Payload|\Spatie\Ray\Payloads\Payload[]  $payloads
+     * @param  Payload|Payload[]  $payloads
      *
      * @throws \Exception
      */

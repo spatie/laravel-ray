@@ -3,6 +3,7 @@
 namespace Spatie\LaravelRay\Watchers;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Spatie\LaravelRay\Ray;
 use Spatie\Ray\Settings\Settings;
 
@@ -19,7 +20,7 @@ class ViewWatcher extends Watcher
                 return;
             }
 
-            /** @var \Illuminate\View\View $view */
+            /** @var View $view */
             $view = $data[0];
 
             $ray = app(Ray::class)->view($view);

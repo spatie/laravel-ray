@@ -13,7 +13,7 @@ class DumpRecorder
     /** @var array */
     protected $dumps = [];
 
-    /** @var \Illuminate\Contracts\Container\Container */
+    /** @var Container */
     protected $app;
 
     protected static $registeredHandler = false;
