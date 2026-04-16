@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.43.8 - 2026-04-16
+
+### What's Changed
+
+* Defer Ray resolution to boot phase by @freekmurze in https://github.com/spatie/laravel-ray/pull/415
+
+Fixes two paired errors on PHP 8.5 during app boot (`ReflectionException: Class "request" does not exist` and `Unresolvable dependency resolving [Parameter #0 [ <required> array $settings ]] in class Spatie\Ray\Settings\Settings`) by making `register()` purely declarative and moving `setProjectName()` into `boot()`.
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.43.7...1.43.8
+
 ## 1.43.7 - 2026-03-06
 
 Add support for latest version `zbateson/mail-mime-parser`
