@@ -163,3 +163,16 @@ it('still boots and works although the DB facade has not been bound', function (
 
     expect($this->client->sentRequests())->toHaveCount(1);
 });
+
+it('does not resolve the ray helper during register when the project name is customised', function () {
+    Ray::$projectName = '';
+    config()->set('app.name', 'my-project');
+
+    (new RayServiceProvider($this->app))->register();
+
+    expect(Ray::$projectName)->toEqual('');
+
+    (new RayServiceProvider($this->app))->boot();
+
+    expect(Ray::$projectName)->toEqual('my-project');
+});
