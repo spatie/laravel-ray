@@ -48,18 +48,18 @@ class RayServiceProvider extends ServiceProvider
         $this
             ->registerCommands()
             ->registerSettings()
-            ->setProjectName()
             ->registerBindings()
             ->registerWatchers()
             ->registerMacros()
-            ->registerBindings()
             ->registerBladeDirectives()
             ->registerPayloadFinder();
     }
 
     public function boot()
     {
-        $this->bootWatchers();
+        $this
+            ->setProjectName()
+            ->bootWatchers();
     }
 
     protected function registerCommands(): self
@@ -115,18 +115,16 @@ class RayServiceProvider extends ServiceProvider
 
     protected function registerBindings(): self
     {
-        $settings = app(Settings::class);
+        $this->app->bind(Client::class, function ($app) {
+            $settings = $app->make(Settings::class);
 
-        $this->app->bind(Client::class, function () use ($settings) {
             return new Client($settings->port, $settings->host);
         });
 
-        $this->app->bind(Ray::class, function () {
-            $client = app(Client::class);
+        $this->app->bind(Ray::class, function ($app) {
+            $settings = $app->make(Settings::class);
 
-            $settings = app(Settings::class);
-
-            $ray = new Ray($settings, $client);
+            $ray = new Ray($settings, $app->make(Client::class));
 
             if (! $settings->enable) {
                 $ray->disable();
