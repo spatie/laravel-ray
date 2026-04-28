@@ -92,7 +92,7 @@ class RequestWatcher extends Watcher
                 return json_decode($content, true);
             }
 
-            if (Str::startsWith(strtolower($response->headers->get('Content-Type')), 'text/plain')) {
+            if (Str::startsWith(strtolower($response->headers->get('Content-Type') ?? ''), 'text/plain')) {
                 return $content;
             }
         }
