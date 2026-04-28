@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-ray` will be documented in this file
 
+## 1.43.9 - 2026-04-28
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 3.0.0 to 3.1.0 by @dependabot[bot] in https://github.com/spatie/laravel-ray/pull/416
+* Fix strtolower null deprecation in RequestWatcher (PHP 8.1+) by @OtavioMoreira in https://github.com/spatie/laravel-ray/pull/417
+* Use connection name from `QueryException` when creating `QueryExecuted` event by @oli-laban in https://github.com/spatie/laravel-ray/pull/405
+
+### New Contributors
+
+* @OtavioMoreira made their first contribution in https://github.com/spatie/laravel-ray/pull/417
+* @oli-laban made their first contribution in https://github.com/spatie/laravel-ray/pull/405
+
+**Full Changelog**: https://github.com/spatie/laravel-ray/compare/1.43.8...1.43.9
+
 ## 1.43.8 - 2026-04-16
 
 ### What's Changed
