@@ -79,13 +79,3 @@ parameters:
 			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Optional::gatherMiddleware\\(\\).$#"
 			count: 1
 			path: src/Watchers/RequestWatcher.php
-
-		-
-			message: "#^Access to protected property Illuminate\\\\Support\\\\Collection::\\$items.$#"
-			count: 2
-			path: src/RayServiceProvider.php
-
-		-
-			message: "#^Access to protected property Illuminate\\\\Support\\\\Stringable::\\$value.$#"
-			count: 2
-			path: src/RayServiceProvider.php
